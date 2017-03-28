@@ -1,6 +1,6 @@
 package com.apssouza.controllers;
 
-import com.apssouza.monitrs.TodoEventsMonitor;
+import com.apssouza.monitors.TodoServiceMethodMonitor;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.LongSummaryStatistics;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/todo-statistics")
 @RestController
-public class TodoStatisticsController {
+public class TodoServiceStatisticsController {
 
     @Autowired
-    TodoEventsMonitor ms;
+    TodoServiceMethodMonitor monitor;
 
     @GetMapping
     public ObjectNode get() {
-        LongSummaryStatistics statistics = ms.getStatistics();
+        LongSummaryStatistics statistics = monitor.getStatistics();
         return JsonNodeFactory.instance.objectNode().
                 put("average-duration", statistics.getAverage()).
                 put("invocation-count", statistics.getCount()).

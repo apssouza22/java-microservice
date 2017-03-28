@@ -1,4 +1,5 @@
-package com.apssouza.monitrs;
+
+package com.apssouza.monitors;
 
 import com.apssouza.events.TodoChangedEvent;
 import java.util.List;
@@ -6,35 +7,32 @@ import java.util.LongSummaryStatistics;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+/**
+ *
+ * @author apssouza
+ */
 @Component
-public class TodoEventsMonitor {
-
-    //@Autowired
-    //LogSink LOG;
-
-    CopyOnWriteArrayList<TodoChangedEvent> recentEvents;
-
+public class TodoEventChangesMonitor {
+    
+    private CopyOnWriteArrayList<TodoChangedEvent> events;
+    
     @PostConstruct
-    public void init() {
-        this.recentEvents = new CopyOnWriteArrayList<>();
+    public void init(){
+        this.events =  new CopyOnWriteArrayList<>();
     }
-
-    @EventListener
-    public void onCallEvent(TodoChangedEvent event) {
-        //LOG.log(event.toString());
-        this.recentEvents.add(event);
+    
+    public void addNewEvent(TodoChangedEvent event){
+        this.events.add(event);
     }
-
+    
     public List<TodoChangedEvent> getRecentEvents() {
-        return this.recentEvents;
+        return this.events;
     }
 
     public LongSummaryStatistics getStatistics() {
-        return this.recentEvents.stream().
+        return this.events.stream().
                 collect(Collectors.summarizingLong(TodoChangedEvent::getPriority));
     }
-
 }

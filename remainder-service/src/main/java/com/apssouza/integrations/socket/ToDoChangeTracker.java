@@ -1,8 +1,8 @@
 package com.apssouza.integrations.socket;
 
 
-import com.apssouza.annotations.ChangeEvent;
 import com.apssouza.entities.ToDo;
+import com.apssouza.events.TodoChangedEvent;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
@@ -33,7 +33,8 @@ public class ToDoChangeTracker {
     }
     
     @EventListener
-    public void onToDoChange(@ChangeEvent(ChangeEvent.Type.CREATION) ToDo todo) throws EncodeException {
+    public void onToDoChange(TodoChangedEvent e) throws EncodeException {
+        ToDo todo = e.getTodo();
         if (this.session != null && this.session.isOpen()) {
             try {
                 ObjectNode event = JsonNodeFactory.instance.objectNode().

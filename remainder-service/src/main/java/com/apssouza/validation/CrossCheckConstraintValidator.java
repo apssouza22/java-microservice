@@ -1,6 +1,5 @@
 package com.apssouza.validation;
 
-import com.apssouza.validation.CrossCheck;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

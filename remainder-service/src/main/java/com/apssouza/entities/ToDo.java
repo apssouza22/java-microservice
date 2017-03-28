@@ -1,13 +1,10 @@
 package com.apssouza.entities;
 
-import com.apssouza.auditing.ToDoAuditor;
+import com.apssouza.monitors.ToDoPersistenceMonitor;
 import com.apssouza.validation.CrossCheck;
 import com.apssouza.validation.ValidEntity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -21,10 +18,8 @@ import javax.persistence.Version;
  */
 @Entity
 @NamedQuery(name = ToDo.findAll, query = "SELECT t FROM ToDo t")
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 @CrossCheck
-@EntityListeners(ToDoAuditor.class)
+@EntityListeners(ToDoPersistenceMonitor.class)
 public class ToDo implements ValidEntity {
 
     @Id

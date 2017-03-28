@@ -1,7 +1,7 @@
 package com.apssouza.controllers;
 
 import com.apssouza.events.TodoChangedEvent;
-import com.apssouza.monitrs.TodoEventsMonitor;
+import com.apssouza.monitors.TodoEventChangesMonitor;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/todo-changes")
 @RestController
-public class TodoChanges {
+public class TodoChangesController {
 
     @Autowired
-    TodoEventsMonitor ms;
+    TodoEventChangesMonitor monitor;
 
     @GetMapping
     public List<TodoChangedEvent> expose() {
-        return this.ms.getRecentEvents();
+        return this.monitor.getRecentEvents();
     }
 
 }

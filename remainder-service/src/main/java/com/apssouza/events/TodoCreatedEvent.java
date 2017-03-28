@@ -25,6 +25,7 @@ public class TodoCreatedEvent implements TodoChangedEvent{
         this.todo = todo;
     }
     
+    @Override
     public int getPriority(){
         return this.todo.getPriority();
     }

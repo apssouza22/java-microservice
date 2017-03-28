@@ -8,10 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *
+ * Configuration to enable access to the h2db console
  * @author apssouza
  */
-
 @Configuration
 public class H2DbConfiguration {
     @Bean
