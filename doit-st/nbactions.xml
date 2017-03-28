@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-it</actionName>
+            <displayName>it</displayName>
+            <goals>
+                <goal>failsafe:integration-test</goal>
+            </goals>
+        </action>
+    </actions>
