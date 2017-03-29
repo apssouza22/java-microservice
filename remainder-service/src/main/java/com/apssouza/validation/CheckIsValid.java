@@ -16,7 +16,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = CrossCheckConstraintValidator.class)
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CrossCheck {
+public @interface CheckIsValid {
 
     String message() default "Cross check failed!";
 

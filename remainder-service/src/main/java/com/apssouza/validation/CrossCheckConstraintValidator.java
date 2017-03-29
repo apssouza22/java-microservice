@@ -6,10 +6,10 @@ import javax.validation.ConstraintValidatorContext;
 /**
  * @author apssouza
  */
-public class CrossCheckConstraintValidator implements ConstraintValidator<CrossCheck, ValidEntity> {
+public class CrossCheckConstraintValidator implements ConstraintValidator<CheckIsValid, ValidEntity> {
 
     @Override
-    public void initialize(CrossCheck constraintAnnotation) {
+    public void initialize(CheckIsValid constraintAnnotation) {
     }
 
     @Override

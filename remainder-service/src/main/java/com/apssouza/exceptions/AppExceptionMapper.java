@@ -1,4 +1,4 @@
-package com.apssouza.doit.business;
+package com.apssouza.exceptions;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.http.HttpStatus;

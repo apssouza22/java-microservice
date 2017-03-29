@@ -2,7 +2,9 @@ package com.apssouza.services;
 
 import com.apssouza.repositories.TodoRepository;
 import com.apssouza.entities.ToDo;
+import com.apssouza.exceptions.DataNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,13 +14,14 @@ public class ToDoService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public ToDo findById(long id) {
-        return this.todoRepository.findOne(id);
-
+    public Optional<ToDo> findById(long id) {
+        ToDo todo = this.todoRepository.findOne(id);
+        return Optional.ofNullable(todo);
     }
 
-    public void delete(long id) {
-        this.todoRepository.deleteById(id);
+    public boolean delete(long id) {
+        this.findById(id).orElseThrow(() -> new DataNotFoundException("Not found ToDo id " + id));
+        return this.todoRepository.deleteById(id);
     }
 
     public List<ToDo> all() {
@@ -30,13 +33,12 @@ public class ToDoService {
     }
 
     public ToDo updateStatus(long id, boolean done) {
-        ToDo todo = this.findById(id);
-        if (todo == null) {
-            return null;
-        }
-        todo.setDone(done);
-        this.todoRepository.save(todo);
-        return todo;
+        return this.findById(id)
+                .map((t) -> {
+                    t.setDone(done);
+                    todoRepository.save(t);
+                    return t;
+                }).orElseThrow(() -> new DataNotFoundException("Not found ToDo id " + id));
     }
 
 }

@@ -21,13 +21,13 @@ import org.springframework.stereotype.Component;
 public class TodoLoader implements ApplicationListener<ContextRefreshedEvent>  {
 
     private final TodoRepository todoRepository;
+    private final Logger log = Logger.getLogger(this.getClass().getCanonicalName());
 
     @Autowired
     public TodoLoader(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
     }
 
-    private final Logger log = Logger.getLogger(this.getClass().getCanonicalName());
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent e) {

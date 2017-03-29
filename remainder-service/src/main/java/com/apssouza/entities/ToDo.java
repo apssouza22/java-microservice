@@ -1,7 +1,6 @@
 package com.apssouza.entities;
 
 import com.apssouza.monitors.ToDoPersistenceMonitor;
-import com.apssouza.validation.CrossCheck;
 import com.apssouza.validation.ValidEntity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Version;
+import com.apssouza.validation.CheckIsValid;
 
 /**
  *
@@ -18,7 +18,7 @@ import javax.persistence.Version;
  */
 @Entity
 @NamedQuery(name = ToDo.findAll, query = "SELECT t FROM ToDo t")
-@CrossCheck
+@CheckIsValid
 @EntityListeners(ToDoPersistenceMonitor.class)
 public class ToDo implements ValidEntity {
 
@@ -26,7 +26,7 @@ public class ToDo implements ValidEntity {
     @GeneratedValue
     private long id;
 
-    static final String PREFIX = "reminders.entity.ToDo.";
+    static final String PREFIX = "ToDo.";
     public static final String findAll = PREFIX + "findAll";
 
     @NotNull

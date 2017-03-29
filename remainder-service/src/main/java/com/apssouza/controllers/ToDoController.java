@@ -2,6 +2,7 @@ package com.apssouza.controllers;
 
 import com.apssouza.services.ToDoService;
 import com.apssouza.entities.ToDo;
+import com.apssouza.exceptions.DataNotFoundException;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.util.List;
@@ -39,50 +40,49 @@ public class ToDoController {
     public ResponseEntity<?> save(@Valid ToDo todo) {
         ToDo saved = this.toDoService.save(todo);
         Long id = saved.getId();
-        if(id != null){
+        if (id != null) {
             URI location = ServletUriComponentsBuilder
-                            .fromCurrentRequest().path("/{id}")
-                            .buildAndExpand(id).toUri();
+                    .fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(id).toUri();
             return ResponseEntity.created(location).build();
         }
-         return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
     }
-    
-    
+
     @PutMapping("{id}")
-    public ToDo update(@PathVariable long id) {
-        ToDo todo = toDoService.findById(id);
-        todo.setId(id);
-        return toDoService.save(todo);
+    public ResponseEntity<?> update(@PathVariable long id) {
+        return toDoService.findById(id)
+                .map( todo -> {            
+                    todo.setId(id);
+                    toDoService.save(todo);
+                    return ResponseEntity.ok(todo);
+                }).orElseThrow(() -> new DataNotFoundException("Todo not found"));
     }
 
     @GetMapping("{id}")
-    public ToDo find(@PathVariable long id) {
-        return toDoService.findById(id);
+    public ResponseEntity<?> find(@PathVariable long id) {
+        return toDoService.findById(id)
+                .map(todo -> {
+                    return ResponseEntity.ok(todo);
+                }).orElseThrow(() -> new DataNotFoundException("Todo not found"));
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable long id) {
+    public ResponseEntity<?> delete(@PathVariable long id) {
         toDoService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("{id}/status")
-    public ResponseEntity<?>  statusUpdate(@PathVariable long id, JsonNode statusUpdate) {
+    public ResponseEntity<?> statusUpdate(@PathVariable long id, JsonNode statusUpdate) {
         JsonNode done = statusUpdate.get("done");
         if (!done.asBoolean()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     header("reason", "JSON should contains field done").
                     build();
         }
-        
         ToDo todo = toDoService.updateStatus(id, done.asBoolean());
-        if (todo == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    header("reason", "todo with id " + id + " does not exist").
-                    build();
-        } else {
-            return ResponseEntity.ok(todo);
-        }
+        return ResponseEntity.ok(todo);
     }
 
 }

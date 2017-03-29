@@ -36,8 +36,10 @@ public class TodosResourceIT {
                 build();
 
         //create
-        Response postResponse = this.provider.target().request().
-                post(Entity.json(todoToCreate));
+        Response postResponse = this.provider
+                .target()
+                .request()
+                .post(Entity.json(todoToCreate));
         assertThat(postResponse.getStatus(), is(201));
         
         String location = postResponse.getHeaderString("Location");

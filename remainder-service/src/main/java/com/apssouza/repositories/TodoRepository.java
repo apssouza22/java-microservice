@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TodoRepository  extends JpaRepository<ToDo, Long>  {
     
-     Long deleteById(Long id);
+     boolean deleteById(Long id);
 }

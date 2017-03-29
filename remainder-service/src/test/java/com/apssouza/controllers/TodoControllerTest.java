@@ -4,6 +4,7 @@ import com.apssouza.BasicApplication;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import static org.junit.Assert.assertNotNull;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,16 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 import org.springframework.web.context.WebApplicationContext;
+import com.apssouza.entities.ToDo;
+import com.apssouza.repositories.TodoRepository;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.mock.http.MockHttpOutputMessage;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  *
@@ -35,8 +45,14 @@ public class TodoControllerTest {
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
+    private List<ToDo> todoList = new ArrayList<>();
+    
     @Autowired
     private WebApplicationContext webApplicationContext;
+    
+    @Autowired
+    private TodoRepository todoRepository;
+    
     
      @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -50,9 +66,31 @@ public class TodoControllerTest {
                 this.mappingJackson2HttpMessageConverter);
     }
 
+     @Before
+    public void setup() throws Exception {
+        this.mockMvc = webAppContextSetup(webApplicationContext).build();
+
+        this.todoRepository.deleteAllInBatch();
+
+        this.todoList.add(todoRepository.save(new ToDo("caption 1", "description 1", 5)));
+        this.todoList.add(todoRepository.save(new ToDo("caption 2", "description 2", 4)));
+    }
 
     @Test
-    public void test(){
-        
+    public void userNotFound() throws Exception {
+        mockMvc.perform(post("/todos/5")
+                .content(this.json(new ToDo()))
+                .contentType(contentType))
+                .andExpect(status().isNotFound());
+    }
+    
+    protected String json(Object o) throws IOException {
+        MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
+        this.mappingJackson2HttpMessageConverter.write(
+                o, 
+                MediaType.APPLICATION_JSON, 
+                mockHttpOutputMessage
+        );
+        return mockHttpOutputMessage.getBodyAsString();
     }
 }
