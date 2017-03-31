@@ -15,8 +15,7 @@ public class ToDoService {
     private TodoRepository todoRepository;
 
     public Optional<ToDo> findById(long id) {
-        ToDo todo = this.todoRepository.findOne(id);
-        return Optional.ofNullable(todo);
+        return Optional.ofNullable(this.todoRepository.findOne(id));
     }
 
     public boolean delete(long id) {

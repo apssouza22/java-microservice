@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.mock.http.MockHttpOutputMessage;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -46,51 +47,54 @@ public class TodoControllerTest {
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
     private List<ToDo> todoList = new ArrayList<>();
-    
+
     @Autowired
     private WebApplicationContext webApplicationContext;
-    
+
     @Autowired
     private TodoRepository todoRepository;
-    
-    
-     @Autowired
+
+    @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
 
         this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
-            .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
-            .findAny()
-            .orElse(null);
+                .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
+                .findAny()
+                .orElse(null);
 
         assertNotNull("the JSON message converter must not be null",
                 this.mappingJackson2HttpMessageConverter);
     }
 
-     @Before
+    @Before
     public void setup() throws Exception {
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
 
         this.todoRepository.deleteAllInBatch();
-
-        this.todoList.add(todoRepository.save(new ToDo("caption 1", "description 1", 5)));
-        this.todoList.add(todoRepository.save(new ToDo("caption 2", "description 2", 4)));
+        ToDo toDo1 = new ToDo("caption 1", "description 1", 5);
+        ToDo toDo2 = new ToDo("caption 2", "description 2", 4);
+        this.todoList.add(todoRepository.save(toDo1));
+        this.todoList.add(todoRepository.save(toDo2));
+        List<ToDo> findAll = todoRepository.findAll();
+        findAll.stream().forEach(t -> System.out.println(t.getId()));
     }
 
-    @Test
-    public void userNotFound() throws Exception {
-        mockMvc.perform(post("/todos/5")
-                .content(this.json(new ToDo()))
-                .contentType(contentType))
-                .andExpect(status().isNotFound());
-    }
-    
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         this.mappingJackson2HttpMessageConverter.write(
-                o, 
-                MediaType.APPLICATION_JSON, 
+                o,
+                MediaType.APPLICATION_JSON,
                 mockHttpOutputMessage
         );
         return mockHttpOutputMessage.getBodyAsString();
     }
+
+    @Test
+    public void userNotFound() throws Exception {
+        mockMvc.perform(get("/todos/55")
+                .content(this.json(new ToDo()))
+                .contentType(contentType))
+                .andExpect(status().isNotFound());
+    }
+
 }

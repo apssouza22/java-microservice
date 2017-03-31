@@ -11,6 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 import com.apssouza.validation.CheckIsValid;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -20,7 +30,7 @@ import com.apssouza.validation.CheckIsValid;
 @NamedQuery(name = ToDo.findAll, query = "SELECT t FROM ToDo t")
 @CheckIsValid
 @EntityListeners(ToDoPersistenceMonitor.class)
-public class ToDo implements ValidEntity {
+public class ToDo implements ValidEntity, Cloneable {
 
     @Id
     @GeneratedValue
@@ -34,6 +44,34 @@ public class ToDo implements ValidEntity {
     private String caption;
     private String description;
     private int priority;
+
+    @OneToMany(
+            cascade = CascadeType.ALL, 
+            mappedBy = "atachment", 
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private Set<Attachment> files;
+
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "todo_category",
+            joinColumns = {
+                @JoinColumn(
+                        name = "todo_id",
+                        referencedColumnName = "id"
+                ),
+                @JoinColumn(
+                        name = "category_id",
+                        referencedColumnName = "id"
+                )
+            }
+    )
+    private Category category;
+
     private boolean done;
 
     @Version
@@ -88,12 +126,44 @@ public class ToDo implements ValidEntity {
         this.priority = priority;
     }
 
+    public Set<Attachment> getFiles() {
+        return new HashSet<>(files);
+    }
+
+    public void setFiles(Set<Attachment> files) {
+        this.files = new HashSet<>(files);
+    }
+
+    public Category getCategory() {
+        return Category.newInstance(category);
+    }
+
+    public void setCategory(Category category) {
+        this.category = Category.newInstance(category);
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
     @Override
     public boolean isValid() {
         if (this.priority <= 10) {
             return true;
         }
         return (this.description != null && !this.description.isEmpty());
+    }
+
+    @Override
+    public ToDo clone() throws CloneNotSupportedException {
+        ToDo clone = (ToDo) super.clone();
+        clone.setCategory(category);
+        clone.setFiles(files);
+        return clone;
     }
 
     @Override

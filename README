@@ -1,0 +1,14 @@
+# Todo microservice experience
+
+Microservice Based
+Service discovery with Spring Cloud Eureka
+Client Side Load Balancing with Ribbon
+Declarative REST Clients with Feign
+Software Circuit Breakers with Hystrix
+Api Gateway with Spring cloud Zuul 
+Security with Spring Security OAuth
+Containers with Docker 
+Distributed events with RobbitMQ
+Continuous Integration with Jenkins
+Aws
+Maven Multimodule project
