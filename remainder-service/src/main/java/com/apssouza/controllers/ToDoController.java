@@ -34,8 +34,7 @@ public class ToDoController {
 
     @GetMapping
     public List<ToDo> all() {
-        List<ToDo> all = this.toDoService.all();
-        return all;
+        return this.toDoService.all();
     }
 
     @PostMapping
@@ -52,10 +51,9 @@ public class ToDoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> update(@PathVariable long id) {
+    public ResponseEntity<?> update(@PathVariable long id, ToDo toDo) {
         return toDoService.findById(id)
                 .map(todo -> {
-                    todo.setId(id);
                     toDoService.save(todo);
                     return ResponseEntity.ok(todo);
                 }).orElseThrow(() -> new DataNotFoundException("Todo not found"));
@@ -77,13 +75,16 @@ public class ToDoController {
 
     @PutMapping("{id}/status")
     public ResponseEntity<?> statusUpdate(@PathVariable long id, JsonNode statusUpdate) {
-        JsonNode done = statusUpdate.get("done");
-        if (!done.asBoolean()) {
+        JsonNode status = statusUpdate.get("status");
+        if (status == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     header("reason", "JSON should contains field done").
                     build();
         }
-        ToDo todo = toDoService.updateStatus(id, done.asBoolean());
+        ToDo todo = toDoService.updateStatus(
+                id, 
+                ToDo.TodoStatus.valueOf(status.asText())
+        );
         return ResponseEntity.ok(todo);
     }
 

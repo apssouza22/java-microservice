@@ -31,12 +31,12 @@ public class ToDoService {
         return this.todoRepository.save(todo);
     }
 
-    public ToDo updateStatus(long id, boolean done) {
+    public ToDo updateStatus(long id, ToDo.TodoStatus status) {
         return this.findById(id)
                 .map((t) -> {
-                    t.setDone(done);
-                    todoRepository.save(t);
-                    return t;
+                    ToDo todo = t.updateStatus(status);
+                    todoRepository.save(todo);
+                    return todo;
                 }).orElseThrow(() -> new DataNotFoundException("Not found ToDo id " + id));
     }
 

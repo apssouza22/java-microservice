@@ -5,6 +5,8 @@
  */
 package com.apssouza.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,23 +27,21 @@ public class Category implements Cloneable {
     private String name;
 
     @ManyToMany(
-            mappedBy = "todo",
+            mappedBy = "categories",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
-    private ToDo todo;
+    private List<ToDo> todos = new ArrayList<>();;
 
-    public Category(Long id, String name, ToDo todo) {
+    public Category(Long id, String name) {
         this.name = name;
         this.id = id;
-        this.todo = todo;
     }
 
     public Category(String name) {
         this.name = name;
     }
 
-    public Category() {
-    }
+    public Category() {}
 
     /**
      * Defensive copying Provide an attractive alternative to the rather
@@ -53,8 +53,7 @@ public class Category implements Cloneable {
     public static Category newInstance(Category category) {
         return new Category(
                 category.getId(),
-                category.getName(),
-                category.getTodo()
+                category.getName()
         );
     }
 
@@ -74,12 +73,12 @@ public class Category implements Cloneable {
         this.name = name;
     }
 
-    public ToDo getTodo() {
-        return todo;
+    public List<ToDo> getTodos() {
+        return todos;
     }
 
-    public void setTodo(ToDo todo) {
-        this.todo = todo;
+    public void setTodos(List<ToDo> todos) {
+        this.todos = todos;
     }
 
 }

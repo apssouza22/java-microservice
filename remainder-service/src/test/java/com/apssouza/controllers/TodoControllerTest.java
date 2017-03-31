@@ -1,6 +1,8 @@
 package com.apssouza.controllers;
 
 import com.apssouza.BasicApplication;
+import com.apssouza.entities.Attachment;
+import com.apssouza.entities.Category;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import static org.junit.Assert.assertNotNull;
@@ -18,10 +20,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 import org.springframework.web.context.WebApplicationContext;
 import com.apssouza.entities.ToDo;
+import com.apssouza.repositories.CategoryRepository;
 import com.apssouza.repositories.TodoRepository;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
+import java.util.Locale;
 import org.springframework.mock.http.MockHttpOutputMessage;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -53,6 +59,8 @@ public class TodoControllerTest {
 
     @Autowired
     private TodoRepository todoRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -73,10 +81,28 @@ public class TodoControllerTest {
         this.todoRepository.deleteAllInBatch();
         ToDo toDo1 = new ToDo("caption 1", "description 1", 5);
         ToDo toDo2 = new ToDo("caption 2", "description 2", 4);
-        this.todoList.add(todoRepository.save(toDo1));
+
+        Attachment attach1 = new Attachment("planilha", "xls");
+        Attachment attach2 = new Attachment("phones", "xls");
+
+        Category category = new Category("work");
+
+        Set<Attachment> files = new HashSet<>();
+        files.add(attach1);
+        files.add(attach2);
+        ArrayList categories = new ArrayList(Arrays.asList(
+                new Category[]{category})
+        );
+        ToDo newTodo1 = toDo1.addAttachments(files);
+        ToDo toDo3 = newTodo1.addCategory(categories);
+        
+        this.todoList.add(todoRepository.save(toDo3));
         this.todoList.add(todoRepository.save(toDo2));
-        List<ToDo> findAll = todoRepository.findAll();
-        findAll.stream().forEach(t -> System.out.println(t.getId()));
+        List<Category> findAll = categoryRepository.findAll();
+        findAll.stream().forEach(t -> {
+            System.out.println(t.getName() + " ==== " );
+             //t.getAttachments().stream().forEach( a -> System.out.println(a.getName()));
+        });
     }
 
     protected String json(Object o) throws IOException {
