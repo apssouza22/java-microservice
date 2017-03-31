@@ -6,6 +6,7 @@ import com.apssouza.exceptions.DataNotFoundException;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,8 @@ public class ToDoController {
 
     @GetMapping
     public List<ToDo> all() {
-        return this.toDoService.all();
+        List<ToDo> all = this.toDoService.all();
+        return all;
     }
 
     @PostMapping
@@ -52,7 +54,7 @@ public class ToDoController {
     @PutMapping("{id}")
     public ResponseEntity<?> update(@PathVariable long id) {
         return toDoService.findById(id)
-                .map( todo -> {            
+                .map(todo -> {
                     todo.setId(id);
                     toDoService.save(todo);
                     return ResponseEntity.ok(todo);
@@ -61,10 +63,10 @@ public class ToDoController {
 
     @GetMapping("{id}")
     public ResponseEntity<?> find(@PathVariable long id) {
-        return toDoService.findById(id)
-                .map(todo -> {
-                    return ResponseEntity.ok(todo);
-                }).orElseThrow(() -> new DataNotFoundException("Todo not found"));
+        Optional<ToDo> findById = toDoService.findById(id);
+        return findById.map(todo -> {
+            return ResponseEntity.ok(todo);
+        }).orElseThrow(() -> new DataNotFoundException("Todo not found"));
     }
 
     @DeleteMapping("{id}")
