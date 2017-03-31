@@ -38,8 +38,9 @@ public class TodoServiceInterceptor {
     public Object logCall(ProceedingJoinPoint joinPoint) {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         long start = System.currentTimeMillis();
+        Object result = null;
         try {
-            joinPoint.proceed();
+            result = joinPoint.proceed();
         } catch (Throwable ex) {
             Logger.getLogger(TodoServiceInterceptor.class.getName())
                     .log(Level.SEVERE, null, ex);
@@ -52,7 +53,7 @@ public class TodoServiceInterceptor {
                         duration
                 )
         );
-        return joinPoint.getThis();
+        return result;
     }
 
 }
