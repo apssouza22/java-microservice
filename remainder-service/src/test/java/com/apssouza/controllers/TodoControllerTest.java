@@ -25,12 +25,24 @@ import com.apssouza.repositories.TodoRepository;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.List;
 import java.util.Locale;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import org.springframework.mock.http.MockHttpOutputMessage;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -59,8 +71,6 @@ public class TodoControllerTest {
 
     @Autowired
     private TodoRepository todoRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -93,15 +103,15 @@ public class TodoControllerTest {
         ArrayList categories = new ArrayList(Arrays.asList(
                 new Category[]{category})
         );
-        ToDo newTodo1 = toDo1.addAttachments(files);
-        ToDo toDo3 = newTodo1.addCategory(categories);
-        
-        this.todoList.add(todoRepository.save(toDo3));
+        toDo1.setAttachments(files);
+        toDo1.setCategories(categories);
+
+        this.todoList.add(todoRepository.save(toDo1));
         this.todoList.add(todoRepository.save(toDo2));
-        List<Category> findAll = categoryRepository.findAll();
+        List<ToDo> findAll = todoRepository.findAll();
         findAll.stream().forEach(t -> {
-            System.out.println(t.getName() + " ==== " );
-             //t.getAttachments().stream().forEach( a -> System.out.println(a.getName()));
+            System.out.println(t.getId() + " ====>>> ");
+            t.getCategories().stream().forEach(a -> System.out.println(a.getName()));
         });
     }
 
@@ -116,11 +126,43 @@ public class TodoControllerTest {
     }
 
     @Test
-    public void userNotFound() throws Exception {
+    public void todoNotFound() throws Exception {
         mockMvc.perform(get("/todos/55")
                 .content(this.json(new ToDo()))
                 .contentType(contentType))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void readSingleTodo() throws Exception {
+        mockMvc.perform(get("/todos/" + this.todoList.get(0).getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.id", is(this.todoList.get(0).getId().intValue())))
+                .andExpect(jsonPath("$.description", is("description 1")));
+    }
+
+    @Test
+    public void readTodos() throws Exception {
+        mockMvc.perform(get("/todos"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id", is(this.todoList.get(0).getId().intValue())))
+                .andExpect(jsonPath("$[0].caption", is(this.todoList.get(0).getCaption())))
+                .andExpect(jsonPath("$[0].description", is(this.todoList.get(0).getDescription())))
+                .andExpect(jsonPath("$[1].id", is(this.todoList.get(1).getId().intValue())))
+                .andExpect(jsonPath("$[1].description", is(this.todoList.get(1).getDescription())));
+    }
+
+    @Test
+    public void createTodo() throws Exception {
+        String todoJson = json(new ToDo("caption 1", "description 1", 6));
+
+        ResultActions perform = this.mockMvc.perform(post("/todos")
+                .contentType(contentType)
+                .content(todoJson));
+        perform.andExpect(status().isCreated());
     }
 
 }

@@ -34,9 +34,8 @@ public class ToDoService {
     public ToDo updateStatus(long id, ToDo.TodoStatus status) {
         return this.findById(id)
                 .map((t) -> {
-                    ToDo todo = t.updateStatus(status);
-                    todoRepository.save(todo);
-                    return todo;
+                    t.setStatus(status);
+                    return todoRepository.save(t);
                 }).orElseThrow(() -> new DataNotFoundException("Not found ToDo id " + id));
     }
 

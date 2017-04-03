@@ -17,9 +17,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.print.Collation;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -103,25 +100,54 @@ public class ToDo implements ValidEntity, Cloneable {
         this.status = status;
     }
     
-    public ToDo addCategory(List<Category> categories){
-        return new ToDo(this, categories, files, status);
+    
+    public void setCategories(List<Category> categories){
+        this.categories = Collections.unmodifiableList(categories);
     }
     
-    public ToDo addAttachments(Set<Attachment> files){
-        return new ToDo(this, categories, files, status);
+    public void setAttachments(Set<Attachment> files){
+        this.files = Collections.unmodifiableSet(files);
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public void setFiles(Set<Attachment> files) {
+        this.files = files;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
     
     
-    public ToDo updateStatus(TodoStatus status){
-        return new ToDo(this, this.categories, this.files, this.status);
+    public void setStatus(TodoStatus status){
+        this.status = status;
     }
 
     public TodoStatus getStatus(){
         return status;
     }
     
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
     }
     
     public String getCaption() {
