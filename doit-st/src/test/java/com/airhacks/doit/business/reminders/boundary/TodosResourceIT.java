@@ -12,7 +12,6 @@ import javax.ws.rs.core.Response;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
@@ -41,7 +40,7 @@ public class TodosResourceIT {
                 .request()
                 .post(Entity.json(todoToCreate));
         assertThat(postResponse.getStatus(), is(201));
-        
+
         String location = postResponse.getHeaderString("Location");
         System.out.println("location = " + location);
 
@@ -67,22 +66,6 @@ public class TodosResourceIT {
                 .put(Entity.json(updated));
         assertThat(updateResponse.getStatus(), is(200));
 
-        //update again
-        updateBuilder = Json.createObjectBuilder();
-        updated = updateBuilder.
-                add("caption", "implemented").
-                add("priority", 42).
-                build();
-
-        updateResponse = this.provider.client().
-                target(location).
-                request(MediaType.APPLICATION_JSON)
-                .put(Entity.json(updated));
-        assertThat(updateResponse.getStatus(), is(409));
-        String conflictInformation = updateResponse.getHeaderString("cause");
-        assertNotNull(conflictInformation);
-        System.out.println("conflictInformation = " + conflictInformation);
-
         //find it again
         //find
         JsonObject updatedTodo = this.provider.client().
@@ -95,7 +78,7 @@ public class TodosResourceIT {
         //update
         JsonObjectBuilder statusBuilder = Json.createObjectBuilder();
         JsonObject status = statusBuilder.
-                add("done", true).
+                add("status", "DONE").
                 build();
 
         this.provider.client().
@@ -109,7 +92,7 @@ public class TodosResourceIT {
                 target(location).
                 request(MediaType.APPLICATION_JSON).
                 get(JsonObject.class);
-        assertThat(updatedTodo.getBoolean("done"), is(true));
+        assertThat(updatedTodo.getString("status"), is("DONE"));
 
         //update not existing status
         JsonObjectBuilder notExistingBuilder = Json.createObjectBuilder();
@@ -139,25 +122,19 @@ public class TodosResourceIT {
                 .put(Entity.json(status));
         assertThat(response.getStatus(), is(400));
         assertFalse(response.getHeaderString("reason").isEmpty());
-
-        //findAll
-        response = this.provider.target().
+    }
+    
+    
+    
+    @Test
+    public void findAll(){
+        Response response = this.provider.target().
                 request(MediaType.APPLICATION_JSON).
                 get();
         assertThat(response.getStatus(), is(200));
         JsonArray allTodos = response.readEntity(JsonArray.class);
         System.out.println("payload " + allTodos);
         assertFalse(allTodos.isEmpty());
-
-        JsonObject todo = allTodos.getJsonObject(0);
-        assertTrue(todo.getString("caption").startsWith("impl"));
-
-        //deleting not-existing
-        Response deleteResponse = this.provider.target().
-                path("42").
-                request(MediaType.APPLICATION_JSON).delete();
-        assertThat(deleteResponse.getStatus(), is(204));
-
     }
 
     @Test
@@ -167,8 +144,9 @@ public class TodosResourceIT {
                 add("priority", 42).
                 build();
 
-        Response postResponse = this.provider.target().request().
-                post(Entity.json(todoToCreate));
+        Response postResponse = this.provider.target()
+                .request()
+                .post(Entity.json(todoToCreate));
         assertThat(postResponse.getStatus(), is(400));
         postResponse.getHeaders().entrySet().forEach(System.out::println);
 

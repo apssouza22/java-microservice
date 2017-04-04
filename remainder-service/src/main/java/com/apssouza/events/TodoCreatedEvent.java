@@ -1,11 +1,13 @@
 package com.apssouza.events;
 
+import com.apssouza.annotations.ChangeEvent;
 import  com.apssouza.entities.ToDo;
 
 /**
  *
  * @author apssouza
  */
+@ChangeEvent(ChangeEvent.Type.CREATION)
 public class TodoCreatedEvent implements TodoChangedEvent{
 
     private ToDo todo;

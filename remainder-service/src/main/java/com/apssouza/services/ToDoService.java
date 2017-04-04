@@ -18,8 +18,10 @@ public class ToDoService {
         return Optional.ofNullable(this.todoRepository.findOne(id));
     }
 
-    public boolean delete(long id) {
-        this.findById(id).orElseThrow(() -> new DataNotFoundException("Not found ToDo id " + id));
+    public Boolean delete(long id) throws DataNotFoundException {
+        this.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Not found ToDo id " + id));
+        
         return this.todoRepository.deleteById(id);
     }
 
@@ -31,7 +33,7 @@ public class ToDoService {
         return this.todoRepository.save(todo);
     }
 
-    public ToDo updateStatus(long id, ToDo.TodoStatus status) {
+    public ToDo updateStatus(long id, ToDo.TodoStatus status) throws DataNotFoundException {
         return this.findById(id)
                 .map((t) -> {
                     t.setStatus(status);

@@ -1,7 +1,9 @@
 package com.apssouza.listeners;
 
 import com.apssouza.events.TodoChangedEvent;
+import com.apssouza.integrations.socket.TodoChangeSocketNotify;
 import com.apssouza.monitors.TodoEventChangesMonitor;
+import javax.websocket.EncodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -11,10 +13,14 @@ public class TodoChangedListener {
 
     @Autowired
     TodoEventChangesMonitor changesMonitor;
+    
+    @Autowired
+    TodoChangeSocketNotify socketNotify;
 
     @EventListener
-    public void onTodoChange(TodoChangedEvent event) {
-        changesMonitor.addNewEvent(event);        
+    public void onTodoChange(TodoChangedEvent event) throws EncodeException {
+        changesMonitor.addNewEvent(event); 
+        socketNotify.notify(event);
     }
 
 }

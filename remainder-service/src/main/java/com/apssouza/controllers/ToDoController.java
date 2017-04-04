@@ -52,11 +52,16 @@ public class ToDoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> update(@PathVariable long id, ToDo toDo) {
+    public ResponseEntity<?> update(
+            @PathVariable long id, 
+            @RequestBody @Valid ToDo toDo
+    ) {
         return toDoService.findById(id)
                 .map(todo -> {
-                    toDoService.save(todo);
-                    return ResponseEntity.ok(todo);
+                    todo.setCaption(toDo.getCaption());
+                    todo.setDescription(toDo.getDescription());
+                    todo.setPriority(toDo.getPriority());
+                    return ResponseEntity.ok(toDoService.save(todo));
                 }).orElseThrow(() -> new DataNotFoundException("Todo not found"));
     }
 
@@ -75,7 +80,7 @@ public class ToDoController {
     }
 
     @PutMapping("{id}/status")
-    public ResponseEntity<?> statusUpdate(@PathVariable long id, JsonNode statusUpdate) {
+    public ResponseEntity<?> statusUpdate(@PathVariable long id, @RequestBody JsonNode statusUpdate) {
         JsonNode status = statusUpdate.get("status");
         if (status == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
