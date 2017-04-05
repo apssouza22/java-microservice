@@ -46,4 +46,15 @@ public class TodoServiceImpl implements TodoService {
                 }).orElseThrow(() -> new DataNotFoundException("Not found ToDo id " + id));
     }
 
+    @Override
+    public ToDo update(Long id, ToDo toDo) throws DataNotFoundException {
+        return this.findById(id)
+                .map(todo -> {
+                    todo.setCaption(toDo.getCaption());
+                    todo.setDescription(toDo.getDescription());
+                    todo.setPriority(toDo.getPriority());
+                    return save(todo);
+                }).orElseThrow(() -> new DataNotFoundException("User not found"));
+    }
+
 }

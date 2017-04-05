@@ -57,13 +57,7 @@ public class TodoController {
             @PathVariable long id, 
             @RequestBody @Valid ToDo toDo
     ) {
-        return todoService.findById(id)
-                .map(todo -> {
-                    todo.setCaption(toDo.getCaption());
-                    todo.setDescription(toDo.getDescription());
-                    todo.setPriority(toDo.getPriority());
-                    return ResponseEntity.ok(todoService.save(todo));
-                }).orElseThrow(() -> new DataNotFoundException("Todo not found"));
+        return ResponseEntity.ok(todoService.update(id, toDo));
     }
 
     @GetMapping("{id}")
