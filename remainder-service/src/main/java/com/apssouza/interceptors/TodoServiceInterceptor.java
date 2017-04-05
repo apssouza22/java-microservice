@@ -34,7 +34,7 @@ public class TodoServiceInterceptor {
      * @param joinPoint
      * @return 
      */
-    @Around("execution(* com.apssouza.services.ToDoService.*(..))")
+    @Around("execution(* com.apssouza.services.TodoServiceImpl.*(..))")
     public Object logCall(ProceedingJoinPoint joinPoint) {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         long start = System.currentTimeMillis();

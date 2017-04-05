@@ -1,8 +1,9 @@
 package com.apssouza.controllers;
 
-import com.apssouza.services.ToDoService;
+import com.apssouza.services.TodoService;
 import com.apssouza.entities.ToDo;
 import com.apssouza.exceptions.DataNotFoundException;
+import com.apssouza.services.TodoServiceImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.util.List;
@@ -28,19 +29,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  */
 @RequestMapping("/todos")
 @RestController
-public class ToDoController {
+public class TodoController {
 
     @Autowired
-    ToDoService toDoService;
+    TodoService todoService;
 
     @GetMapping
     public List<ToDo> all() {
-        return this.toDoService.all();
+        return this.todoService.all();
     }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid ToDo todo) {
-        ToDo saved = this.toDoService.save(todo);
+        ToDo saved = this.todoService.save(todo);
         Long id = saved.getId();
         if (id != null) {
             URI location = ServletUriComponentsBuilder
@@ -56,18 +57,18 @@ public class ToDoController {
             @PathVariable long id, 
             @RequestBody @Valid ToDo toDo
     ) {
-        return toDoService.findById(id)
+        return todoService.findById(id)
                 .map(todo -> {
                     todo.setCaption(toDo.getCaption());
                     todo.setDescription(toDo.getDescription());
                     todo.setPriority(toDo.getPriority());
-                    return ResponseEntity.ok(toDoService.save(todo));
+                    return ResponseEntity.ok(todoService.save(todo));
                 }).orElseThrow(() -> new DataNotFoundException("Todo not found"));
     }
 
     @GetMapping("{id}")
     public ResponseEntity<?> find(@PathVariable long id) {
-        Optional<ToDo> findById = toDoService.findById(id);
+        Optional<ToDo> findById = todoService.findById(id);
         return findById.map(todo -> {
             return ResponseEntity.ok(todo);
         }).orElseThrow(() -> new DataNotFoundException("Todo not found"));
@@ -75,7 +76,7 @@ public class ToDoController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {
-        toDoService.delete(id);
+        todoService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -87,7 +88,7 @@ public class ToDoController {
                     header("reason", "JSON should contains field done").
                     build();
         }
-        ToDo todo = toDoService.updateStatus(
+        ToDo todo = todoService.updateStatus(
                 id, 
                 ToDo.TodoStatus.valueOf(status.asText())
         );

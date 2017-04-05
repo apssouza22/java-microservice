@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apssouza.pojo;
+package com.apssouza.pojos;
 
 import com.apssouza.entities.ToDo;
 

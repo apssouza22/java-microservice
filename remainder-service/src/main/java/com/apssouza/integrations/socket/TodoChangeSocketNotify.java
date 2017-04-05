@@ -3,7 +3,7 @@ package com.apssouza.integrations.socket;
 import com.apssouza.annotations.ChangeEvent;
 import com.apssouza.entities.ToDo;
 import com.apssouza.events.TodoChangedEvent;
-import com.apssouza.pojo.SocketOutputMessage;
+import com.apssouza.pojos.SocketOutputMessage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
