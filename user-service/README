@@ -1,15 +1,5 @@
 # To do service 
 
 Here we are working with:
-Events
-EntityListeners
-AOP
-Optional Extensivelly
-Integration tests
-Monitoring
-OAuth2
-Defensive copying
-Maven Multimodules 
-External message
-
-
+Oauth2
+Jwt
