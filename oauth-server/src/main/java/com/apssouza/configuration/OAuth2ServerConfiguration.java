@@ -1,11 +1,11 @@
 package com.apssouza.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -24,22 +24,29 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+
         clients.inMemory()
-                .withClient("web_app")
-                .scopes("FOO")
-                .autoApprove(true)
-                .authorities("FOO_READ", "FOO_WRITE")
-                .authorizedGrantTypes("implicit","refresh_token", "password", "authorization_code");
+                .withClient("todo-app")
+                .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
+                .authorities("USER_READ", "USER_WRITE")
+                .scopes("write")
+                .resourceIds("todo")
+                .secret("123456");
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore()).tokenEnhancer(jwtTokenEnhancer()).authenticationManager(authenticationManager);
+        endpoints.tokenStore(tokenStore())
+                .tokenEnhancer(jwtTokenEnhancer())
+                .authenticationManager(
+                        (Authentication authentication) -> authenticationManager
+                        .getOrBuild()
+                        .authenticate(authentication)
+                );
     }
 
     @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
+    AuthenticationManagerBuilder authenticationManager;
 
     @Bean
     public TokenStore tokenStore() {

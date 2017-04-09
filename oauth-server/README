@@ -1,0 +1,8 @@
+# To do service 
+
+Here we are working with:
+Oauth2
+Jwt
+
+To authenticate:
+curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"
