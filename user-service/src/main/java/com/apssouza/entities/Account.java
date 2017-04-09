@@ -1,5 +1,6 @@
 package com.apssouza.entities;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.persistence.Entity;
@@ -7,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Version;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -21,28 +21,29 @@ public class Account {
     private long id;
 
     @NotNull
+    private long authId;
+
+    @NotNull
     @Size(min = 2, max = 256)
     private String name;
 
     @Email
     @NotNull
+    @Column(unique = true)
     private String email;
-
-    @NotEmpty
-    private String password;
 
     @Version
     private long version;
-    
+
     public Account() {
     }
 
-    public Account(String name, String email, String password) {
+    public Account(String name, String email, long authId) {
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.authId = authId;
     }
-    
+
     public long getId() {
         return id;
     }
@@ -67,12 +68,12 @@ public class Account {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public long getAuthId() {
+        return authId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAuthId(long authId) {
+        this.authId = authId;
     }
 
     public long getVersion() {
@@ -82,6 +83,5 @@ public class Account {
     public void setVersion(long version) {
         this.version = version;
     }
-    
 
 }

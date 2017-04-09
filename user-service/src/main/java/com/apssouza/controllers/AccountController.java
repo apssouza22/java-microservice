@@ -37,8 +37,8 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid Account todo) {
-        Account saved = this.userService.save(todo);
+    public ResponseEntity<?> save(@RequestBody @Valid Account account) {
+        Account saved = this.userService.save(account);
         Long id = saved.getId();
         if (id != null) {
             URI location = ServletUriComponentsBuilder
