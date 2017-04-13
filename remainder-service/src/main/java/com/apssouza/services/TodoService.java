@@ -22,4 +22,6 @@ public interface TodoService {
     ToDo updateStatus(long id, ToDo.TodoStatus status) throws DataNotFoundException;
     
     ToDo update(Long id, ToDo toDo) throws DataNotFoundException;
+
+    List<ToDo> getByUserEmail(String email);
 }

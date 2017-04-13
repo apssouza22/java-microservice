@@ -57,4 +57,9 @@ public class TodoServiceImpl implements TodoService {
                 }).orElseThrow(() -> new DataNotFoundException("User not found"));
     }
 
+    @Override
+    public List<ToDo> getByUserEmail(String email) {
+        return this.todoRepository.findByUserEmail(email);
+    }
+
 }

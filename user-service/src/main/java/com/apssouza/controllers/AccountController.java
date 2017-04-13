@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.apssouza.services.AccountService;
-import java.security.Principal;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -62,15 +62,19 @@ public class AccountController {
         Optional<Account> findById = userService.findById(id);
         return findById.map(todo -> {
             return ResponseEntity.ok(todo);
-        }).orElseThrow(() -> new DataNotFoundException("user not found"));
+        }).orElseThrow(
+                () -> new DataNotFoundException("user not found")
+        );
     }
-    
-    @GetMapping("me")
-    public ResponseEntity<?> find(Principal principal) {
-        Optional<Account> findById = userService.findByEmail(principal.getName());
-        return findById.map(account -> {
-            return ResponseEntity.ok(account);
-        }).orElseThrow(() -> new DataNotFoundException("user not found"));
+
+    @GetMapping("search")
+    public ResponseEntity<?> find(@RequestParam("email")  String email) {
+        Optional<Account> account = userService.findByEmail(email);
+            return account.map(a -> {
+            return ResponseEntity.ok(a);
+        }).orElseThrow(
+                () -> new DataNotFoundException("user not found")
+        );
     }
 
 }

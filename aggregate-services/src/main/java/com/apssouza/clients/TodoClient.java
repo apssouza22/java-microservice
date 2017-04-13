@@ -1,4 +1,3 @@
-
 package com.apssouza.clients;
 
 import com.apssouza.pojos.Todo;
@@ -13,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author apssouza
  */
-@FeignClient("user")
-public interface UserClient {
-    
-    @RequestMapping(value = "/accounts", method = RequestMethod.GET)
+@FeignClient("todo")
+public interface TodoClient {
+
+    @RequestMapping(value = "/todos", method = RequestMethod.GET)
     public List<User> getAll();
 
-    @RequestMapping(value = "/accounts/search", method = RequestMethod.GET)
-    public User getUserByEmail(@RequestParam("email") String email);
-    
+    @RequestMapping(value = "/todos/search", method = RequestMethod.GET)
+    public List<Todo> getTodoByUserEmaill(@RequestParam("email") String email);
+
     @RequestMapping(
-            value = "/users", 
+            value = "/todos", 
             method = RequestMethod.POST
     )
-    Todo createUser(User user);
+    Todo createTodo(Todo todo);
 }

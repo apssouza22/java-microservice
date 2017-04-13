@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 import com.apssouza.validation.CheckIsValid;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -29,24 +29,25 @@ import javax.persistence.OneToMany;
  * @author apssouza
  */
 @Entity
-@NamedQuery(name = ToDo.findAll, query = "SELECT t FROM ToDo t")
 @CheckIsValid
 @EntityListeners(ToDoPersistenceMonitor.class)
 public class ToDo implements ValidEntity, Cloneable {
+    
+    public enum TodoStatus { DONE, PENDING }
 
     @Id
     @GeneratedValue
     private long id;
 
-    static final String PREFIX = "ToDo.";
-    public static final String findAll = PREFIX + "findAll";
-    
-    public enum TodoStatus { DONE, PENDING }
-
     @NotNull
     @Size(min = 2, max = 256)
     private String caption;
+    
+    @Column(nullable = false, unique = true)
+    private String userEmail;
+            
     private String description;
+    
     private int priority;
 
     @OneToMany(
@@ -84,20 +85,28 @@ public class ToDo implements ValidEntity, Cloneable {
     private long version;
 
     public ToDo() {
-        
     }
     
-    public ToDo(String caption, String description, int priority) {
+    public ToDo(String email, String caption, String description, int priority) {
         this.caption = caption;
         this.description = description;
         this.priority = priority;
+        this.userEmail = email;
     }
 
     public ToDo(ToDo todo, List<Category> categories, Set<Attachment> files, TodoStatus status) {
-        this(todo.getCaption(), todo.getDescription(), todo.getPriority());
+        this(todo.getUserEmail(), todo.getCaption(), todo.getDescription(), todo.getPriority());
         this.categories = Collections.unmodifiableList(categories);
         this.files = Collections.unmodifiableSet(files);
         this.status = status;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
     
     

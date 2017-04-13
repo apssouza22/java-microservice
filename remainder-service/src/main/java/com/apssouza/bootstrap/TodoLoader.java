@@ -31,9 +31,9 @@ public class TodoLoader implements ApplicationListener<ContextRefreshedEvent>  {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent e) {
-        ToDo todo1 = new ToDo("Test caption", "description 1", 2);
-        ToDo todo2 = new ToDo("Test caption 2", "description 2", 3);
-        ToDo todo3 = new ToDo("Test caption 3", "description 3", 2);
+        ToDo todo1 = new ToDo("apssouza22@gmail.com","Test caption", "description 1", 2);
+        ToDo todo2 = new ToDo("gael@gmail.com","Test caption 2", "description 2", 3);
+        ToDo todo3 = new ToDo("marcia@gmail.com","Test caption 3", "description 3", 2);
         
         todoRepository.save(todo1);
         todoRepository.save(todo2);

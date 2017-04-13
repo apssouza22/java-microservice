@@ -26,7 +26,7 @@ public class TodoTest {
     
     @Test
     public void validateTodoValid() {
-        ToDo toDo = new ToDo("caption", "description 1", 6);
+        ToDo toDo = new ToDo("apssouza22@gmail.com","caption", "description 1", 6);
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<ToDo>> constraintViolations = validator.validate(toDo);
@@ -35,7 +35,7 @@ public class TodoTest {
     
      @Test
     public void validateTodoInValid() {
-        ToDo toDo = new ToDo("c", "description 1", 6);
+        ToDo toDo = new ToDo("apssouza22@gmail.com","c", "description 1", 6);
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<ToDo>> constraintViolations = validator.validate(toDo);

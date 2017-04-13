@@ -7,8 +7,18 @@ Declarative REST Clients with Feign
 Software Circuit Breakers with Hystrix
 Api Gateway with Spring cloud Zuul 
 Security with Spring Security OAuth
+JWT
 Containers with Docker 
 Distributed events with RobbitMQ
 Continuous Integration with Jenkins
 Aws
 Maven Multimodule project
+
+
+
+#How to use
+
+Start al services -> sudo sh start_all.sh
+Authenticate -> curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"
+
+Get data using the access_token -> localhost:8018/path?access_token={access_token} or curl -H "Authorization: Bearer $TOKEN" "localhost:9090/foo"
