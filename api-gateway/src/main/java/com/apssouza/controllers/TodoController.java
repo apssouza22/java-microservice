@@ -2,6 +2,7 @@ package com.apssouza.controllers;
 
 import com.apssouza.clients.TodoClient;
 import com.apssouza.pojos.User;
+import com.apssouza.services.TodoService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TodoController {
 
     @Autowired
-    TodoClient todoClient ;
+    TodoService todoService ;
 
     @GetMapping
     public List<User> all() {
-        return this.todoClient.getAll();
+        return this.todoService.getAll();
     }
 
 }

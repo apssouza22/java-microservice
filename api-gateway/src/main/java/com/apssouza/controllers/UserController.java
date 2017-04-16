@@ -4,6 +4,8 @@ import com.apssouza.clients.TodoClient;
 import com.apssouza.clients.UserClient;
 import com.apssouza.pojos.Todo;
 import com.apssouza.pojos.User;
+import com.apssouza.services.TodoService;
+import com.apssouza.services.UserService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,29 +25,29 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    UserClient userClient;
+    UserService userService;
     
     @Autowired
-    TodoClient todoClient ;
+    TodoService todoService ;
 
     @GetMapping
     public List<User> all() {
-        return this.userClient.getAll();
+        return this.userService.getAll();
     }
     
     @GetMapping("/me")
     public User  me( OAuth2Authentication auth) {
-        return this.userClient.getUserByEmail(auth.getName());
+        return this.userService.getUserByEmail(auth.getName());
     }
     
     @GetMapping("/me/todos")
     public List<Todo> todos( OAuth2Authentication auth) {
-        return this.todoClient.getTodoByUserEmaill(auth.getName());
+        return this.todoService.getTodoByUserEmaill(auth.getName());
     }
     
     @PostMapping("/me/todos")
     public Todo create(@RequestBody Todo todo) {
-        return this.todoClient.createTodo(todo);
+        return this.todoService.createTodo(todo);
     }
 
 }

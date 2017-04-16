@@ -22,9 +22,6 @@ public interface UserClient {
     @RequestMapping(value = "/accounts/search", method = RequestMethod.GET)
     public User getUserByEmail(@RequestParam("email") String email);
     
-    @RequestMapping(
-            value = "/users", 
-            method = RequestMethod.POST
-    )
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
     Todo createUser(User user);
 }
