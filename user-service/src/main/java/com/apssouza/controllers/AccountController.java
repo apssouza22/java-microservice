@@ -2,6 +2,7 @@ package com.apssouza.controllers;
 
 import com.apssouza.entities.Account;
 import com.apssouza.exceptions.DataNotFoundException;
+import com.apssouza.queries.UserQuery;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -30,10 +31,20 @@ public class AccountController {
 
     @Autowired
     AccountService userService;
+    private final UserQuery userQuery;
+    
+    @Autowired
+    public  AccountController(
+            AccountService userService,
+            UserQuery userQuery
+    ) {
+        this.userService = userService;
+        this.userQuery = userQuery;
+    }
 
     @GetMapping
     public List<Account> all() {
-        return this.userService.all();
+        return userQuery.all();
     }
 
     @PostMapping
