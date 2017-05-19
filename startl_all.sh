@@ -16,3 +16,4 @@ java -jar ../todo-ms/user-service/target/user-service-0.0.1-SNAPSHOT.jar >> /var
 
 echo "Starting api gateway, port 8018..."
 java -jar ../todo-ms/api-gateway/target/api-gateway-0.0.1-SNAPSHOT.jar >> /var/log/microservice/api-gateway.log &
+	

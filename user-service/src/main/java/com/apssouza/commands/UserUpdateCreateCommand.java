@@ -49,5 +49,4 @@ public class UserUpdateCreateCommand {
         return uuid;
     }
     
-    
 }
