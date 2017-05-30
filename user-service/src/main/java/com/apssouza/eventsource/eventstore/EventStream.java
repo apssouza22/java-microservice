@@ -11,7 +11,7 @@ import static java.util.stream.Collectors.toList;
 import static javax.persistence.FetchType.EAGER;
 
 @Entity(name = "event_streams")
-class EventStream {
+public class EventStream {
 
     @Id
     @GeneratedValue(generator = "event_stream_seq", strategy = GenerationType.SEQUENCE)

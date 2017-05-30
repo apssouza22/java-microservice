@@ -31,20 +31,17 @@ public class AccountController {
 
     @Autowired
     AccountService userService;
-    private final UserQuery userQuery;
     
     @Autowired
     public  AccountController(
-            AccountService userService,
-            UserQuery userQuery
+            AccountService userService
     ) {
         this.userService = userService;
-        this.userQuery = userQuery;
     }
 
     @GetMapping
     public List<Account> all() {
-        return userQuery.all();
+        return userService.all();
     }
 
     @PostMapping

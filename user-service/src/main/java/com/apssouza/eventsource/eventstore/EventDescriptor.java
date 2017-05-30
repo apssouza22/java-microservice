@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity(name = "event_descriptors")
-class EventDescriptor {
+public class EventDescriptor {
 
     @Id
     @GeneratedValue(generator = "event_descriptors_seq", strategy = GenerationType.SEQUENCE)

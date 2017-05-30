@@ -12,5 +12,10 @@ public interface Aggregate {
     
     UUID getUuid();
     
-    List<DomainEvent> getChanges();
+    List<DomainEvent> getUncommittedChanges();
+    
+    UserAggregate markChangesAsCommitted();
+    
+    UserState getState();
+    
 }

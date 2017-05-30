@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import static java.util.Collections.emptyList;
 
-interface EventStore extends JpaRepository<EventStream, Long> {
+public interface EventStoreRepository extends JpaRepository<EventStream, Long> {
 
     Optional<EventStream> findByAggregateUUID(UUID uuid);
 

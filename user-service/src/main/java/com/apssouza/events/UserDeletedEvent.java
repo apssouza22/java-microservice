@@ -1,7 +1,6 @@
 package com.apssouza.events;
 
-import com.apssouza.commands.UserUpdateCreateCommand;
-import com.apssouza.entities.Account;
+import com.apssouza.commands.UserDeleteCommand;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -9,17 +8,17 @@ import java.util.UUID;
  *
  * @author apssouza
  */
-public class UserCreatedEvent implements DomainEvent {
+public class UserDeletedEvent implements DomainEvent {
     
     private final UUID uuid;
-    private final String type = "Created";
+    private final String type = "Deleted";
     private final Instant when = Instant.now();
     
-    private final Account account;
+    private final UserDeleteCommand command;
 
-    public UserCreatedEvent(UUID uuid, Account account) {
+    public UserDeletedEvent(UUID uuid, UserDeleteCommand command) {
         this.uuid = uuid;
-        this.account = account;
+        this.command = command;
     }
     
     
@@ -28,8 +27,8 @@ public class UserCreatedEvent implements DomainEvent {
         return uuid;
     }
     
-    public Account getAccount(){
-        return account;
+    public UserDeleteCommand getCommand(){
+        return command;
     }
 
     @Override

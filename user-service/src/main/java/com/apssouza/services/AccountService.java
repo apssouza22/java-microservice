@@ -21,4 +21,5 @@ public interface AccountService {
 
     Optional<Account> findByEmail(String name);
 
+    void delete(Account a);
 }

@@ -44,4 +44,9 @@ public class AccountServiceImpl implements AccountService {
     public Optional<Account> findByEmail(String email){
         return accountRepository.findByEmail(email);
     }
+    
+    @Override
+    public void delete(Account a){
+        accountRepository.delete(a);
+    }
 }
