@@ -1,4 +1,4 @@
-package com.apssouza.mail.mailservice;
+package com.apssouza.eventsourcing;
 
 public class Greeting {
 

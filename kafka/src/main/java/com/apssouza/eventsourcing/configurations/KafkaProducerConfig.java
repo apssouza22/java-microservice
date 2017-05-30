@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apssouza.mail.mailservice.configurations;
+package com.apssouza.eventsourcing.configurations;
 
-import com.apssouza.mail.mailservice.Greeting;
+import com.apssouza.eventsourcing.Greeting;
 import com.fasterxml.jackson.databind.ser.std.StringSerializer;
 import java.util.HashMap;
 import java.util.Map;
