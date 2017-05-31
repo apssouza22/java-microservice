@@ -1,4 +1,4 @@
-package com.apssouza.eventsourcing;
+package com.apssouza.kafkaevent;
 
 public class Greeting {
 

@@ -1,4 +1,4 @@
-package com.apssouza.eventsourcing.configurations;
+package com.apssouza.kafkaevent.configurations;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

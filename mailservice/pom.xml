@@ -14,7 +14,6 @@
         <artifactId>parent-todo-ms</artifactId>
         <groupId>com.apssouza</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../</relativePath>
     </parent>
 
     <properties>
@@ -27,15 +26,10 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
-<!--        <dependency>
-            <groupId>com.apssouza</groupId>
-            <artifactId>kafka</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>-->
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>kafka</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.apssouza</groupId>
+            <artifactId>kafka-event</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

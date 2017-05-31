@@ -1,6 +1,6 @@
-package com.apssouza.eventsourcing.kafka;
+package com.apssouza.kafkaevent.kafka;
 
-import com.apssouza.eventsourcing.Greeting;
+import com.apssouza.kafkaevent.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;

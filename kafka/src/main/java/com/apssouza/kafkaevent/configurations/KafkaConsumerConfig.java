@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apssouza.eventsourcing.configurations;
+package com.apssouza.kafkaevent.configurations;
 
-import com.apssouza.eventsourcing.Greeting;
+import com.apssouza.kafkaevent.Greeting;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

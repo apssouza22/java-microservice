@@ -1,6 +1,6 @@
-package com.apssouza.eventsourcing.kafka;
+package com.apssouza.kafkaevent.kafka;
 
-import com.apssouza.eventsourcing.Greeting;
+import com.apssouza.kafkaevent.Greeting;
 import java.util.concurrent.CountDownLatch;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;

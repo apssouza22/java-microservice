@@ -1,22 +1,24 @@
 package com.apssouza.mail.mailservice;
 
-import com.apssouza.eventsourcing.Greeting;
-import com.apssouza.eventsourcing.kafka.MessageListener;
-import com.apssouza.eventsourcing.kafka.MessageProducer;
+import com.apssouza.kafkaevent.Greeting;
+import com.apssouza.kafkaevent.kafka.MessageListener;
+import com.apssouza.kafkaevent.kafka.MessageProducer;
 import java.util.concurrent.TimeUnit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan({"com.apssouza.kafkaevent"})
 public class MailserviceApplication {
 
 
     public static void main(String[] args) throws Exception {
 
-        ConfigurableApplicationContext context = SpringApplication.run(MailserviceApplication.class, args);
-
+        ConfigurableApplicationContext context =  SpringApplication.run(MailserviceApplication.class, args);
+       
         MessageProducer producer = context.getBean(MessageProducer.class);
         MessageListener listener = context.getBean(MessageListener.class);
 
@@ -31,13 +33,4 @@ public class MailserviceApplication {
         context.close();
     }
 
-    @Bean
-    public MessageProducer messageProducer() {
-        return new MessageProducer();
-    }
-    
-    @Bean
-    public MessageListener messageListener() {
-        return new MessageListener();
-    }
 }
