@@ -2,7 +2,6 @@ package com.apssouza.controllers;
 
 import com.apssouza.entities.Account;
 import com.apssouza.exceptions.DataNotFoundException;
-import com.apssouza.queries.UserQuery;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;

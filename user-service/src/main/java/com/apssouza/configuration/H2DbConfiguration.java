@@ -21,29 +21,3 @@ public class H2DbConfiguration {
     }
 }
 
-/**
- * If using spring security, we need to add this configuration to the 
- * Spring security configuration
- */
-
-/*
-package guru.springframework.configuration;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-@Configuration
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
-                .authorizeRequests().antMatchers("/console/**").permitAll();
-
-        httpSecurity.csrf().disable(); //disable csrf, not recommeded to production
-        httpSecurity.headers().frameOptions().disable(); //disable  X-Frame-Options
-    }
-
-}
-*/
