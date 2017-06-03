@@ -61,6 +61,20 @@ public class EmailAggregate implements Aggregate {
         }
         return applyChange(new EmailDeletedEvent(uuid, command));
     }
+    
+    private EmailAggregate apply(DomainEvent event) {
+        if (event instanceof EmailCreatedEvent) {
+            return this.apply((EmailCreatedEvent) event);
+        } else if (event instanceof EmailSentEvent) {
+            return this.apply((EmailSentEvent) event);
+        } else if (event instanceof EmailDeliveredEvent) {
+            return this.apply((EmailDeliveredEvent) event);
+        } else if (event instanceof EmailDeletedEvent) {
+            return this.apply((EmailDeletedEvent) event);
+        } else {
+            throw new IllegalArgumentException("Cannot handle event " + event.getClass());
+        }
+    }
 
     private EmailAggregate apply(EmailCreatedEvent event) {
         return new EmailAggregate(uuid, changes, EmailState.CREATED);
@@ -105,20 +119,6 @@ public class EmailAggregate implements Aggregate {
         CopyOnWriteArrayList<DomainEvent> listChanges = new CopyOnWriteArrayList(changes);
         listChanges.add(event);
         return listChanges;
-    }
-
-    private EmailAggregate apply(DomainEvent event) {
-        if (event instanceof EmailCreatedEvent) {
-            return this.apply((EmailCreatedEvent) event);
-        } else if (event instanceof EmailSentEvent) {
-            return this.apply((EmailSentEvent) event);
-        } else if (event instanceof EmailDeliveredEvent) {
-            return this.apply((EmailDeliveredEvent) event);
-        } else if (event instanceof EmailDeletedEvent) {
-            return this.apply((EmailDeletedEvent) event);
-        } else {
-            throw new IllegalArgumentException("Cannot handle event " + event.getClass());
-        }
     }
 
     private EmailAggregate applyChange(DomainEvent event) {

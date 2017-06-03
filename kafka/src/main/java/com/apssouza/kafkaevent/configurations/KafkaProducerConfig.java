@@ -5,8 +5,7 @@
  */
 package com.apssouza.kafkaevent.configurations;
 
-import com.apssouza.kafkaevent.Greeting;
-import com.fasterxml.jackson.databind.ser.std.StringSerializer;
+import com.apssouza.eventsourcing.events.AbstractDomainEvent;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -29,7 +28,7 @@ public class KafkaProducerConfig {
     private String bootstrapAddress;
     
     @Bean
-    public ProducerFactory<String, Greeting> greetingProducerFactory() {
+    public ProducerFactory<String, AbstractDomainEvent> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, org.apache.kafka.common.serialization.StringSerializer.class);
@@ -38,8 +37,8 @@ public class KafkaProducerConfig {
     }
     
     @Bean
-    public KafkaTemplate<String, Greeting> greetingKafkaTemplate() {
-        return new KafkaTemplate<>(greetingProducerFactory());
+    public KafkaTemplate<String, AbstractDomainEvent> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
     }
     
 }

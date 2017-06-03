@@ -1,6 +1,5 @@
 package com.apssouza.eventsourcing.events;
 
-import com.apssouza.eventsourcing.commands.EmailCreateCommand;
 import com.apssouza.eventsourcing.entities.Email;
 import java.time.Instant;
 import java.util.UUID;
@@ -9,7 +8,7 @@ import java.util.UUID;
  *
  * @author apssouza
  */
-public class EmailCreatedEvent implements DomainEvent {
+public class EmailCreatedEvent extends AbstractDomainEvent implements DomainEvent {
     
     private final UUID uuid;
     private final String type = "Created";

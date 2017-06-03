@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.apssouza.kafkaevent.configurations;
 
-import com.apssouza.kafkaevent.Greeting;
+import com.apssouza.eventsourcing.events.AbstractDomainEvent;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -24,26 +20,28 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
  */
 @EnableKafka
 @Configuration
-public class KafkaConsumerConfig {
+public class KafkaEmailConsumerConfig {
     
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
-
     
-    public ConsumerFactory<String, Greeting> greetingConsumerFactory() {
+    @Value(value = "${mail.topic.name}")
+    private String topicName;
+
+    public ConsumerFactory<String, AbstractDomainEvent> emailConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "greeting");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, topicName);
         return new DefaultKafkaConsumerFactory<>(props, 
                 new org.apache.kafka.common.serialization.StringDeserializer(), 
-                new JsonDeserializer<>(Greeting.class)
+                new JsonDeserializer<>(AbstractDomainEvent.class)
         );
     }
     
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Greeting> greetingKafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Greeting> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(greetingConsumerFactory());
+    public ConcurrentKafkaListenerContainerFactory<String, AbstractDomainEvent> emailKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, AbstractDomainEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(emailConsumerFactory());
         return factory;
     }
 }
