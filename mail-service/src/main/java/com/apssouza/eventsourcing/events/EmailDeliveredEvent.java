@@ -33,5 +33,8 @@ public class EmailDeliveredEvent implements DomainEvent {
         return when;
     }
 
-    
+    @Override
+    public String getEventClass() {
+        return EmailCreatedEvent.class.getName();
+    }
 }

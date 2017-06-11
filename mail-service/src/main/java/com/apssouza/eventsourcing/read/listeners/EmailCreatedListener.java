@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import com.apssouza.eventsourcing.events.AbstractDomainEvent;
 
 /**
  *
@@ -21,8 +20,4 @@ public class EmailCreatedListener {
         LOG.log(Level.ALL, event.type());
     }
     
-    @EventListener
-    public void listener(AbstractDomainEvent event) {
-        System.out.println(event.type());
-    }
 }

@@ -9,25 +9,28 @@ import java.util.UUID;
  * @author apssouza
  */
 public class EmailCreatedEvent extends AbstractDomainEvent implements DomainEvent {
-    
-    private final UUID uuid;
-    private final String type = "Created";
-    private final Instant when = Instant.now();
-    
-    private final Email email;
+
+    private UUID uuid;
+    private String type = "Created";
+    private Instant when = Instant.now();
+
+    private Email email;
+
+    public EmailCreatedEvent() {
+
+    }
 
     public EmailCreatedEvent(UUID uuid, Email account) {
         this.uuid = uuid;
         this.email = account;
     }
-    
-    
+
     @Override
     public UUID uuid() {
         return uuid;
     }
-    
-    public Email getEmail(){
+
+    public Email getEmail() {
         return email;
     }
 
@@ -40,4 +43,10 @@ public class EmailCreatedEvent extends AbstractDomainEvent implements DomainEven
     public Instant when() {
         return when;
     }
+
+    @Override
+    public String getEventClass() {
+        return EmailCreatedEvent.class.getName();
+    }
+
 }

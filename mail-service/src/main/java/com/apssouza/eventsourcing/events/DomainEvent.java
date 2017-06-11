@@ -12,4 +12,5 @@ public interface DomainEvent {
     UUID uuid();
     String type();
     Instant when();
+    String getEventClass();
 }

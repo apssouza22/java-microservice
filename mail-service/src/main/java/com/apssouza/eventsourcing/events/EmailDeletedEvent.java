@@ -40,4 +40,9 @@ public class EmailDeletedEvent implements DomainEvent {
     public Instant when() {
         return when;
     }
+    
+    @Override
+    public String getEventClass() {
+        return EmailCreatedEvent.class.getName();
+    }
 }
