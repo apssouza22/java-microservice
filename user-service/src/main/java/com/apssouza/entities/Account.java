@@ -21,7 +21,7 @@ public class Account {
     private long id;
 
     @NotNull
-    private long authId;
+    private String password;
 
     @NotNull
     @Size(min = 2, max = 256)
@@ -38,10 +38,10 @@ public class Account {
     public Account() {
     }
 
-    public Account(String name, String email, long authId) {
+    public Account(String name, String email, String pass) {
         this.name = name;
         this.email = email;
-        this.authId = authId;
+        this.password = pass;
     }
 
     public long getId() {
@@ -68,12 +68,12 @@ public class Account {
         this.email = email;
     }
 
-    public long getAuthId() {
-        return authId;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAuthId(long authId) {
-        this.authId = authId;
+    public void setAuthId(String pass) {
+        this.password = pass;
     }
 
     public long getVersion() {

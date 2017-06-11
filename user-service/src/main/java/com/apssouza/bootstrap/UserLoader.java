@@ -31,9 +31,9 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent>  {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent e) {
-        Account user1 = new Account("Alex lindo", "apssouza22@gmail.com", 1234L);
-        Account user2 = new Account("Gaekke delicia", "gaelle@meama.com", 123L);
-        Account user3 = new Account("Márcia almeida", "marciapalito@hotmail.com", 222L);
+        Account user1 = new Account("Alex lindo", "apssouza22@gmail.com", "1234");
+        Account user2 = new Account("Gaekke delicia", "gaelle@meama.com", "2222");
+        Account user3 = new Account("Márcia almeida", "marciapalito@hotmail.com", "2222");
         
         userRepository.save(user1);
         userRepository.save(user2);

@@ -35,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
                 .map(u -> {
                     u.setEmail(user.getEmail());
                     u.setName(user.getName());
-                    u.setAuthId(user.getAuthId());
+                    u.setAuthId(user.getPassword());
                     return save(u);
                 }).orElseThrow(() -> new DataNotFoundException("User not found"));
     }
