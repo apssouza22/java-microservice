@@ -22,9 +22,8 @@ public class KafkaEventConsumer {
             containerFactory = "emailKafkaListenerContainerFactory"
     )
     public void emailListener(AbstractDomainEvent emailEvent) {
-        System.out.println("Recieved event " + emailEvent.type());
+        System.out.println("Recieved event " + emailEvent.getEventClass());
         
-        //Todo a way of republish a event locally, write a serializer to get the real event
         eventPublisher.publishEvent(emailEvent);
     }
 }

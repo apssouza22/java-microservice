@@ -2,6 +2,7 @@
 package com.apssouza.kafkaevent.configurations;
 
 import com.apssouza.eventsourcing.events.AbstractDomainEvent;
+import com.apssouza.kafkaevent.encoders.EventDeserializer;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -34,7 +35,7 @@ public class KafkaEmailConsumerConfig {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, topicName);
         return new DefaultKafkaConsumerFactory<>(props, 
                 new org.apache.kafka.common.serialization.StringDeserializer(), 
-                new JsonDeserializer<>(AbstractDomainEvent.class)
+                new EventDeserializer<>(AbstractDomainEvent.class)
         );
     }
     

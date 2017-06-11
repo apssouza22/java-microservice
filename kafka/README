@@ -1,5 +1,10 @@
 #Mail service
 
+$HOME/bin/kafka/bin/zookeeper-server-start.sh $HOME/bin/kafka/config/zookeeper.properties
+
+$HOME/bin/kafka/bin/kafka-server-start.sh  $HOME/bin/kafka/config/server.properties
+
+
 Events  
 email created
 email sent 
