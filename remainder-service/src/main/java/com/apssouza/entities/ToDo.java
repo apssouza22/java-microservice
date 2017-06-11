@@ -13,6 +13,7 @@ import com.apssouza.validation.CheckIsValid;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +24,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 /**
  *
@@ -48,6 +54,11 @@ public class ToDo implements ValidEntity, Cloneable {
             
     private String description;
     
+    @CreationTimestamp
+    @Generated(GenerationTime.INSERT) //ALWAYS, UPDATE
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdat;
+    
     private int priority;
 
     @OneToMany(
@@ -58,6 +69,8 @@ public class ToDo implements ValidEntity, Cloneable {
     )
     private Set<Attachment> files = new HashSet<>();
 
+    //We shouldn’t default to CascadeType.ALL because the CascadeType.REMOVE might 
+    //end-up deleting more than we’re expecting even if the relation be related to other register. 
     @ManyToMany(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.EAGER
@@ -185,6 +198,14 @@ public class ToDo implements ValidEntity, Cloneable {
         return version;
     }
 
+    public Date getCreatedat() {
+        return createdat;
+    }
+
+    public void setCreatedat(Date createdat) {
+        this.createdat = createdat;
+    }
+    
     @Override
     public boolean isValid() {
         if (this.priority <= 10) {
