@@ -14,5 +14,8 @@ java -jar ../todo-ms/remainder-service/target/remainder-service-0.0.1-SNAPSHOT.j
 echo "Starting user service, port 8016..."
 java -jar ../todo-ms/user-service/target/user-service-0.0.1-SNAPSHOT.jar >> /var/log/microservice/user-service.log &
 
-echo "Starting aggregate services, port 8018..."
-java -jar ../todo-ms/aggregate-services/target/aggregate-service-0.0.1-SNAPSHOT.jar >> /var/log/microservice/aggregate-service.log &
+echo "Starting api gateway, port 8018..."
+java -jar ../todo-ms/api-gateway/target/api-gateway-0.0.1-SNAPSHOT.jar >> /var/log/microservice/api-gateway.log &
+
+echo "Starting mailer service, port 8020..."
+
