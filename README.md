@@ -31,4 +31,6 @@ Start al services -> sudo sh start_all.sh
 Authenticate -> curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"
 
 Get data using the access_token -> localhost:8018/path?access_token={access_token} or curl -H "Authorization: Bearer $TOKEN" "localhost:9090/foo"
-					
+
+## Monitoring 					
+http://localhost:8021/turbine.stream

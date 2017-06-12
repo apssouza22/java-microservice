@@ -18,4 +18,7 @@ echo "Starting api gateway, port 8018..."
 java -jar ../todo-ms/api-gateway/target/api-gateway-0.0.1-SNAPSHOT.jar >> /var/log/microservice/api-gateway.log &
 
 echo "Starting mailer service, port 8020..."
+java -jar ../todo-ms/mail-service/target/mailservice-0.0.1-SNAPSHOT.jar >> /var/log/microservice/mailer.log &
 
+echo "Starting monitoring service, port 8021..."
+java -jar ../todo-ms/turbine-monitoring/target/turbine-monitoring-0.0.1-SNAPSHOT.jar >> /var/log/microservice/monitoring.log &
