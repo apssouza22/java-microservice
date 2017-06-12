@@ -9,14 +9,20 @@ import javax.persistence.PostUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 
+/**
+ * ToDo's entity listener
+ *
+ * @author apssouza
+ */
+public class ToDoEntityListener {
 
-public class ToDoPersistenceMonitor {
-   
     @Autowired
     private ApplicationEventPublisher publisher;
 
     @PostPersist
     public void onPersist(ToDo todo) {
+        //ToDoPersistenceMonitor is not a spring managed been, so we need to inject 
+        //  publisher using this simple helper
         AutowireHelper.autowire(this, this.publisher);
         this.publisher.publishEvent(new TodoCreatedEvent(todo));
     }

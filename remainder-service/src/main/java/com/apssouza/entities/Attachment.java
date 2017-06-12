@@ -1,4 +1,3 @@
-
 package com.apssouza.entities;
 
 import java.util.Objects;
@@ -8,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
+ * To Do's Attachment entity
  *
  * @author apssouza
  */
@@ -17,11 +17,11 @@ public class Attachment {
     @Id
     @GeneratedValue
     private Long id;
-    
+
     private String name;
-    
+
     private String type;
-    
+
     @ManyToOne
     private ToDo todo;
 
@@ -86,5 +86,5 @@ public class Attachment {
         }
         return true;
     }
-    
+
 }

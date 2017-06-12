@@ -9,10 +9,14 @@ import java.util.Date;
 
 import javax.websocket.EncodeException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * Component responsible to notify socket clients.
+ *
+ * @author apssouza
+ */
 @Component
 public class TodoChangeSocketNotify {
 

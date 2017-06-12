@@ -9,7 +9,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 /**
- *
+ * Check if the instance is valid.
  * @author apssouza
  */
 @Documented

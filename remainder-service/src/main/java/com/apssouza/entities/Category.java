@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.apssouza.entities;
 
 import java.util.ArrayList;
@@ -14,11 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 /**
+ * To Do's Category entity
  *
  * @author apssouza
  */
 @Entity
-public class Category implements Cloneable {
+public class Category {
 
     @Id
     @GeneratedValue
@@ -30,7 +26,9 @@ public class Category implements Cloneable {
             mappedBy = "categories",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
-    private List<ToDo> todos = new ArrayList<>();;
+    private List<ToDo> todos = new ArrayList<>();
+
+    ;
 
     public Category(Long id, String name) {
         this.name = name;
@@ -41,7 +39,8 @@ public class Category implements Cloneable {
         this.name = name;
     }
 
-    public Category() {}
+    public Category() {
+    }
 
     /**
      * Defensive copying Provide an attractive alternative to the rather

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.apssouza.helpers;
 
 import org.springframework.context.ApplicationContextAware;
@@ -22,6 +17,7 @@ import org.springframework.stereotype.Component;
 public final class AutowireHelper implements ApplicationContextAware {
 
     private static final AutowireHelper INSTANCE = new AutowireHelper();
+    
     private static ApplicationContext applicationContext;
 
     private AutowireHelper() {

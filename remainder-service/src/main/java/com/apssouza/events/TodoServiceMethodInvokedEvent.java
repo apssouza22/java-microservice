@@ -1,20 +1,21 @@
 package com.apssouza.events;
 
 /**
+ * To Do service method invoked event
  *
  * @author apssouza
  */
-public class TodoServiceMethodCalledEvent {
+public class TodoServiceMethodInvokedEvent {
 
     private String methodName;
     private long duration;
 
-    public TodoServiceMethodCalledEvent(String methodName, long duration) {
+    public TodoServiceMethodInvokedEvent(String methodName, long duration) {
         this.methodName = methodName;
         this.duration = duration;
     }
 
-    public TodoServiceMethodCalledEvent() {
+    public TodoServiceMethodInvokedEvent() {
     }
 
     public String getMethodName() {

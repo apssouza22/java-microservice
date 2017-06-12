@@ -3,11 +3,12 @@ package com.apssouza.pojos;
 import com.apssouza.entities.ToDo;
 
 /**
+ * Socket message output.
  *
  * @author apssouza
  */
 public class SocketOutputMessage {
-    
+
     private final ToDo todo;
     private final String state;
     private final String time;
@@ -29,5 +30,5 @@ public class SocketOutputMessage {
     public String getTime() {
         return time;
     }
-    
+
 }

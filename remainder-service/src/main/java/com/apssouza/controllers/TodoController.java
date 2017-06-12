@@ -3,7 +3,6 @@ package com.apssouza.controllers;
 import com.apssouza.services.TodoService;
 import com.apssouza.entities.ToDo;
 import com.apssouza.exceptions.DataNotFoundException;
-import com.apssouza.services.TodoServiceImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.util.List;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
+ * Controller responsible of accessing ToDo's functionalities
  *
  * @author apssouza
  */
@@ -40,7 +40,7 @@ public class TodoController {
     public List<ToDo> all() {
         return this.todoService.all();
     }
-    
+
     @GetMapping("search")
     public List<ToDo> getByUserEmail(@RequestParam("email") String email) {
         return this.todoService.getByUserEmail(email);
@@ -48,6 +48,9 @@ public class TodoController {
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid ToDo todo, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().build();
+        }
         ToDo saved = this.todoService.save(todo);
         Long id = saved.getId();
         if (id != null) {
@@ -61,7 +64,7 @@ public class TodoController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> update(
-            @PathVariable long id, 
+            @PathVariable long id,
             @RequestBody @Valid ToDo toDo
     ) {
         return ResponseEntity.ok(todoService.update(id, toDo));
@@ -90,7 +93,7 @@ public class TodoController {
                     build();
         }
         ToDo todo = todoService.updateStatus(
-                id, 
+                id,
                 ToDo.TodoStatus.valueOf(status.asText())
         );
         return ResponseEntity.ok(todo);

@@ -2,6 +2,7 @@ package com.airhacks.doit.business.reminders.boundary;
 
 import com.airhacks.rulz.jaxrsclient.JAXRSClientProvider;
 import static com.airhacks.rulz.jaxrsclient.JAXRSClientProvider.buildWithURI;
+import java.time.Instant;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -24,7 +25,7 @@ import org.junit.Test;
 public class TodosResourceIT {
 
     @Rule
-    public JAXRSClientProvider provider = buildWithURI("http://localhost:8011/todos");
+    public JAXRSClientProvider provider = buildWithURI("http://localhost:8015/todos");
 
     @Test
     public void crud() {
@@ -32,6 +33,7 @@ public class TodosResourceIT {
         JsonObject todoToCreate = todoBuilder.
                 add("caption", "implement").
                 add("priority", 10).
+                add("userEmail", "apssouza"+Instant.now()+"@gmail.com").
                 build();
 
         //create
@@ -158,6 +160,7 @@ public class TodosResourceIT {
         JsonObject todoToCreate = todoBuilder.
                 add("caption", "12").
                 add("priority", 9).
+                add("userEmail", "apssouza"+Instant.now()+"@gmail.com").
                 build();
 
         Response postResponse = this.provider.target().request().
@@ -172,11 +175,15 @@ public class TodosResourceIT {
         JsonObject todoToCreate = todoBuilder.
                 add("caption", "10").
                 add("priority", 12).
+                add("userEmail", "apssouza"+Instant.now()+"@gmail.com").
                 build();
 
-        Response postResponse = this.provider.target().request().
-                post(Entity.json(todoToCreate));
-        postResponse.getHeaders().entrySet().forEach(System.out::println);
+        Response postResponse = this.provider.target()
+                .request()
+                .post(Entity.json(todoToCreate));
+        postResponse.getHeaders()
+                .entrySet()
+                .forEach(System.out::println);
 
         assertThat(postResponse.getStatus(), is(400));
 

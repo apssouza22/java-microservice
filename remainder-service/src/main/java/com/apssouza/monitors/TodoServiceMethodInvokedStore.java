@@ -1,7 +1,6 @@
-
 package com.apssouza.monitors;
 
-import com.apssouza.events.TodoServiceMethodCalledEvent;
+import com.apssouza.events.TodoServiceMethodInvokedEvent;
 import java.util.List;
 import java.util.LongSummaryStatistics;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -10,29 +9,30 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 /**
+ * Store TodoService method invoked.
  *
  * @author apssouza
  */
 @Component
-public class TodoServiceMethodMonitor {
+public class TodoServiceMethodInvokedStore {
 
-    private CopyOnWriteArrayList<TodoServiceMethodCalledEvent> events;
+    private CopyOnWriteArrayList<TodoServiceMethodInvokedEvent> events;
 
     @PostConstruct
     public void init() {
         this.events = new CopyOnWriteArrayList<>();
     }
 
-    public void addNewEvent(TodoServiceMethodCalledEvent event) {
+    public void addNewEvent(TodoServiceMethodInvokedEvent event) {
         this.events.add(event);
     }
 
-    public List<TodoServiceMethodCalledEvent> getRecentChanges() {
+    public List<TodoServiceMethodInvokedEvent> getRecentChanges() {
         return this.events;
     }
 
     public LongSummaryStatistics getStatistics() {
         return this.events.stream().
-                collect(Collectors.summarizingLong(TodoServiceMethodCalledEvent::getDuration));
+                collect(Collectors.summarizingLong(TodoServiceMethodInvokedEvent::getDuration));
     }
 }

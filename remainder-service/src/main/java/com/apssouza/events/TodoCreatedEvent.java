@@ -1,14 +1,15 @@
 package com.apssouza.events;
 
 import com.apssouza.annotations.ChangeEvent;
-import  com.apssouza.entities.ToDo;
+import com.apssouza.entities.ToDo;
 
 /**
+ * To Do created event
  *
  * @author apssouza
  */
 @ChangeEvent(ChangeEvent.Type.CREATION)
-public class TodoCreatedEvent implements TodoChangedEvent{
+public class TodoCreatedEvent implements TodoChangedEvent {
 
     private ToDo todo;
 
@@ -26,9 +27,9 @@ public class TodoCreatedEvent implements TodoChangedEvent{
     public void setTodo(ToDo todo) {
         this.todo = todo;
     }
-    
+
     @Override
-    public int getPriority(){
+    public int getPriority() {
         return this.todo.getPriority();
     }
 
@@ -36,6 +37,5 @@ public class TodoCreatedEvent implements TodoChangedEvent{
     public String toString() {
         return "TodoChangeEvent{" + "todo=" + todo.getDescription() + '}';
     }
-
 
 }

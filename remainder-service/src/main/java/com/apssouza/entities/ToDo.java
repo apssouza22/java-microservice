@@ -1,6 +1,6 @@
 package com.apssouza.entities;
 
-import com.apssouza.monitors.ToDoPersistenceMonitor;
+import com.apssouza.monitors.ToDoEntityListener;
 import com.apssouza.validation.ValidEntity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,12 +31,12 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
 /**
- *
+ * To Do entity
  * @author apssouza
  */
 @Entity
 @CheckIsValid
-@EntityListeners(ToDoPersistenceMonitor.class)
+@EntityListeners(ToDoEntityListener.class)
 public class ToDo implements ValidEntity, Cloneable {
     
     public enum TodoStatus { DONE, PENDING }
@@ -54,12 +54,16 @@ public class ToDo implements ValidEntity, Cloneable {
             
     private String description;
     
-    @CreationTimestamp
     @Generated(GenerationTime.INSERT) //ALWAYS, UPDATE
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdat;
     
     private int priority;
+    
+    private TodoStatus status = TodoStatus.PENDING;
+
+    @Version
+    private long version;
 
     @OneToMany(
             cascade = CascadeType.ALL, 
@@ -91,11 +95,6 @@ public class ToDo implements ValidEntity, Cloneable {
             }
     )
     private List<Category> categories = new ArrayList<>();;
-
-    private TodoStatus status = TodoStatus.PENDING;
-
-    @Version
-    private long version;
 
     public ToDo() {
     }

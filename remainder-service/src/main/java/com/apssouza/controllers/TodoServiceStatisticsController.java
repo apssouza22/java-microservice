@@ -1,6 +1,6 @@
 package com.apssouza.controllers;
 
-import com.apssouza.monitors.TodoServiceMethodMonitor;
+import com.apssouza.monitors.TodoServiceMethodInvokedStore;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.LongSummaryStatistics;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TodoServiceStatisticsController {
 
     @Autowired
-    TodoServiceMethodMonitor monitor;
+    TodoServiceMethodInvokedStore monitor;
 
     @GetMapping
     public ObjectNode get() {

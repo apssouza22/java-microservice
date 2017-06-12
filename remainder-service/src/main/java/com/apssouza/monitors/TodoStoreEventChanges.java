@@ -1,4 +1,3 @@
-
 package com.apssouza.monitors;
 
 import com.apssouza.events.TodoChangedEvent;
@@ -10,23 +9,24 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 /**
+ * Store ToDo event changes.
  *
  * @author apssouza
  */
 @Component
-public class TodoEventChangesMonitor {
-    
+public class TodoStoreEventChanges {
+
     private CopyOnWriteArrayList<TodoChangedEvent> events;
-    
+
     @PostConstruct
-    public void init(){
-        this.events =  new CopyOnWriteArrayList<>();
+    public void init() {
+        this.events = new CopyOnWriteArrayList<>();
     }
-    
-    public void addNewEvent(TodoChangedEvent event){
+
+    public void addNewEvent(TodoChangedEvent event) {
         this.events.add(event);
     }
-    
+
     public List<TodoChangedEvent> getRecentEvents() {
         return this.events;
     }

@@ -1,6 +1,6 @@
 package com.apssouza.interceptors;
 
-import com.apssouza.events.TodoServiceMethodCalledEvent;
+import com.apssouza.events.TodoServiceMethodInvokedEvent;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +14,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 /**
- * Interceptor for methods called in the Todo service methods
+ * Interceptor for methods invoked in the To do service, AOP.
  *
  * @author apssouza
  */
@@ -47,8 +47,7 @@ public class TodoServiceInterceptor {
         }
         long duration = System.currentTimeMillis() - start;
 
-        publisher.publishEvent(
-                new TodoServiceMethodCalledEvent(
+        publisher.publishEvent(new TodoServiceMethodInvokedEvent(
                         method.getName(),
                         duration
                 )

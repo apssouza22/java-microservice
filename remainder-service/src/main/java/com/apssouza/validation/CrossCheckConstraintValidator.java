@@ -4,6 +4,8 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
+ * A constraint ToDo validator
+ *
  * @author apssouza
  */
 public class CrossCheckConstraintValidator implements ConstraintValidator<CheckIsValid, ValidEntity> {

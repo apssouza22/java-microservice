@@ -1,6 +1,7 @@
 package com.apssouza.validation;
 
 /**
+ * Valid entity interface
  *
  * @author apssouza
  */
