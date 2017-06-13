@@ -5,7 +5,7 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8010/eureka/,http://localhost:8011/eureka/,http://localhost:8012/eureka/,http://localhost:8013/eureka/
 server:
-  port: 8021
+  port: 8022
   
 info:
   component: Turbine

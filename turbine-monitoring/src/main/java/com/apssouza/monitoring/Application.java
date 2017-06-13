@@ -23,14 +23,14 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
     
-//	@Bean
-//	public TurbineProperties turbineProperties() {
-//		return new TurbineProperties();
-//	}
-//
-//	@Bean
-//	public InstanceDiscovery instanceDiscovery() {
-//		return new ConfigPropertyBasedDiscovery();
-//	}
+	@Bean
+	public TurbineProperties turbineProperties() {
+		return new TurbineProperties();
+	}
+
+	@Bean
+	public InstanceDiscovery instanceDiscovery() {
+		return new ConfigPropertyBasedDiscovery();
+	}
     
 }
