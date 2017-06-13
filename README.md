@@ -26,10 +26,17 @@ The System Integration Test is a Java application that is reaching the Reminder 
 In the Microservice architecture we have to deal with many microservices working in different IP and port and we will need to find a way of manage each address without hard coding and Eureka comes to rescue, it is a client side service discovery that allows services to find and communicate with each other. We are using Spring Cloud Eureka in our system and you will need to have a look at how it works to understand how our services REST are communicating between the microservices.
  
 ## Authentication
-…
+Security is something very important when we are developing any system and with microservice architecture is not different. The question: "How can I maintain security in my microservices" comes up immediately, and the first answer is OAuth2! And definitely OAuth2 is a very good solution, it is a well known authorization technology. It is widely used for Google, Facebook, Github at their APIs. It's impossible to talk about security and don't mention Spring security and therefore we are using Spring Cloud Security  with OAuth2.
+Spring Security and OAuth2 are obvious choices when talking about secure distributed system, due to the wide use by the market, however we adding one more element to our security concert, it is JWT(Json Web Token). Using only OAuth we would need to have a OAuth Authorization server to authenticate the user, generate the token and also a endpoint  for the Resource servers to ask if the token is valid and which permission does it grant, requiring twice more request to the Authorization server than we really need. JWT provides a simple way of transmitting the permissions and user data in the access token and once the all data is already in the token string the resource servers don't need to ask for token checks. All the information is serialized into JSON first, encoded with base64 and finally signed with a private RSA key assuming that all resource servers will have a public key to check if the token was signed for the proper private key then deserialize the token to have the information.
+You can check the OAuth2 Authorization server and the Resource server implementation in the OAuth-server and in the API gateway and those were done following mainly this blog post 
  
 ## REST
-….
+In our system we have 2 interaction styles, we have synchronous and  asynchronous, for async style we are using distributed events with Kafka following the model publish/subscribe and for synch we have REST style using Request/Response supporting JSON and XML.
+ 
+There are 4 levels of maturity of RESTfull, starting at level 0, as described for Martin Fowler here and our services is in the level 2 because I decided not implement the Hypermedia Controls using the HATEOAS design pattern.
+ 
+Because we are using the Spring Cloud we have out-of-box some scalability patterns are placed in our HTTP connections that need to be mentioned: Circuit breaker, Bulkheads, Load balancing, Connection pooling, timeouts and retry.
+
  
 ## Eventsourcing and CQRS
 …
