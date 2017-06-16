@@ -3,18 +3,18 @@ package com.apssouza.eventsourcing.commands;
 import java.util.UUID;
 
 /**
+ * Email create command
  *
  * @author apssouza
  */
 public class EmailCreateCommand {
 
     private UUID uuid;
-    
+
     private String name;
 
     private String email;
 
-    
     public EmailCreateCommand(UUID uuid, String name, String email) {
         this.uuid = uuid;
         this.name = name;
@@ -32,5 +32,5 @@ public class EmailCreateCommand {
     public UUID getUuid() {
         return uuid;
     }
-    
+
 }

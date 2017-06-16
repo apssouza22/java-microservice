@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
+ * Declarative To do REST client
  *
  * @author apssouza
  */
@@ -22,7 +23,7 @@ public interface TodoClient {
     public List<Todo> getTodoByUserEmaill(@RequestParam("email") String email);
 
     @RequestMapping(
-            value = "/todos", 
+            value = "/todos",
             method = RequestMethod.POST
     )
     Todo createTodo(Todo todo);

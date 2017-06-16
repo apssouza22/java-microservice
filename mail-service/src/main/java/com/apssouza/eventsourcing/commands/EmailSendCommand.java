@@ -9,11 +9,12 @@ import java.time.Instant;
 import java.util.UUID;
 
 /**
+ * Email send command
  *
  * @author apssouza
  */
 public class EmailSendCommand {
-    
+
     private final UUID uuid;
     private final Instant instant;
 
@@ -29,5 +30,5 @@ public class EmailSendCommand {
     public Instant getInstant() {
         return instant;
     }
-    
+
 }

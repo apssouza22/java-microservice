@@ -1,6 +1,7 @@
 package com.apssouza.pojos;
 
 /**
+ * User Pojo
  *
  * @author apssouza
  */

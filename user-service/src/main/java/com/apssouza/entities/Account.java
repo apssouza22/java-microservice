@@ -10,6 +10,7 @@ import javax.persistence.Version;
 import org.hibernate.validator.constraints.Email;
 
 /**
+ * Account Entity
  *
  * @author apssouza
  */

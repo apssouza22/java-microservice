@@ -5,29 +5,29 @@ import java.time.Instant;
 import java.util.UUID;
 
 /**
+ * Email deleted event
  *
  * @author apssouza
  */
 public class EmailDeletedEvent implements DomainEvent {
-    
+
     private final UUID uuid;
     private final String type = "Deleted";
     private final Instant when = Instant.now();
-    
+
     private final EmailDeleteCommand command;
 
     public EmailDeletedEvent(UUID uuid, EmailDeleteCommand command) {
         this.uuid = uuid;
         this.command = command;
     }
-    
-    
+
     @Override
     public UUID uuid() {
         return uuid;
     }
-    
-    public EmailDeleteCommand getCommand(){
+
+    public EmailDeleteCommand getCommand() {
         return command;
     }
 
@@ -40,9 +40,9 @@ public class EmailDeletedEvent implements DomainEvent {
     public Instant when() {
         return when;
     }
-    
+
     @Override
     public String getEventClass() {
-        return EmailCreatedEvent.class.getName();
+        return this.getClass().getName();
     }
 }

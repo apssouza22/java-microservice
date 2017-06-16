@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * To Do entry point
  *
  * @author apssouza
  */
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TodoController {
 
     @Autowired
-    TodoService todoService ;
+    TodoService todoService;
 
     @GetMapping
     public List<User> all() {

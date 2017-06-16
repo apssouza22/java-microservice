@@ -9,6 +9,12 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
+/**
+ * Event desirializer
+ *
+ * @author apssouza
+ * @param <T>
+ */
 public class EventDeserializer<T extends AbstractDomainEvent> extends JsonDeserializer<T> {
 
     private static final Logger logger = Logger.getLogger(EventDeserializer.class.getName());

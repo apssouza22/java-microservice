@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * Email command service handler. Deal with the business requirements before
+ * send the command
  *
  * @author apssouza
  */
@@ -23,19 +25,19 @@ public class EmailCommandHandler {
         EmailAggregate emailAggregate = getByUUID(randomUUID);
         eventSourcingService.save(emailAggregate.create(command));
     }
-    
+
     public void send(EmailSendCommand command) throws Exception {
         EmailAggregate emailAggregate = getByUUID(command.getUuid());
         emailAggregate.send(command);
         eventSourcingService.save(emailAggregate);
     }
-    
+
     public void delivery(EmailDeliveryCommand command) throws Exception {
         EmailAggregate emailAggregate = getByUUID(command.getUuid());
         emailAggregate.delivery(command);
         eventSourcingService.save(emailAggregate);
     }
-    
+
     public void delete(EmailDeleteCommand command) throws Exception {
         EmailAggregate emailAggregate = getByUUID(command.getUuid());
         emailAggregate.delete(command);

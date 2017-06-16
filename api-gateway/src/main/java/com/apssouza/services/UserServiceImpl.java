@@ -1,4 +1,5 @@
 package com.apssouza.services;
+
 import com.apssouza.clients.UserClient;
 import com.apssouza.pojos.Todo;
 import com.apssouza.pojos.User;
@@ -7,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
+ * User Service
  *
  * @author apssouza
  */
 @Component
-public class UserServiceImpl implements UserService{
-    
+public class UserServiceImpl implements UserService {
+
     @Autowired
     UserClient userClient;
 
@@ -30,5 +32,5 @@ public class UserServiceImpl implements UserService{
     public Todo createUser(User user) {
         return userClient.createUser(user);
     }
-     
+
 }

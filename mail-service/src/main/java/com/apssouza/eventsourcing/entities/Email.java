@@ -9,11 +9,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
+ * Email entity
  *
  * @author apssouza
  */
 @Entity
 public class Email {
+
     @Id
     @GeneratedValue
     private long id;
@@ -90,5 +92,5 @@ public class Email {
     public String toString() {
         return "Email{" + "id=" + id + ", authId=" + authId + ", name=" + name + ", email=" + email + ", version=" + version + '}';
     }
-    
+
 }

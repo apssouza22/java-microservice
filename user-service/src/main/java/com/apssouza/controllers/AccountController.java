@@ -21,6 +21,7 @@ import com.apssouza.services.AccountService;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
+ * Account's entry points
  *
  * @author apssouza
  */
@@ -30,9 +31,9 @@ public class AccountController {
 
     @Autowired
     AccountService userService;
-    
+
     @Autowired
-    public  AccountController(
+    public AccountController(
             AccountService userService
     ) {
         this.userService = userService;
@@ -75,9 +76,9 @@ public class AccountController {
     }
 
     @GetMapping("search")
-    public ResponseEntity<?> find(@RequestParam("email")  String email) {
+    public ResponseEntity<?> find(@RequestParam("email") String email) {
         Optional<Account> account = userService.findByEmail(email);
-            return account.map(a -> {
+        return account.map(a -> {
             return ResponseEntity.ok(a);
         }).orElseThrow(
                 () -> new DataNotFoundException("user not found")

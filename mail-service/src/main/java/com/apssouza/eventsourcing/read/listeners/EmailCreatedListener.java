@@ -7,6 +7,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 /**
+ * Email created listener
  *
  * @author apssouza
  */
@@ -18,6 +19,7 @@ public class EmailCreatedListener {
     @EventListener
     public void listener(EmailCreatedEvent event) {
         LOG.log(Level.ALL, event.type());
+        //TODO: update email data views
     }
-    
+
 }

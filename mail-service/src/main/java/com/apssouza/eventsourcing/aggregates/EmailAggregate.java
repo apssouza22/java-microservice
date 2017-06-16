@@ -16,7 +16,8 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- *
+ * Email aggregate, it aggregate all events related to Email and get the final 
+ * state
  * @author apssouza
  */
 public class EmailAggregate implements Aggregate {

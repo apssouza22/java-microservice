@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.apssouza.kafkaevent.configurations;
 
 import com.apssouza.eventsourcing.events.AbstractDomainEvent;
@@ -18,6 +13,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
 /**
+ * Kafka producer configuration
  *
  * @author apssouza
  */
@@ -26,7 +22,7 @@ public class KafkaProducerConfig {
 
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
-    
+
     @Bean
     public ProducerFactory<String, AbstractDomainEvent> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -35,10 +31,10 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, EventSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
     }
-    
+
     @Bean
     public KafkaTemplate<String, AbstractDomainEvent> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
-    
+
 }

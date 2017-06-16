@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 /**
+ * Email created event
  *
  * @author apssouza
  */
@@ -46,7 +47,7 @@ public class EmailCreatedEvent extends AbstractDomainEvent implements DomainEven
 
     @Override
     public String getEventClass() {
-        return EmailCreatedEvent.class.getName();
+        return this.getClass().getName();
     }
 
 }

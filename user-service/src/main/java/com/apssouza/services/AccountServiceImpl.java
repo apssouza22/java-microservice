@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.apssouza.repositories.AccountRepository;
 
+/**
+ * @see AccountService
+ * @author apssouza
+ */
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -30,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account update(Long id, Account user) throws DataNotFoundException{
+    public Account update(Long id, Account user) throws DataNotFoundException {
         return this.findById(id)
                 .map(u -> {
                     u.setEmail(user.getEmail());
@@ -39,14 +43,14 @@ public class AccountServiceImpl implements AccountService {
                     return save(u);
                 }).orElseThrow(() -> new DataNotFoundException("User not found"));
     }
-    
+
     @Override
-    public Optional<Account> findByEmail(String email){
+    public Optional<Account> findByEmail(String email) {
         return accountRepository.findByEmail(email);
     }
-    
+
     @Override
-    public void delete(Account a){
+    public void delete(Account a) {
         accountRepository.delete(a);
     }
 }

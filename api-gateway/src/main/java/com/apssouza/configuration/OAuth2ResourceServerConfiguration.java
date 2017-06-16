@@ -1,4 +1,3 @@
-
 package com.apssouza.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 /**
+ * OAuth2 resource server configuration
  *
  * @author apssouza
  */
@@ -26,10 +26,9 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
                 .authorizeRequests()
                 .antMatchers("/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/todos").hasAuthority("USER_READ");
-                //.antMatchers(HttpMethod.POST, "/foo").hasAuthority("FOO_WRITE");
-                //you can implement it like this, but I show method invocation security on write
+        //.antMatchers(HttpMethod.POST, "/foo").hasAuthority("FOO_WRITE");
+        //you can implement it like this, but I show method invocation security on write
     }
-
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {

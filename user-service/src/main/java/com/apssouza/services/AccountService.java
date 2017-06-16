@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Account service interface
  *
  * @author apssouza
  */
@@ -16,7 +17,7 @@ public interface AccountService {
     List<Account> all();
 
     Account save(Account user);
-    
+
     Account update(Long id, Account user) throws DataNotFoundException;
 
     Optional<Account> findByEmail(String name);

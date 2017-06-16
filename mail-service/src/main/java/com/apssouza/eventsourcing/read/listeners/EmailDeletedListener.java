@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.apssouza.eventsourcing.read.listeners;
 
 import com.apssouza.eventsourcing.events.EmailCreatedEvent;
@@ -12,16 +7,18 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 /**
+ * Email deleted listener
  *
  * @author apssouza
  */
 @Component
-public class UserDeletedListener {
+public class EmailDeletedListener {
 
-    private static final Logger LOG = Logger.getLogger(UserDeletedListener.class.getName());
-    
+    private static final Logger LOG = Logger.getLogger(EmailDeletedListener.class.getName());
+
     @EventListener
-    public void listener(EmailCreatedEvent event){
+    public void listener(EmailCreatedEvent event) {
         LOG.log(Level.ALL, event.getEmail().toString());
+        //TODO: update views
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.apssouza.eventsourcing.events.AbstractDomainEvent;
 
 /**
- *
+ * Email Kafka event consumer
  * @author apssouza
  */
 @Component

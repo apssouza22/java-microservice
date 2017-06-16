@@ -1,14 +1,15 @@
-
 package com.apssouza.eventsourcing.events;
 
 import java.time.Instant;
 import java.util.UUID;
 
 /**
+ * Email delivered event
  *
  * @author apssouza
  */
 public class EmailDeliveredEvent implements DomainEvent {
+
     private final UUID uuid;
     private final Instant when = Instant.now();
     private final String type = "sent";
@@ -17,7 +18,6 @@ public class EmailDeliveredEvent implements DomainEvent {
         this.uuid = uuid;
     }
 
-    
     @Override
     public UUID uuid() {
         return uuid;
@@ -35,6 +35,6 @@ public class EmailDeliveredEvent implements DomainEvent {
 
     @Override
     public String getEventClass() {
-        return EmailCreatedEvent.class.getName();
+        return this.getClass().getName();
     }
 }

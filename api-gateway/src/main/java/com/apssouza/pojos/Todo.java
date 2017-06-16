@@ -1,7 +1,7 @@
-
 package com.apssouza.pojos;
 
 /**
+ * To do PoJo
  *
  * @author apssouza
  */
@@ -14,7 +14,7 @@ public class Todo {
     private String userEmail;
 
     private String description;
-    
+
     private int priority;
 
     public int getPriority() {
@@ -24,7 +24,7 @@ public class Todo {
     public void setPriority(int priority) {
         this.priority = priority;
     }
-    
+
     public long getId() {
         return id;
     }
