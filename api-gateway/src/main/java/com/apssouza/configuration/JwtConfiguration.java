@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.util.FileCopyUtils;
 
 /**
+ * Json web token configuration
  *
  * @author apssouza
  */
