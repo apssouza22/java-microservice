@@ -1,14 +1,17 @@
 # Hands-on Microservices with Java
  
 The term “Microservices Architecture” is now a popular term and in order to keep updated as a software developer, I’ve been putting some effort to get a good understand about this architecture and the better way of implementing it in Java using Spring technologies.
+
 I was working in a nice company with a great team and a good tech stack, however, we were not using the cutting edge Java features such Java 8 and Microservices architectures in that moment, so I had to start looking for that knowledge outside the company. I wanted to play with the Java 8 and Microservices and the best way of doing it is hands on code building something, then I decided to create a To Do system using as many fun staffs as possible and I will try to write a serie of posts talking about this experience.
 
 The intention of this serie is to have a source code walkthrough with many concepts and technologies put in place and combined within a whole system composed with different microservices. I’m not planning to go deep in the concepts and tools, we have a lot of posts about those out there, the intention here is to present an application example containing patterns, tools, technologies used to develop microservices.
 
 This is a studying application and we have intentionally made it as simple as possible to make the source code easy to understand. The application will be available and ready to run on your computer for use as a reference.
+
 We are going to work with a "To Do" application that will be composed of 8 applications (Reminder, User, Service discovery server, Mailer, OAuth Server, System integration test, API Gateway, Web application client).
 
 Some patterns, tools and technologies that you will see in this system:
+
 Spring Boot, Spring Data, Spring Cloud Eureka, Load Balancing with Ribbon, Declarative REST Clients with Feign, Software Circuit Breakers with Hystrix, Monitoring using Hystrix dashboard and Turbine, Security with Spring Security OAuth, Oauth2 with JWT, Aspect Oriented Programing with Spring AOP, Distributed events with Kafka, Maven Multimodule project, Event Sourcing, CQRS, REST, Web Sockets and all developed using Java 8.
 
 This first post is going to provide an overview of the whole project and in the coming posts, I will explain more deeply about what and how we are using the components in each microservice.
