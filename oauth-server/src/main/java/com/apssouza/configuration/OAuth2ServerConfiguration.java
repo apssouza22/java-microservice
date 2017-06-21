@@ -2,7 +2,9 @@ package com.apssouza.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -28,7 +30,9 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("todo-app")
-                .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
+                .authorizedGrantTypes(
+                        "implicit", "refresh_token", "password", "authorization_code"
+                )
                 .authorities("USER_READ", "USER_WRITE")
                 .scopes("write")
                 .resourceIds("todo")

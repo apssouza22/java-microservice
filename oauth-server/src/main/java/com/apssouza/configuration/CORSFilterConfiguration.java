@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.apssouza.configuration;
 
 import java.io.IOException;
@@ -54,7 +49,8 @@ public class CORSFilterConfiguration {
                 response.setHeader("Access-Control-Allow-Credentials", "true");
                 response.setHeader(
                         "Access-Control-Allow-Headers",
-                        "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
+                        "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization"
+                );
                 if ("OPTIONS".equals(method)) {
                     response.setStatus(HttpStatus.OK.value());
                 } else {
