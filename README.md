@@ -75,3 +75,5 @@ To dos http://localhost:8015/todos
 Users http://localhost:8016/accounts
 
 Eurreka server - http://localhost:8010/
+
+Boot admin - http://localhost:8026

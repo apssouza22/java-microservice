@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2017 the original author or authors.
+ * Copyright 2014 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.apssouza.monitoring;
+package de.codecentric.boot.admin;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-/**
- * @author Maciej Szarlinski
- */
+import de.codecentric.boot.admin.config.EnableAdminServer;
+
+
+// tag::application-eureka[]
 @Configuration
-@EnableAspectJAutoProxy
-public class MonitoringConfig {
-
+@EnableAutoConfiguration
+@EnableDiscoveryClient
+@EnableAdminServer
+public class SpringBootAdminApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootAdminApplication.class, args);
+	}
 }
+// end::application-eureka[]
