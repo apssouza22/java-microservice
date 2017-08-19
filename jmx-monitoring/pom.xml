@@ -4,15 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.springframework.samples.petclinic.monitoring</groupId>
-    <artifactId>spring-petclinic-monitoring</artifactId>
+    <groupId>com.apssouza.monitoring</groupId>
+    <artifactId>jmx-monitoring</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <description>Spring PetClinic monitoring utilities</description>
+    <description>Jmx monitoring utilities</description>
 
     <parent>
-        <groupId>org.springframework.samples</groupId>
-        <artifactId>spring-petclinic-microservices</artifactId>
-        <version>1.5.3</version>
+        <artifactId>parent-todo-ms</artifactId>
+        <groupId>com.apssouza</groupId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <dependencies>

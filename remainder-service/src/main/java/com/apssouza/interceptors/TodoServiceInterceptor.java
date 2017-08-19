@@ -28,13 +28,21 @@ public class TodoServiceInterceptor {
     public TodoServiceInterceptor(ApplicationEventPublisher publisher) {
         this.publisher = publisher;
     }
+
     /**
-     * (..) matches any number of parameters (zero or more)
-     * * as the returning type pattern, which matches any return type
+     * (..) matches any number of parameters (zero or more) * as the returning
+     * type pattern, which matches any return type
+     *
      * @param joinPoint
-     * @return 
+     * @return
      */
-    @Around("execution(* com.apssouza.services.TodoServiceImpl.*(..))")
+    //@Around("execution(* com.apssouza.services.TodoServiceImpl.*(..))")
+    /**
+     * Disabled the interceptor in detriment of the new monitoring module
+     *
+     * @param joinPoint
+     * @return
+     */
     public Object logCall(ProceedingJoinPoint joinPoint) {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         long start = System.currentTimeMillis();
@@ -48,9 +56,9 @@ public class TodoServiceInterceptor {
         long duration = System.currentTimeMillis() - start;
 
         publisher.publishEvent(new TodoServiceMethodInvokedEvent(
-                        method.getName(),
-                        duration
-                )
+                method.getName(),
+                duration
+        )
         );
         return result;
     }

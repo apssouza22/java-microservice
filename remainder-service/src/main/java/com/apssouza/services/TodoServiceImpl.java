@@ -3,6 +3,8 @@ package com.apssouza.services;
 import com.apssouza.repositories.TodoRepository;
 import com.apssouza.entities.ToDo;
 import com.apssouza.exceptions.DataNotFoundException;
+import com.apssouza.monitoring.CallMonitoringAspect;
+import com.apssouza.monitoring.Monitored;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ public class TodoServiceImpl implements TodoService {
     private TodoRepository todoRepository;
 
     @Override
+    @Monitored
     public Optional<ToDo> findById(long id) {
         return Optional.ofNullable(this.todoRepository.findOne(id));
     }
 
     @Override
+    @Monitored
     public Boolean delete(long id) throws DataNotFoundException {
         this.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Not found ToDo id " + id));
@@ -28,16 +32,19 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    @Monitored
     public List<ToDo> all() {
         return this.todoRepository.findAll();
     }
 
     @Override
+    @Monitored
     public ToDo save(ToDo todo) {
         return this.todoRepository.save(todo);
     }
 
     @Override
+    @Monitored
     public ToDo updateStatus(long id, ToDo.TodoStatus status) throws DataNotFoundException {
         return this.findById(id)
                 .map((t) -> {
@@ -47,6 +54,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    @Monitored
     public ToDo update(Long id, ToDo toDo) throws DataNotFoundException {
         return this.findById(id)
                 .map(todo -> {
@@ -58,6 +66,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    @Monitored
     public List<ToDo> getByUserEmail(String email) {
         return this.todoRepository.findByUserEmail(email);
     }

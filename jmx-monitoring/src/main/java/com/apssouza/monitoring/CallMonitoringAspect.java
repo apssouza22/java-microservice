@@ -13,11 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.monitoring;
+package com.apssouza.monitoring;
 
+import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
@@ -41,6 +47,13 @@ public class CallMonitoringAspect {
     private int callCount = 0;
 
     private long accumulatedCallTime = 0;
+    
+    private final ApplicationEventPublisher publisher;
+    
+    @Autowired
+    public CallMonitoringAspect(ApplicationEventPublisher publisher) {
+        this.publisher = publisher;
+    }
 
     @ManagedAttribute
     public void setEnabled(boolean enabled) {
@@ -75,6 +88,8 @@ public class CallMonitoringAspect {
 
     @Around("@annotation(Monitored)")
     public Object invoke(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("callend");
+        Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         if (this.enabled) {
             StopWatch sw = new StopWatch(joinPoint.toShortString());
 
@@ -87,6 +102,10 @@ public class CallMonitoringAspect {
                     this.callCount++;
                     this.accumulatedCallTime += sw.getTotalTimeMillis();
                 }
+                publisher.publishEvent(new MonitoringInvokedEvent(
+                        method.getName(),
+                        this.accumulatedCallTime
+                ));
             }
         } else {
             return joinPoint.proceed();
