@@ -65,7 +65,13 @@ As you can notice, we already have a lot of things in this project, but there ar
 * Start all services -> sudo sh start_all.sh  
 * Authenticate -> curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"  
 
-* Get data using the access_token -> localhost:8018/path?access_token={access_token} or curl -H "Authorization: Bearer $TOKEN" "localhost:8018/path"
+* Get data using the access_token -> localhost:8018/accounts?access_token={access_token} or curl -H "Authorization: Bearer $TOKEN" "localhost:8018/path"
 
-### Monitoring stream				
-http://localhost:8021/turbine.stream
+### URLs
+Monitoring stream - http://localhost:8021/turbine.stream
+
+To dos http://localhost:8015/todos
+
+Users http://localhost:8016/accounts
+
+Eurreka server - http://localhost:8010/
