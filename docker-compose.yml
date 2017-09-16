@@ -1,14 +1,38 @@
 version: '2'
 
 services:
-  app:
+  proxy:
+    build: proxy/
+    ports:
+    - 80:80
+    networks:
+    - net
+    depends_on:
+    - reminder
+    hostname: proxy
+    container_name: proxy
+
+  reminder:
     build: remainder-service/
     ports:
     - 8015:8015
     networks:
     - net
     hostname: reminder
-    container_name: reminder
+
+  elk:
+    image: sebp/elk:latest
+    ports:
+    - 5601:5601
+    - 9200:9200
+    - 5044:5044
+    - 5000:5000
+    networks:
+    - net
+    volumes:
+    - todo_elk:/var/lib/elasticsearch
+    hostname: elk
+    container_name: elk
 
 
 volumes:

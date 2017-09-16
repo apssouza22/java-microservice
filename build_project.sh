@@ -2,9 +2,9 @@
 
 ########################################################################
 # title:          Build Complete Project
-# author:         Gary A. Stafford (https://programmaticponderings.com)
-# url:            https://github.com/garystafford/sprint-music-docker
-# description:    Clone and build complete Spring Music Docker project
+# author:         Alexsandro souza (https://apssouza.com.br)
+# url:            https://github.com/apssouza22
+# description:    Build complete Java microservice project
 # usage:          sh ./build_project.sh
 ########################################################################
 
@@ -21,5 +21,8 @@ docker volume create --name todo_elk
 docker network create -d bridge todo_net
 
 # build images and orchestrate start-up of containers (in this order)
-docker-compose -p todo up -d app 
+# -p = --project-name
+docker-compose -p todo up -d elk && sleep 15 \
+  && docker-compose -p todo up -d --scale reminder=3 \
+  && docker-compose -p todo up -d proxy && sleep 15
 
