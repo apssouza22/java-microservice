@@ -1,0 +1,30 @@
+output:
+  logstash:
+    enabled: true
+    hosts:
+      - elk:5044
+    timeout: 15
+    tls:
+      certificate_authorities:
+      - /etc/pki/tls/certs/logstash-beats.crt
+
+filebeat:
+  prospectors:
+    -
+      paths:
+        - /var/log/syslog
+        - /var/log/auth.log
+      document_type: syslog
+    -
+      paths:
+        - /var/log/spring-music.log
+      document_type: log4j
+      multiline:
+        pattern: '^[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}'
+        negate: true
+        match: after
+    -
+      paths:
+        - /usr/local/tomcat/logs/*.out
+        - /usr/local/tomcat/logs/*.log
+      document_type: tomcat

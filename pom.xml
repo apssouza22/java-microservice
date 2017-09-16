@@ -26,7 +26,6 @@
         <module>mail-service</module>
         <module>kafka</module>
         <module>eventsourcing</module>
-        <module>remainder-service</module>
         <module>jmx-monitoring</module>
     </modules>
 

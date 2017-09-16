@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: eureka-example
+    name: admin
   cloud:
     config:
       enabled: false

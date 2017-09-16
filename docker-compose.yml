@@ -1,6 +1,98 @@
 version: '2'
 
 services:
+
+  eureka:
+    build: eureka-server/
+    ports:
+      - 8010:8010
+    networks:
+      - net
+    hostname: eureka
+    container_name: eureka  
+
+  reminder:
+    build: remainder-service/
+    ports:
+      - 8015:8015
+    networks:
+      - net
+    depends_on:
+      - eureka
+    hostname: reminder
+
+  user:
+    build: user-service/
+    ports:
+      - 8016:8016
+    networks:
+      - net
+    depends_on:
+      - eureka
+    hostname: user
+    container_name: user
+
+  oauth:
+    build: oauth-server/
+    ports:
+    - 8017:8017
+    networks:
+    - net
+    depends_on:
+    - eureka
+    - user
+    hostname: oauth
+    container_name: oauth  
+    
+
+  gateway:
+    build: api-gateway/
+    ports:
+    - 8018:8018
+    networks:
+    - net
+    depends_on:
+    - eureka
+    hostname: gateway
+
+  mail:
+    build: mail-service/
+    ports:
+    - 8020:8020
+    networks:
+    - net
+    depends_on:
+    - eureka
+    hostname: mail
+    container_name: mail
+
+  turbine:
+    build: turbine-monitoring/
+    ports:
+    - 8021:8021
+    networks:
+    - net
+    depends_on:
+    - eureka
+    hostname: turbine
+    container_name: turbine
+
+  admin:
+    build:
+      context: ./admin-server
+      dockerfile: ./Dockerfile
+    depends_on:
+      - eureka
+    container_name: admin
+    ports:
+     - 8026:8026
+    networks:
+     - net
+    environment:
+      - EUREKA_SERVICE_URL=http://eureka:8010
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - LOGGING_FILE=/tmp/admin.log
+
   proxy:
     build: proxy/
     ports:
@@ -8,17 +100,9 @@ services:
     networks:
     - net
     depends_on:
-    - reminder
+    - gateway
     hostname: proxy
-    container_name: proxy
-
-  reminder:
-    build: remainder-service/
-    ports:
-    - 8015:8015
-    networks:
-    - net
-    hostname: reminder
+    container_name: proxy  
 
   elk:
     image: sebp/elk:latest
