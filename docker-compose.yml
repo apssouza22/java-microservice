@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  app:
+    build: remainder-service/
+    ports:
+    - 8015:8015
+    networks:
+    - net
+    hostname: reminder
+    container_name: reminder
+
+
+volumes:
+  todo_data:
+    external: true
+  todo_elk:
+    external: true
+
+networks:
+  net:
+    driver: bridge
