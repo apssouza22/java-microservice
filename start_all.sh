@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 echo "Starting all services..."
 
 echo "Starting Eureka server, port 8010..."

@@ -22,7 +22,5 @@ docker network create -d bridge todo_net
 
 # build images and orchestrate start-up of containers (in this order)
 # -p = --project-name
-docker-compose -p todo up -d elk && sleep 15 \
-  && docker-compose -p todo up -d --scale reminder=3 \
-  && docker-compose -p todo up -d proxy && sleep 15
+docker-compose -p todo up 
 

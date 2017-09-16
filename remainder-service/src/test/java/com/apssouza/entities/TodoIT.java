@@ -5,6 +5,7 @@
  */
 package com.apssouza.entities;
 
+import com.apssouza.configuration.RepositoryConfiguration;
 import java.util.Iterator;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -14,14 +15,17 @@ import javax.validation.ValidatorFactory;
 import org.junit.Assert;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
  * @author apssouza
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringBootTest(classes = {RepositoryConfiguration.class})
-public class TodoTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = {RepositoryConfiguration.class})
+public class TodoIT {
    
     
     @Test

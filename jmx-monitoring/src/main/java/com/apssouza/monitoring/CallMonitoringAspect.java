@@ -16,8 +16,6 @@
 package com.apssouza.monitoring;
 
 import java.lang.reflect.Method;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -33,12 +31,8 @@ import org.springframework.util.StopWatch;
  * Simple aspect that monitors call count and call invocation time. It uses JMX annotations and therefore can be
  * monitored using any JMX console such as the jConsole
  *
- * @author Rob Harrop
- * @author Juergen Hoeller
- * @author Michael Isvy
- * @since 2.5
  */
-@ManagedResource(objectName = "petclinic:type=CallMonitor")
+@ManagedResource(objectName = "apssouza:type=CallMonitor")
 @Aspect
 public class CallMonitoringAspect {
 
@@ -86,7 +80,7 @@ public class CallMonitoringAspect {
     }
 
 
-    @Around("@annotation(Monitored)")
+    @Around("@annotation(com.apssouza.monitoring.Monitored)")
     public Object invoke(ProceedingJoinPoint joinPoint) throws Throwable {
         System.out.println("callend");
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
