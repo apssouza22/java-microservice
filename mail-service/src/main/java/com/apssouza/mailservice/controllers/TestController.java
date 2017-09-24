@@ -32,19 +32,19 @@ public class TestController {
     @Autowired
     KafkaEventConsumer listener;
 
-    @RequestMapping("send")
+    @RequestMapping("event/publish")
     public String send() {
         UUID uuid = UUID.randomUUID();
         Email email = new Email("alex", "apssouza@gmail.com");
+        producer.sendEvent(new EmailCreatedEvent(uuid, email));
 //        KafkaIntegrationEvent kafkaIntegrationEvent = new KafkaIntegrationEvent(
 //                new EmailCreatedEvent(uuid, email),
 //                EmailCreatedEvent.class.getName()
 //        );
-        producer.sendEvent(new EmailCreatedEvent(uuid, email));
-        return "sent2";
+        return "sent";
     }
 
-    @RequestMapping("test")
+    @RequestMapping("commander")
     public String index() {
         try {
             UUID uuid = UUID.randomUUID();
@@ -58,7 +58,7 @@ public class TestController {
             Logger.getLogger(TestController.class.getName())
                     .log(Level.SEVERE, null, ex);
         }
-        return "test";
+        return "command executed successfully";
     }
 
 }

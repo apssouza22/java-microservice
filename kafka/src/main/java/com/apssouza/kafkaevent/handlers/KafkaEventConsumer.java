@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import com.apssouza.eventsourcing.events.AbstractDomainEvent;
+import org.apache.log4j.Logger;
 
 /**
  * Email Kafka event consumer
@@ -13,6 +14,8 @@ import com.apssouza.eventsourcing.events.AbstractDomainEvent;
 @Component
 public class KafkaEventConsumer {
 
+    private static final Logger LOG = Logger.getLogger(KafkaEventConsumer.class);
+    
     @Autowired
     public ApplicationEventPublisher eventPublisher;
     
@@ -22,7 +25,7 @@ public class KafkaEventConsumer {
             containerFactory = "emailKafkaListenerContainerFactory"
     )
     public void emailListener(AbstractDomainEvent emailEvent) {
-        System.out.println("Recieved event " + emailEvent.getEventClass());
+        LOG.info("Recieved event " + emailEvent.getEventClass());
         
         eventPublisher.publishEvent(emailEvent);
     }

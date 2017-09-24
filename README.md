@@ -77,3 +77,7 @@ docker exec -it container-name sh /usr/local/tomcat/bin/shutdown.sh
 docker exec -it container-name cat /usr/local/tomcat/logs/catalina.out
 docker logs container-name
 ```
+
+## TODO
+* Integrate mail service to reminder-service
+* Link Kafka container and Elk

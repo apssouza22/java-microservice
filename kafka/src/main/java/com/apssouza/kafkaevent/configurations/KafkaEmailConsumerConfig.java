@@ -39,8 +39,10 @@ public class KafkaEmailConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, AbstractDomainEvent> emailKafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, AbstractDomainEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, AbstractDomainEvent> 
+        emailKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, AbstractDomainEvent> factory 
+                = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(emailConsumerFactory());
         return factory;
     }
