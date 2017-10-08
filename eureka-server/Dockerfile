@@ -14,7 +14,7 @@ RUN apt-get update -qq \
   && touch /var/log/todo.log \
   && chmod 666 /var/log/todo.log 
 
- ADD target/commmon-eureka-server-1.jar /app.jar
+ ADD target/eureka-server.jar /app.jar
 
 
 # install Filebeat

@@ -27,6 +27,7 @@
         <module>kafka</module>
         <module>eventsourcing</module>
         <module>jmx-monitoring</module>
+        <module>config-server</module>
     </modules>
 
     <dependencies>
@@ -42,6 +43,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
+            
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>

@@ -1,0 +1,14 @@
+---
+spring.profiles.active: native
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/apssouza22/java-microservice
+          searchPaths: config-data
+        # "native" is used when the native profile is active, for local tests with a classpath repo:
+        native:
+          searchLocations: classpath:offline-repository/
+server:
+  port: 8888

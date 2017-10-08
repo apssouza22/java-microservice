@@ -1,0 +1,57 @@
+---
+# This default profile is used when running a single instance completely standalone:
+spring:
+  boot:
+    admin:
+      url: http://admin:8026,http://localhost:8026
+  profiles: default
+  
+server:
+  port: 8010  
+  
+eureka:
+  instance:
+    hostname: localhost  
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/    
+
+# primary, secondary, and tertiary illustrate running 3 intercommunicating instances.  This example has them running
+# side-by-side on localhost -- which is unrealistic in production -- but does illustrate how multiple instances collaborate.
+# Run by opening 3 separate command prompts:
+# java -jar -Dspring.profiles.active=primary target/commmon-eureka-server-1.jar
+# java -jar -Dspring.profiles.active=secondary target/commmon-eureka-server-1.jar
+# java -jar -Dspring.profiles.active=tertiary target/commmon-eureka-server-1.jar
+
+---
+spring:
+  profiles: primary
+server:
+  port: 8011  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8012/eureka, http://localhost:8013/eureka/
+
+---
+spring:
+  profiles: secondary
+server:
+  port: 8012  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8013/eureka/,http://localhost:8011/eureka/
+
+---
+spring:
+  profiles: tertiary
+server:
+  port: 8013  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8011/eureka/,http://localhost:8012/eureka/
+      

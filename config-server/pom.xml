@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.test</groupId>
-    <artifactId>eureka-server</artifactId>
+    <artifactId>config-server</artifactId>
     <version>1</version>
     <packaging>jar</packaging>
 
-    <name>eureka-server</name>
-    <description>Eureka server - service discovery</description>
+    <name>config-server</name>
+    <description>Spring Cloud Config Server suitable for use with most course labs</description>
 
     <parent>
         <groupId>org.springframework.cloud</groupId>
@@ -20,24 +20,29 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>com.apssouza.discovery.Application</start-class>
+        <start-class>demo.Application</start-class>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka-server</artifactId>
+            <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
+		
         <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>1.5.4</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
+
+        <!-- Allow for automatic restarts when classpath contents change. -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
         </dependency>
+
     </dependencies>
 	
     <build>

@@ -33,7 +33,7 @@ CQRS, REST, Web Sockets and all developed using Java 8.
 * Get data using the access_token -> localhost:8018/accounts?access_token={access_token} or curl -H "Authorization: Bearer $TOKEN" "localhost:8018/path"
 
 ### URLs
-Monitoring stream - http://localhost:8021/turbine.stream
+Monitoring stream - http://localhost:8022/turbine.stream
 
 To dos http://localhost:8015/todos
 
@@ -80,4 +80,4 @@ docker logs container-name
 
 ## TODO
 * Integrate mail service to reminder-service
-* Link Kafka container and Elk
+* Add spring config support
