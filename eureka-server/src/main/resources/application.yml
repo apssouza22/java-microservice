@@ -1,9 +1,16 @@
 ---
 # This default profile is used when running a single instance completely standalone:
 spring:
+  application:
+    name: eurekaserver
+  boot:
+    admin:
+      url: http://admin:8026,http://localhost:8026
   profiles: default
+  
 server:
   port: 8010  
+  
 eureka:
   instance:
     hostname: localhost  

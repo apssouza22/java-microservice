@@ -19,6 +19,7 @@ services:
       - net
     depends_on:
       - eureka
+      - admin
     hostname: reminder
 
   user:
@@ -29,6 +30,7 @@ services:
       - net
     depends_on:
       - eureka
+      - admin
     hostname: user
     container_name: user
 
@@ -41,6 +43,7 @@ services:
     depends_on:
       - eureka
       - user
+      - admin
     hostname: oauth
     container_name: oauth
     
@@ -53,6 +56,7 @@ services:
       - net
     depends_on:
       - eureka
+      - admin
     hostname: gateway
 
   mail:
@@ -63,13 +67,14 @@ services:
       - net
     depends_on:
       - eureka
+      - admin
     hostname: mail
     container_name: mail
 
   turbine:
     build: turbine-monitoring/
     ports:
-      - 8021:8021
+      - 8022:8022
     networks:
       - net
     depends_on:
@@ -122,6 +127,8 @@ services:
     image: wurstmeister/zookeeper
     ports:
       - 2181:2181
+    networks:
+      - net
       
   kafka:
     image: wurstmeister/kafka
@@ -135,6 +142,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     hostname: kafka
     container_name: kafka
+    networks:
+      - net
 
 volumes:
   todo_data:

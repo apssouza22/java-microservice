@@ -95,6 +95,12 @@
             <scope>test</scope>
         </dependency>
         
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+        
     </dependencies>
 
     <build>
