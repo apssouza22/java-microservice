@@ -51,13 +51,5 @@ public class OutOfContainerTest {
 			.andExpect(status().isOk())
 			.andReturn() 
 			;
-		
-		String returned = result.getResponse().getContentAsString();
-
-		//	Check that the test values from the yml are present in the properties:
-		assertTrue(returned.contains("fromApplication:"));
-		assertTrue(returned.contains("applicationValue"));
-		assertTrue(returned.contains("fromTestConfig:"));
-		assertTrue(returned.contains("testConfigValue"));
 	}
 }

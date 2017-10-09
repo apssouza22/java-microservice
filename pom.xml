@@ -28,6 +28,7 @@
         <module>eventsourcing</module>
         <module>jmx-monitoring</module>
         <module>config-server</module>
+        <module>remainder-service</module>
     </modules>
 
     <dependencies>

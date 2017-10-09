@@ -46,6 +46,9 @@ Boot admin - http://localhost:8026
 docker-compose -p todo up
 docker-compose -p todo down
 
+## OBS
+* In order to make ELK work we need to reserve 3GB RAM to docker(docker settings - advanced - memory )
+
 ## Useful Commands
 
 ### Stopping, Starting, Restarting...

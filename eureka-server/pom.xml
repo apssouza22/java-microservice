@@ -34,10 +34,10 @@
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <version>1.5.4</version>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
+        </dependency>-->
     </dependencies>
 	
     <build>
