@@ -1,5 +1,8 @@
 ---
 # Items that apply to ALL profiles:
+spring:
+  application:
+    name: turbine
 eureka:
   client:
     serviceUrl:
