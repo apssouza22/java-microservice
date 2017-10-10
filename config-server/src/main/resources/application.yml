@@ -1,5 +1,7 @@
 ---
 spring.profiles.active: native
+spring.application.name: config-server
+server.port: 8888
 spring:
   cloud:
     config:
@@ -10,5 +12,3 @@ spring:
         # "native" is used when the native profile is active, for local tests with a classpath repo:
         native:
           searchLocations: classpath:offline-repository/
-server:
-  port: 8888

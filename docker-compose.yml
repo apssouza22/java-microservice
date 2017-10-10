@@ -1,6 +1,14 @@
 version: '2'
 
 services:
+  config:
+    build: config-server/
+    ports:
+      - 8888:8888
+    networks:
+      - net
+    hostname: config
+    container_name: config 
 
   eureka:
     build: eureka-server/
@@ -8,6 +16,8 @@ services:
       - 8010:8010
     networks:
       - net
+    depends_on:
+      - config
     hostname: eureka
     container_name: eureka  
 
