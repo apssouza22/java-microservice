@@ -9,6 +9,7 @@ services:
       - net
     hostname: config
     container_name: config 
+    command: ["./wait-for-it.sh","elk:9200","--timeout=500","--","/usr/local/bin/start.sh"]
 
   eureka:
     build: eureka-server/
@@ -20,6 +21,7 @@ services:
       - config
     hostname: eureka
     container_name: eureka  
+    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
 
   reminder:
     build: remainder-service/
@@ -31,6 +33,7 @@ services:
       - eureka
       - admin
     hostname: reminder
+    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
 
   user:
     build: user-service/
@@ -43,6 +46,7 @@ services:
       - admin
     hostname: user
     container_name: user
+    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
 
   oauth:
     build: oauth-server/
@@ -56,6 +60,7 @@ services:
       - admin
     hostname: oauth
     container_name: oauth
+    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
     
 
   gateway:
@@ -68,6 +73,7 @@ services:
       - eureka
       - admin
     hostname: gateway
+    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
 
   mail:
     build: mail-service/
@@ -80,6 +86,7 @@ services:
       - admin
     hostname: mail
     container_name: mail
+    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
 
   turbine:
     build: turbine-monitoring/
@@ -91,6 +98,7 @@ services:
       - eureka
     hostname: turbine
     container_name: turbine
+    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
 
   admin:
     build:
@@ -107,6 +115,7 @@ services:
       - EUREKA_SERVICE_URL=http://eureka:8010
       - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
       - LOGGING_FILE=/tmp/admin.log
+    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
 
   proxy:
     build: proxy/
@@ -139,11 +148,13 @@ services:
       - 2181:2181
     networks:
       - net
-      
+    
   kafka:
     image: wurstmeister/kafka
     ports:
       - 9092
+    depends_on:
+      - zookeeper
     environment:
       KAFKA_ADVERTISED_HOST_NAME: 192.168.0.178 #ip local, not use localhost
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"

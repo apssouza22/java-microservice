@@ -15,7 +15,8 @@ RUN apt-get update -qq \
   && chmod 666 /var/log/todo.log 
 
  ADD target/oauth2-server-0.0.1-SNAPSHOT.jar /app.jar
-
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh wait-for-it.sh
+RUN bash -c 'chmod +x wait-for-it.sh'
 
 # install Filebeat
 ENV FILEBEAT_VERSION=filebeat_1.2.3_amd64.deb
