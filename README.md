@@ -26,6 +26,8 @@ CQRS, REST, Web Sockets and all developed using Java 8.
 ### Using Docker
 * run package-projects.sh
 * run docker-orchestrate.sh
+* docker-compose -f infra-docker-compose.yml -p todo up
+* docker-compose -p todo up 
 
 ### Accessing the services
 * Authenticate -> curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"  
@@ -35,13 +37,23 @@ CQRS, REST, Web Sockets and all developed using Java 8.
 ### URLs
 Monitoring stream - http://localhost:8022/turbine.stream
 
-To dos http://localhost:8015/todos
+To-dos http://localhost:8015/todos
 
 Users http://localhost:8016/accounts 
 
-Eurreka server - http://localhost:8010/
+Eureka server - http://localhost:8010/
+
+Config server - http://localhost:8888/
 
 Boot admin - http://localhost:8026
+
+Kimbana - http://localhost:5601
+
+Elasticsearch Info: http://localhost:9200
+
+Elasticsearch Status: http://localhost:9200/_status?pretty
+
+NGINX Status: localhost/nginx_status
 
 docker-compose -p todo up
 docker-compose -p todo down

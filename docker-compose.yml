@@ -9,7 +9,9 @@ services:
       - net
     hostname: config
     container_name: config 
-    command: ["./wait-for-it.sh","elk:9200","--timeout=500","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+      - kafka
 
   eureka:
     build: eureka-server/
@@ -21,7 +23,9 @@ services:
       - config
     hostname: eureka
     container_name: eureka  
-    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    command: ["./wait-for-it.sh","config:8888","--timeout=100","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
 
   reminder:
     build: remainder-service/
@@ -33,8 +37,10 @@ services:
       - eureka
       - admin
     hostname: reminder
-    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
-
+    command: ["./wait-for-it.sh","config:8888","--timeout=100","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+      - kafka
   user:
     build: user-service/
     ports:
@@ -47,6 +53,9 @@ services:
     hostname: user
     container_name: user
     command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+      - kafka
 
   oauth:
     build: oauth-server/
@@ -61,6 +70,8 @@ services:
     hostname: oauth
     container_name: oauth
     command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
     
 
   gateway:
@@ -74,6 +85,8 @@ services:
       - admin
     hostname: gateway
     command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
 
   mail:
     build: mail-service/
@@ -87,18 +100,9 @@ services:
     hostname: mail
     container_name: mail
     command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
-
-  turbine:
-    build: turbine-monitoring/
-    ports:
-      - 8022:8022
-    networks:
-      - net
-    depends_on:
-      - eureka
-    hostname: turbine
-    container_name: turbine
-    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+      - kafka
 
   admin:
     build:
@@ -116,6 +120,8 @@ services:
       - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
       - LOGGING_FILE=/tmp/admin.log
     command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
 
   proxy:
     build: proxy/
@@ -127,44 +133,6 @@ services:
       - gateway
     hostname: proxy
     container_name: proxy  
-
-  elk:
-    image: sebp/elk:latest
-    ports:
-      - 5601:5601
-      - 9200:9200
-      - 5044:5044
-      - 5000:5000
-    networks:
-      - net
-    volumes:
-      - todo_elk:/var/lib/elasticsearch
-    hostname: elk
-    container_name: elk
-    
-  zookeeper:
-    image: wurstmeister/zookeeper
-    ports:
-      - 2181:2181
-    networks:
-      - net
-    
-  kafka:
-    image: wurstmeister/kafka
-    ports:
-      - 9092
-    depends_on:
-      - zookeeper
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.178 #ip local, not use localhost
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-      KAFKA_CREATE_TOPICS: "todo-mail:1:1"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    hostname: kafka
-    container_name: kafka
-    networks:
-      - net
 
 volumes:
   todo_data:

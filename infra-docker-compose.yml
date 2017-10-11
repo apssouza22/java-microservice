@@ -1,0 +1,61 @@
+version: '2'
+
+services:
+  elk:
+    image: sebp/elk:latest
+    ports:
+      - 5601:5601
+      - 9200:9200
+      - 5044:5044
+      - 5000:5000
+    networks:
+      - net
+    volumes:
+      - todo_elk:/var/lib/elasticsearch
+    hostname: elk
+    container_name: elk
+    
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+    networks:
+      - net
+    
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - 9092
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1 #ip local, not use localhost
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_CREATE_TOPICS: "todo-mail:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    hostname: kafka
+    container_name: kafka
+    networks:
+      - net
+      
+  turbine:
+    build: turbine-monitoring/
+    ports:
+      - 8022:8022
+    networks:
+      - net
+    hostname: turbine
+    container_name: turbine
+    command: ["./wait-for-it.sh","elk:9200","--timeout=300","--","/usr/local/bin/start.sh"]
+
+
+volumes:
+  todo_data:
+    external: true
+  todo_elk:
+    external: true
+
+networks:
+  net:
+    driver: bridge
