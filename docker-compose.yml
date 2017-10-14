@@ -28,7 +28,7 @@ services:
       - elk
 
   reminder:
-    build: remainder-service/
+    image: todo/reminder-service
     ports:
       - 8015:8015
     networks:
@@ -41,6 +41,7 @@ services:
     external_links:
       - elk
       - kafka
+      
   user:
     build: user-service/
     ports:

@@ -17,9 +17,10 @@
     <description>Parent for all to do microservices</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
         <spring-cloud.version>Dalston.SR1</spring-cloud.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
     </properties>
 
     <modules>
@@ -55,7 +56,7 @@
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <version>1.5.4</version>
         </dependency>
-
+        
 
         <dependency>
             <groupId>junit</groupId>
