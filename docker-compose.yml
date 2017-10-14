@@ -37,7 +37,7 @@ services:
       - eureka
       - admin
     hostname: reminder
-    command: ["./wait-for-it.sh","config:8888","--timeout=100","--","/usr/local/bin/start.sh"]
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
     external_links:
       - elk
       - kafka
@@ -53,7 +53,7 @@ services:
       - admin
     hostname: user
     container_name: user
-    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
     external_links:
       - elk
       - kafka
@@ -70,7 +70,7 @@ services:
       - admin
     hostname: oauth
     container_name: oauth
-    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
     external_links:
       - elk
     
@@ -85,7 +85,7 @@ services:
       - eureka
       - admin
     hostname: gateway
-    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
     external_links:
       - elk
 
@@ -100,7 +100,7 @@ services:
       - admin
     hostname: mail
     container_name: mail
-    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
     external_links:
       - elk
       - kafka
@@ -120,7 +120,7 @@ services:
       - EUREKA_SERVICE_URL=http://eureka:8010
       - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
       - LOGGING_FILE=/tmp/admin.log
-    command: ["./wait-for-it.sh","config:8888","--timeout=500","--","/usr/local/bin/start.sh"]
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
     external_links:
       - elk
 
@@ -134,6 +134,7 @@ services:
       - gateway
     hostname: proxy
     container_name: proxy  
+    command: ["./wait-for-it.sh","gateway:8018","--timeout=150","--","/usr/local/bin/start.sh"]
 
 volumes:
   todo_data:
