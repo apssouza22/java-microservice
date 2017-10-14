@@ -1,31 +1,3 @@
-server:
-    port: 8026
-
 spring:
   application:
     name: admin
-  cloud:
-    config:
-      enabled: false
-# tag::configuration-eureka[]
-eureka:  #<1>
-  instance:
-    leaseRenewalIntervalInSeconds: 10
-  client:
-    registryFetchIntervalSeconds: 5
-    serviceUrl:
-      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8010}/eureka/
-
-management.security.enabled: false  #<2>
-# end::configuration-eureka[]
-
-# tag::configuration-ui-hystrix[]
-spring.boot.admin.routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
-# end::configuration-ui-hystrix[]
-
-# tag::configuration-ui-turbine[]
-spring.boot.admin.turbine:
-  clusters: default
-  location: turbine  #<1>
-# end::configuration-ui-turbine[]
-
