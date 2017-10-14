@@ -19,11 +19,6 @@ CQRS, REST, Web Sockets and all developed using Java 8.
 
 ## How to use
 
-### Spring boot embedded tomcat
-* run package-projects.sh
-* Start all services -> sudo sh start_all.sh  
-
-### Using Docker
 * run package-projects.sh
 * run docker-orchestrate.sh
 * docker-compose -f infra-docker-compose.yml -p todo up
