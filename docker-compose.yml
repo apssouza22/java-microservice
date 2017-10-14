@@ -2,7 +2,7 @@ version: '2'
 
 services:
   config:
-    build: config-server/
+    image: todo/config-server
     ports:
       - 8888:8888
     networks:
@@ -14,7 +14,7 @@ services:
       - kafka
 
   eureka:
-    build: eureka-server/
+    image: todo/eureka-server
     ports:
       - 8010:8010
     networks:
@@ -43,7 +43,7 @@ services:
       - kafka
       
   user:
-    build: user-service/
+    image: todo/user-service
     ports:
       - 8016:8016
     networks:
@@ -59,7 +59,7 @@ services:
       - kafka
 
   oauth:
-    build: oauth-server/
+    image: todo/oauth-server
     ports:
       - 8017:8017
     networks:
@@ -76,7 +76,7 @@ services:
     
 
   gateway:
-    build: api-gateway/
+    image: todo/api-gateway
     ports:
       - 8018:8018
     networks:
@@ -90,7 +90,7 @@ services:
       - elk
 
   mail:
-    build: mail-service/
+    image: todo/mail-service
     ports:
       - 8020:8020
     networks:
@@ -106,9 +106,7 @@ services:
       - kafka
 
   admin:
-    build:
-      context: ./admin-server
-      dockerfile: ./Dockerfile
+    image: todo/admin-server
     depends_on:
       - eureka
     container_name: admin

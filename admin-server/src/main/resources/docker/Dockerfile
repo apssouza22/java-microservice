@@ -14,7 +14,7 @@ RUN apt-get update -qq \
   && touch /var/log/todo.log \
   && chmod 666 /var/log/todo.log 
 
- ADD target/mailservice-0.0.1-SNAPSHOT.jar /app.jar
+ADD application/lib/springboot-webapp.jar /app.jar
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh wait-for-it.sh
 RUN bash -c 'chmod +x wait-for-it.sh'
 

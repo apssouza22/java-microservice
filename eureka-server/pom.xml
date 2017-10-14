@@ -49,4 +49,102 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>dockerimage</id>
+            <properties>
+                <docker.image.name>todo/eureka-server</docker.image.name>
+                <docker.image.src.root>src/main/resources/docker</docker.image.src.root>
+                <docker.build.directory>${project.build.directory}/dockerimgbuild</docker.build.directory>
+                <docker.file.name>Dockerfile</docker.file.name>
+            </properties>
+            <build>
+                <plugins>
+                    <!--
+                        Copy the directory containing static content to build directory.
+                    -->
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${docker.build.directory}</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${docker.image.src.root}</directory>
+                                            <filtering>false</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!--
+                        Copy the JAR file containing the Spring Boot application
+                        to the application/lib directory.
+                    -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>${project.groupId}</groupId>
+                                            <artifactId>${project.artifactId}</artifactId>
+                                            <version>${project.version}</version>
+                                            <type>jar</type>
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>${docker.build.directory}/application/lib</outputDirectory>
+                                            <destFileName>springboot-webapp.jar</destFileName>
+                                        </artifactItem>
+                                        <!-- Add additional artifacts to be packaged in the Docker image here. -->
+
+                                    </artifactItems>
+                                    <outputDirectory>${docker.build.directory}</outputDirectory>
+                                    <overWriteReleases>true</overWriteReleases>
+                                    <overWriteSnapshots>true</overWriteSnapshots>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!--
+                        Build the Docker image.
+                    -->
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.19.0</version>
+                        <configuration>
+                            <!--<dockerHost>http://localhost:2376</dockerHost>-->
+                            <dockerHost>unix:///var/run/docker.sock</dockerHost>
+                            <images>
+                                <image>
+                                    <name>${docker.image.name}</name>
+                                    <build>
+                                        <tags>
+                                            <tag>latest</tag>
+                                        </tags>
+                                        <dockerFile>${docker.build.directory}/${docker.file.name}</dockerFile>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
