@@ -1,0 +1,16 @@
+node {
+   stage('Fetch changes') {
+      git 'https://github.com/apssouza22/java-microservice.git'
+   }
+   stage('Build image') {
+      // Run the maven build
+      if (isUnix()) {
+         sh "mvn -f ./eureka-server/pom.xml -Pdockerimage docker:build "
+      } else {
+         echo "Not ready for windows"
+      }
+   }
+   stage('Deploy ECS') {
+      echo "TODO deploy on AWS"
+   }
+}
