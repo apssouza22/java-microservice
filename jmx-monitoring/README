@@ -1,0 +1,5 @@
+# JMX monitoring module
+
+On this module we show how to export managed been easily using JMX. We implemented
+a monitoring functionality using Aspect, Annotation and JMX, with the possibility of
+enable /disable and check the values real time using any JMX client.

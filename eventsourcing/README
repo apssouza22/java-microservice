@@ -1,45 +1,5 @@
-#Mail service
+# Eventsourcing module
 
-Events  
-email created
-email sent 
-email delivered
-email read
-email delivery failed
-email answered
-
-email entity
-    id
-    from
-    to 
-    body
-    title
-    state
-    created_at
-    delivered_at
-    click[
-        {
-            clicked_at
-            link
-        }
-    ]
-    reply[
-        {
-            body
-            replied_at
-        }
-    ]
-
-Archtecture 
-    Event centric
-    CQRS
-    EventSourcing 
-    Mongo db
-    
-
-
-
- 
-
-
+This module contains important components to work with event centric application.
+Here you will find  event serializer and event store, using relational database.
 

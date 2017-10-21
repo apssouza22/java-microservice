@@ -1,0 +1,5 @@
+# Config server
+
+In the Config Server we have a central place to manage external properties for applications across all environments.
+We are using Spring config to deal with configuration of our services.
+

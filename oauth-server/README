@@ -1,9 +1,12 @@
-# To do service 
+# Oauth server
 
-Here we are working with:
-Oauth2
-Jwt
-NO encryption applied 
+The OAuth server  enables a third-party app to obtain limited access to an HTTP service. 
+Instead of using the resource owner's credentials to access a protected resource, 
+the client obtains an access token issued by this authorization server. 
+
+We are issuing a token of JWT (JSON Web Token) format  that defines a compact and 
+self-contained way for securely transmitting information between parties as a JSON object.
+
 
 To authenticate:
 curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"

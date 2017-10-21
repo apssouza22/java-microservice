@@ -1,5 +1,5 @@
-# angular2-jwt-authentication-example
+# Webapp 
 
-Angular 2 JWT Authentication Example
+This is the front-end of our application. It is done using Angular 2
 
-To see a demo and further details go to http://jasonwatmore.com/post/2016/08/16/angular-2-jwt-authentication-example-tutorial
+## It's not fully working yet.

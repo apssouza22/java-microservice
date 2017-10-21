@@ -7,7 +7,9 @@ package com.apssouza.monitoring;
 public class MonitoringInvokedEvent {
 
     private final long duration;
+    
     private final String methodName;
+
     public MonitoringInvokedEvent(String methodName, long duration) {
         this.methodName = methodName;
         this.duration = duration;
@@ -20,5 +22,5 @@ public class MonitoringInvokedEvent {
     public String getMethodName() {
         return methodName;
     }
-    
+
 }

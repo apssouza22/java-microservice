@@ -1,15 +1,19 @@
-# To do service 
+# Reminder service
+
+This is the core of our To-Do project, here we have all functionality related to the To-do.
+On this server we tried to add many cool Java things in order to make the project nicer.
 
 Here we are working with:
 Events
 EntityListeners
 AOP
-Optional Extensivelly
-Integration tests
+Optional, extensively
 Monitoring
-OAuth2
 Defensive copying
 Maven Multimodules 
-External message
-
+External messages
+Socket
+Hibernate
+Spring data
+Custom Annotations
 

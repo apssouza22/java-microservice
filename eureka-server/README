@@ -1,0 +1,4 @@
+# Eureka server
+
+Server-side service discovery allows services to find and communicate with each other without hard coding hostname and port. 
+The only ‘fixed point’ in such an architecture consists of a service registry with which each service has to register.

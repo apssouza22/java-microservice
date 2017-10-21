@@ -1,6 +1,11 @@
-# Aggregates 
+# API Gateway 
 
-Here we are working with:
-Oauth2 source
-Jwt
-Histryx 
+We are implementing an API gateway pattern to our project. 
+
+This is the single entry point for all clients. The API gateway handles the requests.
+At the moment we have in this layer only the authentication using JWT then the requests are simply proxied/routed to the appropriate service.
+
+## To-do
+
+* Add cache handling
+

@@ -65,12 +65,15 @@ docker-compose -p todo down
 
 ## OBS
 * In order to make ELK work we need to reserve 3GB RAM to docker(docker settings - advanced - memory )
-
+* Have a look at the Readme of each service/ module to see the explanation about it.
 ## Useful Commands
 
 ### Stopping, Starting, Restarting...
 
 ```
+# running separated container
+docker run -d -p 8026:8026  --network todo_net --add-host eureka:172.19.0.3 todo/admin-server
+
 # orchestrate start-up of containers, tailing the logs...
 docker-compose -p music up -d container-name && docker logs elk --follow # ^C to break
 
@@ -100,4 +103,6 @@ docker logs container-name
 
 ## TODO
 * Integrate mail service to reminder-service
-* Add spring config support
+* Integrate turbine in the Admin dashboard
+* Added a readme for each microservices and modules
+* Test the integration between the Filebeat and ELK

@@ -1,5 +1,3 @@
-# To do service 
+#  User service
 
-Here we are working with:
-Oauth2
-Jwt
+This service is responsible for dealing with users of our system, we use this service to login and user informations
