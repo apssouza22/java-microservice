@@ -1,6 +1,6 @@
 # Hands-on Microservices with Java
 
-Read the post talking about this project https://medium.com/hands-on-microservices-with-java/hands-on-microservices-with-java-e8a5b5b022ee
+Read the post talking about this [project](https://medium.com/hands-on-microservices-with-java/hands-on-microservices-with-java-e8a5b5b022ee)
  
 “Microservices Architecture” example with many concepts and technologies put in place and combined within a whole system composed with different microservices. 
 Some patterns, tools and technologies that you will see in this system:
@@ -12,7 +12,7 @@ Log management with Elastic search, Logstash and Kibana (ELK), Server load balan
 Infrastructure management with Docker-compose, JMX application monitoring,
 Security with Spring Security OAuth, Oauth2 with JWT, Aspect Oriented Programing, 
 Distributed events with Kafka, Maven Multimodule project, Event Sourcing, 
-CQRS, REST, Web Sockets and all developed using Java 8.
+CQRS, REST, Web Sockets, Continuous deploy with Jenkins, and all developed using Java 8.
 
 ![Alt text](microservices-architecture.jpg?raw=true "microservices architecture")
 
@@ -21,8 +21,18 @@ CQRS, REST, Web Sockets and all developed using Java 8.
 
 * run package-projects.sh
 * run docker-orchestrate.sh
-* docker-compose -f infra-docker-compose.yml -p todo up
+* docker-compose -f infra-docker-compose.yml -p todo up (wait until all services be up)
 * docker-compose -p todo up 
+
+## Continuous deploy using Jenkins Pipeline
+We have created a docker image in order to have continuous deploy in our project [here](https://github.com/apssouza22/build-deploy).
+
+This image will contain all necessary to build our project, create the Docker images and 
+deploy on AWS using ECS containers. 
+
+To make this integration easy, we have added the `Jenkinsfile` with the steps necessary to have
+the Docker image built. To use it, you will need just to configure a Job on Jenkins using Pipeline plugin
+and paste the content of the Jenkinsfile in the Pipeline script box.
 
 ### Accessing the services
 * Authenticate -> curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"  
