@@ -55,3 +55,4 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8011/eureka/,http://localhost:8012/eureka/
       
+logging.file: /var/log/todo.log

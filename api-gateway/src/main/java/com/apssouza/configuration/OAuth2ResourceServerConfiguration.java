@@ -24,6 +24,7 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/hystrix.stream").permitAll()
                 .antMatchers("/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/todos").hasAuthority("USER_READ");
         //.antMatchers(HttpMethod.POST, "/foo").hasAuthority("FOO_WRITE");

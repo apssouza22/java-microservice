@@ -29,3 +29,5 @@ spring.boot.admin.turbine:
   location: turbine  #<1>
 # end::configuration-ui-turbine[]
 
+logging.file: /var/log/todo.log
+

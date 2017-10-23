@@ -66,6 +66,7 @@ docker-compose -p todo down
 ## OBS
 * In order to make ELK work we need to reserve 3GB RAM to docker(docker settings - advanced - memory )
 * Have a look at the Readme of each service/ module to see the explanation about it.
+* On Kimbana create a filter called `filebeat-*` to see the logs
 ## Useful Commands
 
 ### Stopping, Starting, Restarting...
