@@ -49,7 +49,7 @@ public class ToDo implements ValidEntity, Cloneable {
     @Size(min = 2, max = 256)
     private String caption;
     
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String userEmail;
             
     private String description;

@@ -102,6 +102,18 @@ docker exec -it container-name cat /usr/local/tomcat/logs/catalina.out
 docker logs container-name
 ```
 
+## Kafka
+```
+# event consume
+/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server zookeeper:2181 --topic todo-mail --from-beginning
+
+# producer console
+/opt/kafka/bin/kafka-console-producer.sh --broker-list kafka:9092 --topic todo-mail
+
+# Listing topics
+/opt/kafka/bin/kafka-topics.sh --list --zookeeper zookeeper:2181
+```
+
 ## TODO
 * Integrate mail service to reminder-service
 * Integrate turbine in the Admin dashboard

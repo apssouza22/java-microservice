@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableBinding(Source.class)
 public class TimerSource {
 
-    private MessageChannel channel;
+    private final MessageChannel channel;
 
     @Autowired
     public TimerSource(Source source) {
@@ -25,6 +25,7 @@ public class TimerSource {
         ChatMessage chatMessage = new ChatMessage("hello world", System.currentTimeMillis());
         Message<ChatMessage> msg = MessageBuilder.withPayload(chatMessage).build();
         channel.send(msg);
+        System.out.println("published");
     }
 
 }

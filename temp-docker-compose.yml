@@ -1,19 +1,6 @@
 version: '2'
 
 services:
-  elk:
-    image: sebp/elk:latest
-    ports:
-      - 5601:5601
-      - 9200:9200
-      - 5044:5044
-      - 5000:5000
-    networks:
-      - net
-    volumes:
-      - todo_elk:/var/lib/elasticsearch
-    hostname: elk
-    container_name: elk
     
   zookeeper:
     image: wurstmeister/zookeeper
@@ -21,24 +8,46 @@ services:
       - 2181:2181
     networks:
       - net
-    
+      
   kafka:
     image: wurstmeister/kafka
     ports:
-      - 9092
+      - 9092:9092
     depends_on:
       - zookeeper
     environment:
       KAFKA_ADVERTISED_HOST_NAME: 172.19.0.1
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_CREATE_TOPICS: "todo-mail:1:1"
+      KAFKA_ADVERTISED_HOST_NAME: "kafka"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     hostname: kafka
     container_name: kafka
     networks:
       - net
-
+  reminder:
+    image: todo/reminder-service
+    ports:
+      - 8015:8015
+    networks:
+      - net
+    depends_on:
+      - kafka
+    hostname: reminder
+    command: ["./wait-for-it.sh","kafka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    
+  mail:
+    image: todo/mail-service
+    ports:
+      - 8020:8020
+    networks:
+      - net
+    depends_on:
+      - kafka
+    hostname: mail
+    container_name: mail
+    command: ["./wait-for-it.sh","kafka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
 
 volumes:
   todo_data:

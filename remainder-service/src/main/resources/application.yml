@@ -8,8 +8,8 @@ spring:
           content-type: application/json
       kafka:
         binder:
-          brokers: ${SERVICE_REGISTRY_HOST:127.0.0.1}
-          zkNodes: ${SERVICE_REGISTRY_HOST:127.0.0.1}
+          brokers: ${SERVICE_REGISTRY_HOST:kafka}
+          zkNodes: ${SERVICE_REGISTRY_HOST:zookeeper}
           defaultZkPort: 2181
           defaultBrokerPort: 9092
 server:
