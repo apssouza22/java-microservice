@@ -25,7 +25,6 @@
 
     <modules>
         <module>mail-service</module>
-        <module>kafka</module>
         <module>eventsourcing</module>
         <module>jmx-monitoring</module>
         <module>config-server</module>

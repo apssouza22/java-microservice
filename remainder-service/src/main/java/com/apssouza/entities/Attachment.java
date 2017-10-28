@@ -25,6 +25,10 @@ public class Attachment {
     @ManyToOne
     private ToDo todo;
 
+    public Attachment() {
+    }
+    
+
     public Attachment(String name, String type) {
         this.name = name;
         this.type = type;

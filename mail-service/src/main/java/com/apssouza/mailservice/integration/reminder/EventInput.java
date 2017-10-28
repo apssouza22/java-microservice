@@ -8,7 +8,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 
 /**
  *
- * The Stream Kafka processor
+ * The Stream Kafka event input
  *
  * @author apssouza
  */
@@ -17,7 +17,10 @@ public class EventInput {
 
     Logger LOG = Logger.getLogger(EventInput.class);
 
-    @StreamListener(target = Sink.INPUT, condition = "headers['type']=='TodoCreatedEvent'")
+    @StreamListener(
+            target = Sink.INPUT, 
+            condition = "headers['type']=='TodoCreatedEvent'"
+    )
     public void transform(@Payload TodoCreatedEvent event) {
         
         LOG.info("when = "+ event.when());
