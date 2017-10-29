@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableBinding(Source.class)
 public class EventPublisher {
-
+    
     private final MessageChannel channel;
 
     private final ApplicationEventPublisher publisher;
@@ -40,7 +40,9 @@ public class EventPublisher {
     }
 
     public void stream(AppEvent event) {
-        Message<AppEvent> msg = MessageBuilder.withPayload(event).build();
+        Message<AppEvent> msg = MessageBuilder.withPayload(event)
+                .setHeader("type", event.getClass().getSimpleName())
+                .build();
         channel.send(msg);
         System.out.println("published");
     }

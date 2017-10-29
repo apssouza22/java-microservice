@@ -24,6 +24,7 @@
     </properties>
 
     <modules>
+        <module>todo-infra</module>
         <module>mail-service</module>
         <module>eventsourcing</module>
         <module>jmx-monitoring</module>

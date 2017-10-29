@@ -105,7 +105,7 @@ docker logs container-name
 ## Kafka
 ```
 # event consume
-/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server zookeeper:2181 --topic todo-mail --from-beginning
+/opt/kafka/bin/kafka-console-consumer.sh --zookeeper zookeeper:2181 --topic todo-mail --from-beginning
 
 # producer console
 /opt/kafka/bin/kafka-console-producer.sh --broker-list kafka:9092 --topic todo-mail

@@ -25,7 +25,6 @@ public class ToDoEntityListener {
         //  publisher using this simple helper
         AutowireHelper.autowire(this, this.publisher);
         this.publisher.publish(new TodoCreatedEvent(todo));
-        this.publisher.stream(new TodoCreatedEvent(todo));
     }
 
     @PostUpdate
