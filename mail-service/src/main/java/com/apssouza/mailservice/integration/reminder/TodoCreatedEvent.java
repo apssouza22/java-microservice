@@ -9,20 +9,20 @@ import com.apssouza.infra.AbstractDomainEvent;
  */
 public class TodoCreatedEvent extends AbstractDomainEvent {
 
-    private ToDo todo;
+    private ToDoDto todo;
 
-    public TodoCreatedEvent(ToDo todo) {
+    public TodoCreatedEvent(ToDoDto todo) {
         this.todo = todo;
     }
 
     public TodoCreatedEvent() {
     }
 
-    public ToDo getTodo() {
+    public ToDoDto getTodo() {
         return todo;
     }
 
-    public void setTodo(ToDo todo) {
+    public void setTodo(ToDoDto todo) {
         this.todo = todo;
     }
 

@@ -46,13 +46,6 @@ public class TodoController {
     public List<ToDo> all() {
         return this.todoService.all();
     }
-
-    @GetMapping("publish")
-    public @ResponseBody String publish() {
-        TodoCreatedEvent todoCreatedEvent = new TodoCreatedEvent(new ToDo());
-        publisher.stream(todoCreatedEvent);
-        return "published";
-    }
     
     @GetMapping("search")
     public List<ToDo> getByUserEmail(@RequestParam("email") String email) {

@@ -1,53 +1,38 @@
 package com.apssouza.mailservice.integration.reminder;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Version;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 
 /**
  * To Do entity
+ *
  * @author apssouza
  */
-public class ToDo implements Cloneable {
-    
-    public enum TodoStatus { DONE, PENDING }
+public class ToDoDto implements Cloneable {
 
-    @Id
-    @GeneratedValue
+    public enum TodoStatus {
+        DONE, PENDING
+    }
+
     private long id;
 
-    @NotNull
-    @Size(min = 2, max = 256)
     private String caption;
-    
-    @Column(nullable = false)
+
     private String userEmail;
-            
+
     private String description;
-    
-    @Generated(GenerationTime.INSERT) //ALWAYS, UPDATE
-    @Temporal(TemporalType.TIMESTAMP)
+
     private Date createdat;
-    
+
     private int priority;
-    
+
     private TodoStatus status = TodoStatus.PENDING;
 
-    @Version
     private long version;
 
-    public ToDo() {
+    public ToDoDto() {
     }
-    
-    public ToDo(String email, String caption, String description, int priority) {
+
+    public ToDoDto(String email, String caption, String description, int priority) {
         this.caption = caption;
         this.description = description;
         this.priority = priority;
@@ -81,24 +66,23 @@ public class ToDo implements Cloneable {
     public void setVersion(long version) {
         this.version = version;
     }
-    
-    
-    public void setStatus(TodoStatus status){
+
+    public void setStatus(TodoStatus status) {
         this.status = status;
     }
 
-    public TodoStatus getStatus(){
+    public TodoStatus getStatus() {
         return status;
     }
-    
+
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getCaption() {
         return caption;
     }

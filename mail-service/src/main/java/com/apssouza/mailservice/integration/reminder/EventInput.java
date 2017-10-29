@@ -21,10 +21,12 @@ public class EventInput {
             target = Sink.INPUT, 
             condition = "headers['type']=='TodoCreatedEvent'"
     )
-    public void transform(@Payload TodoCreatedEvent event) {
+    public void todoCreated(@Payload TodoCreatedEvent event) {
         
+        LOG.info("Event created");
         LOG.info("when = "+ event.when());
-        LOG.info("transfoming..");
+        LOG.info("todo = "+ event.getTodo().toString());
+        
     }
 
 }
