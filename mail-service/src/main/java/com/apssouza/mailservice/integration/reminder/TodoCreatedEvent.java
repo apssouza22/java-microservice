@@ -1,7 +1,5 @@
-package com.apssouza.events;
+package com.apssouza.mailservice.integration.reminder;
 
-import com.apssouza.annotations.ChangeEvent;
-import com.apssouza.entities.ToDo;
 import com.apssouza.infra.AbstractDomainEvent;
 
 /**
@@ -9,27 +7,25 @@ import com.apssouza.infra.AbstractDomainEvent;
  *
  * @author apssouza
  */
-@ChangeEvent(ChangeEvent.Type.CREATION)
-public class TodoCreatedEvent extends AbstractDomainEvent implements TodoChangedEvent {
+public class TodoCreatedEvent extends AbstractDomainEvent {
 
-    private ToDo todo;
+    private ToDoDto todo;
 
-    public TodoCreatedEvent(ToDo todo) {
+    public TodoCreatedEvent(ToDoDto todo) {
         this.todo = todo;
     }
 
     public TodoCreatedEvent() {
     }
 
-    public ToDo getTodo() {
+    public ToDoDto getTodo() {
         return todo;
     }
 
-    public void setTodo(ToDo todo) {
+    public void setTodo(ToDoDto todo) {
         this.todo = todo;
     }
 
-    @Override
     public int getPriority() {
         return this.todo.getPriority();
     }

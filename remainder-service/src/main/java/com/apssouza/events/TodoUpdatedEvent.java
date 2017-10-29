@@ -2,6 +2,7 @@ package com.apssouza.events;
 
 import com.apssouza.annotations.ChangeEvent;
 import com.apssouza.entities.ToDo;
+import com.apssouza.infra.AbstractDomainEvent;
 
 /**
  * To Do updated event
@@ -9,7 +10,7 @@ import com.apssouza.entities.ToDo;
  * @author apssouza
  */
 @ChangeEvent(ChangeEvent.Type.UPDATE)
-public class TodoUpdatedEvent implements TodoChangedEvent {
+public class TodoUpdatedEvent extends AbstractDomainEvent implements TodoChangedEvent {
 
     private ToDo todo;
 

@@ -1,0 +1,70 @@
+version: '2'
+
+services:
+    
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+    networks:
+      - net
+      
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 172.19.0.1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_CREATE_TOPICS: "todo-mail:1:1"
+      KAFKA_ADVERTISED_HOST_NAME: "kafka"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    hostname: kafka
+    container_name: kafka
+    networks:
+      - net
+  reminder:
+    image: todo/reminder-service
+    ports:
+      - 8015:8015
+    networks:
+      - net
+    depends_on:
+      - kafka
+    hostname: reminder
+    command: ["./wait-for-it.sh","kafka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    
+  mail:
+    image: todo/mail-service
+    ports:
+      - 8020:8020
+    networks:
+      - net
+    depends_on:
+      - kafka
+    hostname: mail
+    container_name: mail
+    command: ["./wait-for-it.sh","kafka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    
+  config:
+    image: todo/config-server
+    ports:
+      - 8888:8888
+    networks:
+      - net
+    hostname: config
+    container_name: config 
+    external_links:
+      - elk
+volumes:
+  todo_data:
+    external: true
+  todo_elk:
+    external: true
+
+networks:
+  net:
+    driver: bridge

@@ -1,6 +1,7 @@
 package com.apssouza.eventsourcing.events;
 
 import com.apssouza.eventsourcing.entities.Email;
+import com.apssouza.infra.AbstractDomainEvent;
 import java.time.Instant;
 import java.util.UUID;
 

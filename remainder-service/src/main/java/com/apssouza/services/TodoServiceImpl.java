@@ -2,7 +2,9 @@ package com.apssouza.services;
 
 import com.apssouza.repositories.TodoRepository;
 import com.apssouza.entities.ToDo;
+import com.apssouza.events.TodoCreatedEvent;
 import com.apssouza.exceptions.DataNotFoundException;
+import com.apssouza.infra.EventPublisher;
 import com.apssouza.monitoring.CallMonitoringAspect;
 import com.apssouza.monitoring.Monitored;
 import java.util.List;
@@ -15,6 +17,9 @@ public class TodoServiceImpl implements TodoService {
 
     @Autowired
     private TodoRepository todoRepository;
+    
+    @Autowired
+    private EventPublisher publisher;
 
     @Override
     @Monitored
@@ -40,7 +45,10 @@ public class TodoServiceImpl implements TodoService {
     @Override
     @Monitored
     public ToDo save(ToDo todo) {
-        return this.todoRepository.save(todo);
+        ToDo savedTodo = this.todoRepository.save(todo);
+        this.publisher.stream(new TodoCreatedEvent(savedTodo));
+        return savedTodo;
+        
     }
 
     @Override

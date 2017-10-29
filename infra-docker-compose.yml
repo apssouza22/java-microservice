@@ -29,7 +29,7 @@ services:
     depends_on:
       - zookeeper
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1 #ip local, not use localhost
+      KAFKA_ADVERTISED_HOST_NAME: 172.19.0.1
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_CREATE_TOPICS: "todo-mail:1:1"
     volumes:

@@ -1,4 +1,4 @@
-package com.apssouza.eventsourcing.events;
+package com.apssouza.infra;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -8,12 +8,10 @@ import java.util.UUID;
  *
  * @author apssouza
  */
-public abstract class AbstractDomainEvent {
+public abstract class AbstractDomainEvent implements AppEvent {
 
     protected UUID uuid;
-    protected String type = "Created";
     protected Instant when = Instant.now();
-    protected String eventClass;
 
     public UUID uuid() {
         return uuid;
@@ -21,13 +19,5 @@ public abstract class AbstractDomainEvent {
 
     public Instant when() {
         return when;
-    }
-
-    public String getEventClass() {
-        return eventClass;
-    }
-
-    public void setEventClass(String eventClass) {
-        this.eventClass = eventClass;
     }
 }

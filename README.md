@@ -67,7 +67,13 @@ docker-compose -p todo down
 * In order to make ELK work we need to reserve 3GB RAM to docker(docker settings - advanced - memory )
 * Have a look at the Readme of each service/ module to see the explanation about it.
 * On Kimbana create a filter called `filebeat-*` to see the logs
+
 ## Useful Commands
+
+### Creating to-do via Curl
+```
+curl -d '{"userEmail":"alex@test.com", "caption":"post caption", "description":"desc", "priority": 1}' -H "Content-Type: application/json" -X POST http://localhost:8015/todos
+```
 
 ### Stopping, Starting, Restarting...
 
@@ -90,7 +96,7 @@ docker-compose todo rm
 
 ```
 
-## Application Startup Issues
+### Application Startup Issues
 
 ```bash
 # stop / start Tomcat
@@ -100,6 +106,18 @@ docker exec -it container-name sh /usr/local/tomcat/bin/shutdown.sh
 # check logs for start-up issues...
 docker exec -it container-name cat /usr/local/tomcat/logs/catalina.out
 docker logs container-name
+```
+
+### Kafka
+```
+# event consume
+/opt/kafka/bin/kafka-console-consumer.sh --zookeeper zookeeper:2181 --topic todo-mail --from-beginning
+
+# producer console
+/opt/kafka/bin/kafka-console-producer.sh --broker-list kafka:9092 --topic todo-mail
+
+# Listing topics
+/opt/kafka/bin/kafka-topics.sh --list --zookeeper zookeeper:2181
 ```
 
 ## TODO

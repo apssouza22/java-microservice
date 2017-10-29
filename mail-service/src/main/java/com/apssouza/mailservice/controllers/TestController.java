@@ -4,10 +4,6 @@ import com.apssouza.eventsourcing.commands.EmailCommandHandler;
 import com.apssouza.eventsourcing.commands.EmailCreateCommand;
 import com.apssouza.eventsourcing.commands.EmailDeleteCommand;
 import com.apssouza.eventsourcing.commands.EmailSendCommand;
-import com.apssouza.eventsourcing.entities.Email;
-import com.apssouza.eventsourcing.events.EmailCreatedEvent;
-import com.apssouza.kafkaevent.handlers.KafkaEventConsumer;
-import com.apssouza.kafkaevent.handlers.KafkaEventProducer;
 import java.time.Instant;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -25,24 +21,6 @@ public class TestController {
 
     @Autowired
     EmailCommandHandler emailCommandHandler;
-    
-    @Autowired
-    KafkaEventProducer producer;
-    
-    @Autowired
-    KafkaEventConsumer listener;
-
-    @RequestMapping("event/publish")
-    public String send() {
-        UUID uuid = UUID.randomUUID();
-        Email email = new Email("alex", "apssouza@gmail.com");
-        producer.sendEvent(new EmailCreatedEvent(uuid, email));
-//        KafkaIntegrationEvent kafkaIntegrationEvent = new KafkaIntegrationEvent(
-//                new EmailCreatedEvent(uuid, email),
-//                EmailCreatedEvent.class.getName()
-//        );
-        return "sent";
-    }
 
     @RequestMapping("commander")
     public String index() {

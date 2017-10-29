@@ -1,0 +1,4 @@
+# Infra module
+
+This module contains common components across the services. Ex Kafka integration
+ with Spring stream, events and etc

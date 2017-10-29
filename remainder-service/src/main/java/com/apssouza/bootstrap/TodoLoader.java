@@ -39,7 +39,7 @@ public class TodoLoader implements ApplicationListener<ContextRefreshedEvent>  {
         todoRepository.save(todo2);
         todoRepository.save(todo3);
         
-        log.info("Created the todos.");
+        log.info("Created the to-dos.");
     }
     
 }

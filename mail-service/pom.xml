@@ -23,12 +23,12 @@
     <dependencies>
         <dependency>
             <groupId>com.apssouza</groupId>
-            <artifactId>kafka-event</artifactId>
+            <artifactId>eventsourcing</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.apssouza</groupId>
-            <artifactId>eventsourcing</artifactId>
+            <artifactId>todo-infra</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

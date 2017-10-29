@@ -2,7 +2,9 @@ package com.apssouza.controllers;
 
 import com.apssouza.services.TodoService;
 import com.apssouza.entities.ToDo;
+import com.apssouza.events.TodoCreatedEvent;
 import com.apssouza.exceptions.DataNotFoundException;
+import com.apssouza.infra.EventPublisher;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.util.List;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -36,11 +39,14 @@ public class TodoController {
     @Autowired
     TodoService todoService;
 
+    @Autowired
+    EventPublisher publisher;
+
     @GetMapping
     public List<ToDo> all() {
         return this.todoService.all();
     }
-
+    
     @GetMapping("search")
     public List<ToDo> getByUserEmail(@RequestParam("email") String email) {
         return this.todoService.getByUserEmail(email);
