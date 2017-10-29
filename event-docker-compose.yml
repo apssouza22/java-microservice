@@ -48,7 +48,17 @@ services:
     hostname: mail
     container_name: mail
     command: ["./wait-for-it.sh","kafka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
-
+    
+  config:
+    image: todo/config-server
+    ports:
+      - 8888:8888
+    networks:
+      - net
+    hostname: config
+    container_name: config 
+    external_links:
+      - elk
 volumes:
   todo_data:
     external: true
