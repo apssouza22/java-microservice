@@ -32,7 +32,9 @@ deploy on AWS using ECS containers.
 
 To make this integration easy, we have added the `Jenkinsfile` with the steps necessary to have
 the Docker image built. To use it, you will need just to configure a Job on Jenkins using Pipeline plugin
-and paste the content of the Jenkinsfile in the Pipeline script box.
+and paste the content of the Jenkinsfile in the Pipeline script box. Have a look at this 
+[video](https://www.youtube.com/watch?v=u3xLXEnlu2M&t=1023s&index=2&list=PLoO1q0-ZB3v6ZN6qvk0dsRRuxjiAQDuZx)
+to check how to work with Jenkins pipeline
 
 ### Accessing the services
 * Authenticate -> curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"  
