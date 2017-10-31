@@ -11,12 +11,14 @@ import static java.util.stream.Collectors.toList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author apssouza
  */
 @Service
+@Transactional(readOnly = true)
 public class EventSourcingServiceImpl implements EventSourcingService{
 
     private final EventSerializer eventSerializer;
@@ -35,6 +37,7 @@ public class EventSourcingServiceImpl implements EventSourcingService{
     }
 
     @Override
+    @Transactional
     public Aggregate save(Aggregate aggregate) {
         final List<DomainEvent> pendingEvents = aggregate.getUncommittedChanges();
         eventStoreRepository.saveEvents(
@@ -58,7 +61,8 @@ public class EventSourcingServiceImpl implements EventSourcingService{
     
     @Override
     public  EventStream getAggregate(UUID uuid) {
-        return eventStoreRepository.getAggregate(uuid);
+        return eventStoreRepository.findByAggregateUUID(uuid)
+                .orElseGet( () -> new EventStream());
     }
 
 }

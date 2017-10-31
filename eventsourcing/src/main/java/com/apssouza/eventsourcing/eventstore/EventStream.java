@@ -1,6 +1,7 @@
 package com.apssouza.eventsourcing.eventstore;
 
 
+import java.io.Serializable;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,8 @@ import static java.util.stream.Collectors.toList;
 import static javax.persistence.FetchType.EAGER;
 
 @Entity(name = "event_streams")
-public class EventStream {
-
+public class EventStream implements Serializable {
+    
     @Id
     @GeneratedValue(generator = "event_stream_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "event_stream_seq", sequenceName = "event_stream_seq", allocationSize = 1)
@@ -30,12 +31,14 @@ public class EventStream {
             orphanRemoval = true, 
             fetch = EAGER
     )
-    private List<EventDescriptor> events = new ArrayList<>();
+    private List<EventDescriptor> events;
 
-    private EventStream() {
+    public EventStream() {
+        this.events = new ArrayList<>();
     }
 
     EventStream(UUID aggregateUUID) {
+        this.events = new ArrayList<>();
         this.aggregateUUID = aggregateUUID;
     }
 

@@ -12,11 +12,11 @@ public interface EventStoreRepository extends JpaRepository<EventStream, Long> {
 
     Optional<EventStream> findByAggregateUUID(UUID uuid);
 
-    default void saveEvents(UUID aggregateId, List<EventDescriptor> events) {
+    default EventStream saveEvents(UUID aggregateId, List<EventDescriptor> events) {
         final EventStream eventStream = findByAggregateUUID(aggregateId)
                 .orElseGet(() -> new EventStream(aggregateId));
         eventStream.addEvents(events);
-        save(eventStream);
+        return save(eventStream);
     }
 
     default List<EventDescriptor> getEventsForAggregate(UUID aggregateId) {
@@ -24,9 +24,5 @@ public interface EventStoreRepository extends JpaRepository<EventStream, Long> {
                 .map(EventStream::getEvents)
                 .orElse(emptyList());
 
-    }
-    
-    default EventStream getAggregate(UUID aggregateId){
-        return findByAggregateUUID(aggregateId).get();
     }
 }
