@@ -1,29 +1,30 @@
 package com.apssouza.eventsourcing.events;
 
 import com.apssouza.eventsourcing.commands.EmailDeleteCommand;
+import com.apssouza.infra.AbstractDomainEvent;
+import com.apssouza.infra.AppEvent;
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Email deleted event
  *
  * @author apssouza
  */
-public class EmailDeletedEvent implements DomainEvent {
+public class EmailDeletedEvent extends AbstractDomainEvent implements AppEvent {
 
-    private final UUID uuid;
+    private final String uuid;
     private final String type = "Deleted";
     private final Instant when = Instant.now();
 
     private final EmailDeleteCommand command;
 
-    public EmailDeletedEvent(UUID uuid, EmailDeleteCommand command) {
+    public EmailDeletedEvent(String uuid, EmailDeleteCommand command) {
         this.uuid = uuid;
         this.command = command;
     }
 
     @Override
-    public UUID uuid() {
+    public String uuid() {
         return uuid;
     }
 
@@ -31,7 +32,6 @@ public class EmailDeletedEvent implements DomainEvent {
         return command;
     }
 
-    @Override
     public String type() {
         return type;
     }
@@ -41,8 +41,4 @@ public class EmailDeletedEvent implements DomainEvent {
         return when;
     }
 
-    @Override
-    public String getEventClass() {
-        return this.getClass().getName();
-    }
 }

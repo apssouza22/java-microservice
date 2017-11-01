@@ -1,8 +1,7 @@
 package com.apssouza.eventsourcing.aggregates;
 
-import com.apssouza.eventsourcing.events.DomainEvent;
+import com.apssouza.infra.AppEvent;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * The aggregate interface
@@ -11,9 +10,9 @@ import java.util.UUID;
  */
 public interface Aggregate {
 
-    UUID getUuid();
+    String getUuid();
 
-    List<DomainEvent> getUncommittedChanges();
+    List<AppEvent> getUncommittedChanges();
 
     Aggregate markChangesAsCommitted();
 

@@ -49,7 +49,7 @@ public class MailserviceApplication {
         ConfigurableApplicationContext context = SpringApplication.run(EventsourcingApplication.class, args);
          EmailCommandHandler commandHandler = context.getBean(EmailCommandHandler.class);
         
-        UUID randomUUID = UUID.randomUUID();
+        String randomUUID = UUID.randomUUID().toString();
         
         EmailCreateCommand commandCreate = new EmailCreateCommand(randomUUID, "Alex", "apssouza22@gmail.com");
         EmailSendCommand send = new EmailSendCommand(randomUUID, Instant.now());

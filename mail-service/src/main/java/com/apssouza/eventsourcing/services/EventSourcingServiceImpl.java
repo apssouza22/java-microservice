@@ -1,10 +1,10 @@
 package com.apssouza.eventsourcing.services;
 
 import com.apssouza.eventsourcing.aggregates.Aggregate;
-import com.apssouza.eventsourcing.events.DomainEvent;
 import com.apssouza.eventsourcing.eventstore.EventSerializer;
 import com.apssouza.eventsourcing.eventstore.EventStoreRepository;
 import com.apssouza.eventsourcing.eventstore.EventStream;
+import com.apssouza.infra.AppEvent;
 import java.util.List;
 import java.util.UUID;
 import static java.util.stream.Collectors.toList;
@@ -37,7 +37,7 @@ public class EventSourcingServiceImpl implements EventSourcingService{
     @Override
     @Transactional
     public Aggregate save(Aggregate aggregate) {
-        final List<DomainEvent> pendingEvents = aggregate.getUncommittedChanges();
+        final List<AppEvent> pendingEvents = aggregate.getUncommittedChanges();
         eventStoreRepository.saveEvents(
                 aggregate.getUuid(),
                 pendingEvents
@@ -49,7 +49,7 @@ public class EventSourcingServiceImpl implements EventSourcingService{
     }
 
     @Override
-    public List<DomainEvent> getRelatedEvents(UUID uuid) {
+    public List<AppEvent> getRelatedEvents(String uuid) {
         return eventStoreRepository.getEventsForAggregate(uuid)
                 .stream()
                 .map(eventSerializer::deserialize)
@@ -57,7 +57,7 @@ public class EventSourcingServiceImpl implements EventSourcingService{
     }
     
     @Override
-    public  EventStream getAggregate(UUID uuid) {
+    public  EventStream getAggregate(String uuid) {
         return eventStoreRepository.findByAggregateUUID(uuid)
                 .orElseGet( () -> new EventStream());
     }

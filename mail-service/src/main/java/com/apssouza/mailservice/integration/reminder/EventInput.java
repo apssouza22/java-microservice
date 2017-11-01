@@ -28,7 +28,7 @@ public class EventInput {
         LOG.info("when = " + event.when());
         LOG.info("todo = " + event.getTodo().toString());
         
-        UUID uuid = UUID.randomUUID();
+        String uuid = UUID.randomUUID().toString();
         EmailCreateCommand command = new EmailCreateCommand(uuid, "Alexsandro", "apssouza22@gmail.com");
 
     }

@@ -5,32 +5,33 @@ import com.apssouza.eventsourcing.commands.EmailCreateCommand;
 import com.apssouza.eventsourcing.commands.EmailDeliveryCommand;
 import com.apssouza.eventsourcing.commands.EmailSendCommand;
 import com.apssouza.eventsourcing.entities.Email;
-import com.apssouza.eventsourcing.events.DomainEvent;
 import com.apssouza.eventsourcing.events.EmailCreatedEvent;
 import com.apssouza.eventsourcing.events.EmailDeliveredEvent;
 import com.apssouza.eventsourcing.events.EmailDeletedEvent;
 import com.apssouza.eventsourcing.events.EmailSentEvent;
+import com.apssouza.infra.AppEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Email aggregate, it aggregate all events related to Email and get the final 
+ * Email aggregate, it aggregate all events related to Email and get the final
  * state
+ *
  * @author apssouza
  */
 public class EmailAggregate implements Aggregate {
 
-    private final UUID uuid;
-    private final List<DomainEvent> changes;
+    private final String uuid;
+    private final List<AppEvent> changes;
     private final EmailState state;
 
-    public EmailAggregate(UUID uuid, List<DomainEvent> changes) {
+    public EmailAggregate(String uuid, List<AppEvent> changes) {
         this(uuid, changes, EmailState.CREATED);
     }
 
-    public EmailAggregate(UUID uuid, List<DomainEvent> changes, EmailState state) {
+    public EmailAggregate(String uuid, List<AppEvent> changes, EmailState state) {
         this.uuid = uuid;
         this.changes = changes;
         this.state = state;
@@ -49,32 +50,34 @@ public class EmailAggregate implements Aggregate {
     }
 
     public EmailAggregate delivery(EmailDeliveryCommand command) throws Exception {
-         if (state == EmailState.DELETED) {
+        if (state == EmailState.DELETED) {
             throw new Exception("Is not possible to edit a deleted user");
         }
         return applyChange(new EmailDeliveredEvent(command.getUuid()));
     }
-    
-    
+
     public EmailAggregate delete(EmailDeleteCommand command) throws Exception {
         if (state == EmailState.DELETED) {
             throw new Exception("Is not possible to delete a deleted user");
         }
         return applyChange(new EmailDeletedEvent(uuid, command));
     }
-    
-    private EmailAggregate apply(DomainEvent event) {
+
+    private EmailAggregate apply(AppEvent event) {
         if (event instanceof EmailCreatedEvent) {
             return this.apply((EmailCreatedEvent) event);
-        } else if (event instanceof EmailSentEvent) {
-            return this.apply((EmailSentEvent) event);
-        } else if (event instanceof EmailDeliveredEvent) {
-            return this.apply((EmailDeliveredEvent) event);
-        } else if (event instanceof EmailDeletedEvent) {
-            return this.apply((EmailDeletedEvent) event);
-        } else {
-            throw new IllegalArgumentException("Cannot handle event " + event.getClass());
         }
+        if (event instanceof EmailSentEvent) {
+            return this.apply((EmailSentEvent) event);
+        }
+        if (event instanceof EmailDeliveredEvent) {
+            return this.apply((EmailDeliveredEvent) event);
+        }
+        if (event instanceof EmailDeletedEvent) {
+            return this.apply((EmailDeletedEvent) event);
+        }
+        throw new IllegalArgumentException("Cannot handle event " + event.getClass());
+
     }
 
     private EmailAggregate apply(EmailCreatedEvent event) {
@@ -84,19 +87,19 @@ public class EmailAggregate implements Aggregate {
     private EmailAggregate apply(EmailDeletedEvent event) {
         return new EmailAggregate(uuid, changes, EmailState.DELETED);
     }
-    
+
     private EmailAggregate apply(EmailSentEvent event) {
         return new EmailAggregate(uuid, changes, EmailState.SENT);
     }
-    
+
     private EmailAggregate apply(EmailDeliveredEvent event) {
         return new EmailAggregate(uuid, changes, EmailState.DELIVERED);
     }
 
-    public static EmailAggregate from(UUID uuid, List<DomainEvent> history) {
-        
+    public static EmailAggregate from(String uuid, List<AppEvent> history) {
+
         EmailAggregate emailAggregate = new EmailAggregate(uuid, new CopyOnWriteArrayList(), EmailState.CREATED);
-        
+
         return history
                 .stream()
                 .reduce(emailAggregate,
@@ -107,7 +110,7 @@ public class EmailAggregate implements Aggregate {
                 );
     }
 
-    private EmailAggregate applyChange(DomainEvent event, boolean isNew) {
+    private EmailAggregate applyChange(AppEvent event, boolean isNew) {
         final EmailAggregate item = this.apply(event);
         if (isNew) {
             return new EmailAggregate(item.getUuid(), appendChange(item, event), item.getState());
@@ -116,18 +119,18 @@ public class EmailAggregate implements Aggregate {
         }
     }
 
-    private CopyOnWriteArrayList<DomainEvent> appendChange(EmailAggregate item, DomainEvent event) {
-        CopyOnWriteArrayList<DomainEvent> listChanges = new CopyOnWriteArrayList(changes);
+    private CopyOnWriteArrayList<AppEvent> appendChange(EmailAggregate item, AppEvent event) {
+        CopyOnWriteArrayList<AppEvent> listChanges = new CopyOnWriteArrayList(changes);
         listChanges.add(event);
         return listChanges;
     }
 
-    private EmailAggregate applyChange(DomainEvent event) {
+    private EmailAggregate applyChange(AppEvent event) {
         return applyChange(event, true);
     }
 
     @Override
-    public List<DomainEvent> getUncommittedChanges() {
+    public List<AppEvent> getUncommittedChanges() {
         return changes;
     }
 
@@ -137,7 +140,7 @@ public class EmailAggregate implements Aggregate {
     }
 
     @Override
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
@@ -147,4 +150,3 @@ public class EmailAggregate implements Aggregate {
     }
 
 }
-

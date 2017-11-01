@@ -25,7 +25,7 @@ public class TestController {
     @RequestMapping("commander")
     public String index() {
         try {
-            UUID uuid = UUID.randomUUID();
+            String uuid = UUID.randomUUID().toString();
             EmailCreateCommand command = new EmailCreateCommand(uuid, "Alexsandro", "apssouza22@gmail.com");
             EmailSendCommand emailSendCommand = new EmailSendCommand(uuid, Instant.now());
             EmailDeleteCommand emailDeleteCommand = new EmailDeleteCommand(uuid);
