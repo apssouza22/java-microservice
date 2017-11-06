@@ -1,6 +1,7 @@
 package com.apssouza.eventsourcing.events;
 
 import com.apssouza.eventsourcing.commands.EmailDeleteCommand;
+import com.apssouza.eventsourcing.entities.Email;
 import com.apssouza.infra.AbstractDomainEvent;
 import com.apssouza.infra.AppEvent;
 import java.time.Instant;
@@ -10,26 +11,27 @@ import java.time.Instant;
  *
  * @author apssouza
  */
-public class EmailDeletedEvent extends AbstractDomainEvent implements AppEvent {
+public class EmailDeletedEvent extends AbstractDomainEvent implements EmailEvent {
 
     private final String uuid;
     private final String type = "Deleted";
     private final Instant when = Instant.now();
+    
+    private Email email;
 
-    private final EmailDeleteCommand command;
-
-    public EmailDeletedEvent(String uuid, EmailDeleteCommand command) {
+    /**
+     *
+     * @param uuid
+     * @param email
+     */
+    public EmailDeletedEvent(String uuid, Email email) {
         this.uuid = uuid;
-        this.command = command;
+        this.email = email;
     }
 
     @Override
     public String uuid() {
         return uuid;
-    }
-
-    public EmailDeleteCommand getCommand() {
-        return command;
     }
 
     public String type() {
@@ -39,6 +41,10 @@ public class EmailDeletedEvent extends AbstractDomainEvent implements AppEvent {
     @Override
     public Instant when() {
         return when;
+    }
+
+    public Email getEmail() {
+        return email;
     }
 
 }

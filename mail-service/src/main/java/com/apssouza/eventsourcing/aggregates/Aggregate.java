@@ -16,6 +16,5 @@ public interface Aggregate {
 
     Aggregate markChangesAsCommitted();
 
-    ObjectState getState();
 
 }

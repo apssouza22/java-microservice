@@ -10,7 +10,7 @@ import java.time.Instant;
  *
  * @author apssouza
  */
-public class EmailCreatedEvent extends AbstractDomainEvent implements AppEvent {
+public class EmailCreatedEvent extends AbstractDomainEvent implements EmailEvent {
 
     private String uuid;
     private String type = "Created";
