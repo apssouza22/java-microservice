@@ -23,7 +23,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class EmailAggregate extends AbstractAggregate implements Aggregate {
 
     private final String uuid;
-    private final List<AppEvent> changes;
     private final Email state;
 
     public EmailAggregate(String uuid, List<AppEvent> changes) {
@@ -119,7 +118,7 @@ public class EmailAggregate extends AbstractAggregate implements Aggregate {
     private EmailAggregate applyChange(AppEvent event, boolean isNew) {
         final EmailAggregate item = this.apply(event);
         if (isNew) {
-            return new EmailAggregate(item.getUuid(), appendChange(item, event), item.getState());
+            return new EmailAggregate(item.getUuid(), appendChange(event), item.getState());
         } else {
             return item;
         }

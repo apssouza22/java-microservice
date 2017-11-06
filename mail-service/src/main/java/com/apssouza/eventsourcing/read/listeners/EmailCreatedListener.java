@@ -18,7 +18,7 @@ public class EmailCreatedListener {
 
     @EventListener
     public void listener(EmailCreatedEvent event) {
-        LOG.log(Level.ALL, event.type());
+//        LOG.log(Level.ALL,);
         //TODO: update email data views
     }
 

@@ -10,7 +10,7 @@ import java.util.UUID;
  */
 public abstract class AbstractDomainEvent implements AppEvent {
 
-    protected String uuid;
+    protected  String uuid;
     
     protected Instant when = Instant.now();
 
@@ -18,6 +18,7 @@ public abstract class AbstractDomainEvent implements AppEvent {
         return uuid;
     }
 
+    @Override
     public Instant when() {
         return when;
     }

@@ -10,38 +10,35 @@ import java.time.Instant;
  *
  * @author apssouza
  */
-public class EmailCreatedEvent extends AbstractDomainEvent implements EmailEvent {
-
-    private String uuid;
-    private String type = "Created";
-    private Instant when = Instant.now();
+public class EmailCreatedEvent implements EmailEvent {
 
     private Email email;
 
-    public EmailCreatedEvent() {
-
+    public EmailCreatedEvent(String uuid) {
     }
+    
+    protected  String uuid;
+    
+    protected Instant when = Instant.now();
 
-    public EmailCreatedEvent(String uuid, Email account) {
-        this.uuid = uuid;
-        this.email = account;
-    }
 
+    @Override
     public String uuid() {
         return uuid;
-    }
-
-    public Email getEmail() {
-        return email;
-    }
-
-    public String type() {
-        return type;
     }
 
     @Override
     public Instant when() {
         return when;
+    }
+    
+
+    public EmailCreatedEvent(String uuid, Email account) {
+        this.email = account;
+    }
+
+    public Email getEmail() {
+        return email;
     }
 
 }
