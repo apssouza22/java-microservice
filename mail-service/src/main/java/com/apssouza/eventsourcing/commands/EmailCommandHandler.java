@@ -31,7 +31,7 @@ public class EmailCommandHandler  {
     }
 
     
-    public void create(EmailCreateCommand command) {
+    public void create(EmailCreateCommand command) throws Exception {
         EmailAggregate emailAggregate = getByUUID(command.getUuid());
         emailAggregate = emailAggregate.create(command);
         List<AppEvent> pendingEvents = emailAggregate.getUncommittedChanges();

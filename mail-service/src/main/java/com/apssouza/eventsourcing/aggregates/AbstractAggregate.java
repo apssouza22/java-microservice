@@ -17,8 +17,7 @@ public abstract class AbstractAggregate implements Aggregate {
 
     private String uuid;
     protected List<AppEvent> changes = new CopyOnWriteArrayList();
-    
-    
+
     protected CopyOnWriteArrayList<AppEvent> appendChange(AppEvent event) {
         CopyOnWriteArrayList<AppEvent> listChanges = new CopyOnWriteArrayList(changes);
         listChanges.add(event);
@@ -29,7 +28,7 @@ public abstract class AbstractAggregate implements Aggregate {
     public List<AppEvent> getUncommittedChanges() {
         return changes;
     }
-    
+
     @Override
     public String getUuid() {
         return uuid;

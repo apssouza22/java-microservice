@@ -35,23 +35,25 @@ public class EmailAggregate extends AbstractAggregate implements Aggregate {
         this.state = state;
     }
 
-    public EmailAggregate create(EmailCreateCommand command) {
-        Email email = new Email(command.getName(), command.getEmail(), EmailState.CREATED);
-        return applyChange(new EmailCreatedEvent(uuid, email));
+    public EmailAggregate create(EmailCreateCommand command) throws Exception {
+        if (state.getState() != null) {
+            throw new Exception("Is not possible to edit a deleted email");
+        }
+        return applyChange(new EmailCreatedEvent(uuid, command.getEmail()));
     }
 
     public EmailAggregate send(EmailSendCommand command) throws Exception {
         if (state.getState() == EmailState.DELETED) {
-            throw new Exception("Is not possible to edit a deleted user");
+            throw new Exception("Is not possible to edit a deleted email");
         }
         return applyChange(new EmailSentEvent(
-                command.getUuid(), 
+                command.getUuid(),
                 getState().setState(EmailState.SENT)));
     }
 
     public EmailAggregate delivery(EmailDeliveryCommand command) throws Exception {
-        if (state.getState()  == EmailState.DELETED) {
-            throw new Exception("Is not possible to edit a deleted user");
+        if (state.getState() == EmailState.DELETED) {
+            throw new Exception("Is not possible to edit a deleted email");
         }
         return applyChange(new EmailDeliveredEvent(
                 command.getUuid(),
@@ -60,10 +62,10 @@ public class EmailAggregate extends AbstractAggregate implements Aggregate {
     }
 
     public EmailAggregate delete(EmailDeleteCommand command) throws Exception {
-        if (state.getState()  == EmailState.DELETED) {
-            throw new Exception("Is not possible to delete a deleted user");
+        if (state.getState() == EmailState.DELETED) {
+            throw new Exception("Is not possible to delete a deleted email");
         }
-        return applyChange(new EmailDeletedEvent(uuid, 
+        return applyChange(new EmailDeletedEvent(uuid,
                 getState().setState(EmailState.DELETED)
         ));
     }
@@ -124,11 +126,9 @@ public class EmailAggregate extends AbstractAggregate implements Aggregate {
         }
     }
 
-
     private EmailAggregate applyChange(EmailEvent event) {
         return applyChange(event, true);
     }
-
 
     @Override
     public EmailAggregate markChangesAsCommitted() {

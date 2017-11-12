@@ -1,6 +1,8 @@
 package com.apssouza.mailservice.integration.reminder;
 
+import com.apssouza.eventsourcing.aggregates.EmailState;
 import com.apssouza.eventsourcing.commands.EmailCreateCommand;
+import com.apssouza.eventsourcing.entities.Email;
 import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -27,10 +29,10 @@ public class EventInput {
         LOG.info("Todo created");
         LOG.info("when = " + event.when());
         LOG.info("todo = " + event.getTodo().toString());
-        
-        String uuid = UUID.randomUUID().toString();
-        EmailCreateCommand command = new EmailCreateCommand(uuid, "Alexsandro", "apssouza22@gmail.com");
 
+        String uuid = UUID.randomUUID().toString();
+        Email email = new Email("Alexsandro", "apssouza22@gmail.com", EmailState.CREATED);
+        EmailCreateCommand command = new EmailCreateCommand(uuid, email);
     }
 
 }

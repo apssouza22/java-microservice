@@ -1,7 +1,6 @@
 package com.apssouza.infra;
 
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Abstract system event. The domain event across all services
@@ -14,6 +13,7 @@ public abstract class AbstractDomainEvent implements AppEvent {
     
     protected Instant when = Instant.now();
 
+    @Override
     public String uuid() {
         return uuid;
     }

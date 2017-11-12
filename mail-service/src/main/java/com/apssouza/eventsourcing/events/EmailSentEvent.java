@@ -2,9 +2,6 @@ package com.apssouza.eventsourcing.events;
 
 import com.apssouza.eventsourcing.entities.Email;
 import com.apssouza.infra.AbstractDomainEvent;
-import com.apssouza.infra.AppEvent;
-import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Email sent event
@@ -22,6 +19,7 @@ public class EmailSentEvent extends AbstractDomainEvent implements EmailEvent {
         this.email = email;
     }
 
+    @Override
     public Email getEmail() {
         return email;
     }

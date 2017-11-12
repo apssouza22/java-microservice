@@ -1,5 +1,7 @@
 package com.apssouza.eventsourcing.commands;
 
+import com.apssouza.eventsourcing.entities.Email;
+
 /**
  * Email create command
  *
@@ -9,21 +11,14 @@ public class EmailCreateCommand {
 
     private final String uuid;
 
-    private final String name;
+    private final Email email;
 
-    private final String email;
-
-    public EmailCreateCommand(String uuid, String name, String email) {
+    public EmailCreateCommand(String uuid, Email email) {
         this.uuid = uuid;
-        this.name = name;
         this.email = email;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 

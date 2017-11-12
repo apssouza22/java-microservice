@@ -1,8 +1,6 @@
 package com.apssouza.eventsourcing.events;
 
 import com.apssouza.eventsourcing.entities.Email;
-import com.apssouza.infra.AbstractDomainEvent;
-import com.apssouza.infra.AppEvent;
 import java.time.Instant;
 
 /**
@@ -16,11 +14,10 @@ public class EmailCreatedEvent implements EmailEvent {
 
     public EmailCreatedEvent(String uuid) {
     }
-    
-    protected  String uuid;
-    
-    protected Instant when = Instant.now();
 
+    protected String uuid;
+
+    protected Instant when = Instant.now();
 
     @Override
     public String uuid() {
@@ -31,12 +28,13 @@ public class EmailCreatedEvent implements EmailEvent {
     public Instant when() {
         return when;
     }
-    
 
     public EmailCreatedEvent(String uuid, Email account) {
         this.email = account;
+        this.uuid = uuid;
     }
 
+    @Override
     public Email getEmail() {
         return email;
     }
