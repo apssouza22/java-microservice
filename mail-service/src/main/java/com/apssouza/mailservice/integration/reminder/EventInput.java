@@ -1,6 +1,7 @@
 package com.apssouza.mailservice.integration.reminder;
 
 import com.apssouza.eventsourcing.aggregates.EmailState;
+import com.apssouza.eventsourcing.commands.EmailCommandHandler;
 import com.apssouza.eventsourcing.commands.EmailCreateCommand;
 import com.apssouza.eventsourcing.entities.Email;
 import java.util.UUID;
@@ -20,12 +21,19 @@ import org.springframework.messaging.handler.annotation.Payload;
 public class EventInput {
 
     Logger LOG = Logger.getLogger(EventInput.class);
+    
+    private final EmailCommandHandler commanderHandler;
+
+    public EventInput(EmailCommandHandler commander) {
+        this.commanderHandler = commander;
+    }
+    
 
     @StreamListener(
             target = Sink.INPUT,
             condition = "headers['type']=='TodoCreatedEvent'"
     )
-    public void todoCreated(@Payload TodoCreatedEvent event) {
+    public void todoCreated(@Payload TodoCreatedEvent event) throws Exception {
         LOG.info("Todo created");
         LOG.info("when = " + event.when());
         LOG.info("todo = " + event.getTodo().toString());
@@ -33,6 +41,7 @@ public class EventInput {
         String uuid = UUID.randomUUID().toString();
         Email email = new Email("Alexsandro", "apssouza22@gmail.com", EmailState.CREATED);
         EmailCreateCommand command = new EmailCreateCommand(uuid, email);
+        commanderHandler.create(command);
     }
 
 }

@@ -36,6 +36,7 @@ public class EmailAggregateTest {
         assertEquals(email.getEmail(), result.getState().getEmail());
         assertEquals(email.getName(), result.getState().getName());
         AppEvent event = result.getUncommittedChanges().get(0);
+        assertEquals(uuid, result.getUuid());
         assertEquals(uuid, event.uuid());
         assertEquals(EmailState.CREATED, result.getState().getState());
     }

@@ -7,10 +7,13 @@ import com.apssouza.eventsourcing.entities.Email;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.Future;
+import java.util.function.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,25 +27,26 @@ public class NotifyController {
     @Autowired
     EmailCommandHandler emailCommandHandler;
 
-    @RequestMapping("email")
-    public CompletableFuture<String> sendEmail() {
-        CompletableFuture<String> result = CompletableFuture.completedFuture("Email sent successfully");
-        try {
+    @GetMapping("email")
+    public @ResponseBody Future<String> sendEmail() {
+        Supplier supplier = () -> {
             String uuid = UUID.randomUUID().toString();
             EmailCreateCommand command = new EmailCreateCommand(
                     uuid,
                     new Email("Alexsandro", "apssouza22@gmail.com", EmailState.CREATED)
             );
             Executors.newCachedThreadPool().submit(() -> {
-                emailCommandHandler.create(command);
-                return null;
+                try {
+                    emailCommandHandler.create(command);
+                } catch (Exception ex) {
+                    ReflectionUtils.rethrowRuntimeException(ex);
+                }
             });
-        } catch (Exception ex) {
-            Logger.getLogger(NotifyController.class.getName())
-                    .log(Level.SEVERE, null, ex);
-        }
+            return "Email sent successfully.  - code= " + uuid;
+        };
 
-        return result;
+        return CompletableFuture.supplyAsync(supplier, Executors.newCachedThreadPool());
+
     }
 
 }

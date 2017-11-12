@@ -22,7 +22,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class EmailAggregate extends AbstractAggregate implements Aggregate {
 
-    private final String uuid;
     private final Email state;
 
     public EmailAggregate(String uuid, List<AppEvent> changes) {

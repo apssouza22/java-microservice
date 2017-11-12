@@ -15,7 +15,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public abstract class AbstractAggregate implements Aggregate {
 
-    private String uuid;
+    protected String uuid;
+    
     protected List<AppEvent> changes = new CopyOnWriteArrayList();
 
     protected CopyOnWriteArrayList<AppEvent> appendChange(AppEvent event) {
