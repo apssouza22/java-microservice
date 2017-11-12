@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Email query service, read data from the read data source This can be
- * separeted in a new service
+ * separated in a new service
  *
  * @author apssouza
  */
