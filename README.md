@@ -41,6 +41,22 @@ to check how to work with Jenkins pipeline
 
 * Get data using the access_token -> localhost:8018/accounts?access_token={access_token} or curl -H "Authorization: Bearer $TOKEN" "localhost:8018/path"
 
+### Scaling 
+NGINX will  be configured for browser caching of the static content and Load balance. For that we will need to scale our App Gateway 
+and update manually the ports in `default.conf` file, in the upstream configuration section:
+
+```
+upstream backend {
+  server gateway:8018;
+  server gateway:DYNAMICPORT;
+  server gateway:DYNAMICPORT;
+}
+```
+
+And we will run the compose file with `--scale` parameter:
+
+`docker-compose -f proxy-docker-compose.yml -p todo up --scale gateway=2`
+
 ### URLs
 Monitoring stream - http://localhost:8022/turbine.stream
 
@@ -60,7 +76,7 @@ Elasticsearch Info: http://localhost:9200
 
 Elasticsearch Status: http://localhost:9200/_status?pretty
 
-NGINX Status: localhost/nginx_status
+NGINX Status: localhost:8055/nginx_status
 
 docker-compose -p todo up
 docker-compose -p todo down

@@ -1,0 +1,4 @@
+# Proxy server
+
+This is a Nginx proxy/ Load balance server placed in front our API Gateway in order to have a 
+load balance and be able of scaling our API Gateway as much as we need.

@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  config:
+    image: todo/config-server
+    ports:
+      - 8888:8888
+    networks:
+      - net
+    hostname: config
+    container_name: config 
+    external_links:
+      - elk
+      - kafka
+    
+  gateway:
+    image: todo/api-gateway
+    ports:
+      - 8018
+    networks:
+      - net
+    hostname: gateway
+    command: ["./wait-for-it.sh","config:8888","--timeout=50","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+
+  proxy:
+     build: proxy/
+     ports:
+       - 8055:80
+     networks:
+       - net
+     depends_on:
+       - gateway
+     hostname: proxy
+     container_name: proxy  
+     command: ["./wait-for-it.sh","gateway:8018","--timeout=50","--","/usr/local/bin/start.sh"]
+
+volumes:
+  todo_data:
+    external: true
+  todo_elk:
+    external: true
+
+networks:
+  net:
+    driver: bridge
