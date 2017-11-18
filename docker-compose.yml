@@ -122,18 +122,6 @@ services:
     external_links:
       - elk
 
-  proxy:
-    build: proxy/
-    ports:
-      - 80:80
-    networks:
-      - net
-    depends_on:
-      - gateway
-    hostname: proxy
-    container_name: proxy  
-    command: ["./wait-for-it.sh","gateway:8018","--timeout=150","--","/usr/local/bin/start.sh"]
-
 volumes:
   todo_data:
     external: true
