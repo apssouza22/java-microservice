@@ -1,29 +1,32 @@
 package com.apssouza.eventsourcing.events;
 
+import com.apssouza.eventsourcing.entities.Email;
+import com.apssouza.infra.AbstractDomainEvent;
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Email delivered event
  *
  * @author apssouza
  */
-public class EmailDeliveredEvent implements DomainEvent {
+public class EmailDeliveredEvent extends AbstractDomainEvent implements EmailEvent {
 
-    private final UUID uuid;
+    private final String uuid;
     private final Instant when = Instant.now();
     private final String type = "sent";
+    
+    private final Email email;
 
-    public EmailDeliveredEvent(UUID uuid) {
+    public EmailDeliveredEvent(String uuid, Email email) {
         this.uuid = uuid;
+        this.email = email;
     }
 
     @Override
-    public UUID uuid() {
+    public String uuid() {
         return uuid;
     }
 
-    @Override
     public String type() {
         return type;
     }
@@ -34,7 +37,8 @@ public class EmailDeliveredEvent implements DomainEvent {
     }
 
     @Override
-    public String getEventClass() {
-        return this.getClass().getName();
+    public Email getEmail() {
+        return email;
     }
+
 }

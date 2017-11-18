@@ -1,40 +1,27 @@
 package com.apssouza.eventsourcing.events;
 
-import java.time.Instant;
-import java.util.UUID;
+import com.apssouza.eventsourcing.entities.Email;
+import com.apssouza.infra.AbstractDomainEvent;
 
 /**
  * Email sent event
  *
  * @author apssouza
  */
-public class EmailSentEvent implements DomainEvent {
+public class EmailSentEvent extends AbstractDomainEvent implements EmailEvent {
 
-    private final UUID uuid;
-    private final Instant when = Instant.now();
     private final String type = "sent";
+    
+    private Email email;
 
-    public EmailSentEvent(UUID uuid) {
+    public EmailSentEvent(String uuid, Email email) {
         this.uuid = uuid;
+        this.email = email;
     }
 
     @Override
-    public UUID uuid() {
-        return uuid;
+    public Email getEmail() {
+        return email;
     }
 
-    @Override
-    public String type() {
-        return type;
-    }
-
-    @Override
-    public Instant when() {
-        return when;
-    }
-
-    @Override
-    public String getEventClass() {
-        return this.getClass().getName();
-    }
 }

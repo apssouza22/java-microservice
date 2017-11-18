@@ -80,7 +80,7 @@ curl -d '{"userEmail":"alex@test.com", "caption":"post caption", "description":"
 ### Stopping, Starting, Restarting...
 
 ```
-# running separated container
+# running separated container and link to the network infrastructure
 docker run -d -p 8026:8026  --network todo_net --add-host eureka:172.19.0.3 todo/admin-server
 
 # orchestrate start-up of containers, tailing the logs...
@@ -122,8 +122,13 @@ docker logs container-name
 /opt/kafka/bin/kafka-topics.sh --list --zookeeper zookeeper:2181
 ```
 
+### Data
+```
+#create a new To-Do 
+curl -H "Content-Type: application/json" -X POST -d '{"id":161,"caption":"Test caption 3","userEmail":"marcia@gmail.com","description":"description 3","createdat":null,"priority":2,"status":"PENDING","version":0,"valid":true}' http://localhost:8015/todos
+```
+
 ## TODO
-* Integrate mail service to reminder-service
 * Integrate turbine in the Admin dashboard
-* Added a readme for each microservices and modules
-* Test the integration between the Filebeat and ELK
+* Add private maven repository Artifactory
+* Manager services integration through Spring Webflow

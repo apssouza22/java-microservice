@@ -1,5 +1,0 @@
-# Eventsourcing module
-
-This module contains important components to work with event centric application.
-Here you will find  event serializer and event store, using relational database.
-

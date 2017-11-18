@@ -1,6 +1,6 @@
 package com.apssouza.eventsourcing.eventstore;
 
-import com.apssouza.eventsourcing.events.DomainEvent;
+import com.apssouza.infra.AppEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -23,17 +23,17 @@ public class EventSerializer {
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
-    public EventDescriptor serialize(DomainEvent event) {
+    public EventDescriptor serialize(AppEvent event) {
         try {
-            return new EventDescriptor(objectMapper.writeValueAsString(event), event.when(), event.type());
+            return new EventDescriptor(objectMapper.writeValueAsString(event), event.when(), AppEvent.class.getCanonicalName());
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public DomainEvent deserialize(EventDescriptor eventDescriptor) {
+    public AppEvent deserialize(EventDescriptor eventDescriptor) {
         try {
-            return objectMapper.readValue(eventDescriptor.getBody(), DomainEvent.class);
+            return objectMapper.readValue(eventDescriptor.getBody(), AppEvent.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
