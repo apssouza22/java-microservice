@@ -4,29 +4,24 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static java.util.Collections.emptyList;
 
 public interface EventStoreRepository extends JpaRepository<EventStream, Long> {
 
-    Optional<EventStream> findByAggregateUUID(UUID uuid);
+    Optional<EventStream> findByAggregateUUID(String uuid);
 
-    default void saveEvents(UUID aggregateId, List<EventDescriptor> events) {
+    default EventStream saveEvents(String aggregateId, List<EventDescriptor> events) {
         final EventStream eventStream = findByAggregateUUID(aggregateId)
                 .orElseGet(() -> new EventStream(aggregateId));
         eventStream.addEvents(events);
-        save(eventStream);
+        return save(eventStream);
     }
 
-    default List<EventDescriptor> getEventsForAggregate(UUID aggregateId) {
+    default List<EventDescriptor> getEventsForAggregate(String aggregateId) {
         return findByAggregateUUID(aggregateId)
                 .map(EventStream::getEvents)
                 .orElse(emptyList());
 
-    }
-    
-    default EventStream getAggregate(UUID aggregateId){
-        return findByAggregateUUID(aggregateId).get();
     }
 }

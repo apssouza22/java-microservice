@@ -6,10 +6,9 @@
 package com.apssouza.eventsourcing.services;
 
 import com.apssouza.eventsourcing.aggregates.Aggregate;
-import com.apssouza.eventsourcing.events.DomainEvent;
 import com.apssouza.eventsourcing.eventstore.EventStream;
+import com.apssouza.infra.AppEvent;
 import java.util.List;
-import java.util.UUID;
 
 /**
  *
@@ -19,7 +18,7 @@ public interface EventSourcingService {
     
     Aggregate save(Aggregate aggregate) ;
     
-    List<DomainEvent> getRelatedEvents(UUID uuid);
+    List<AppEvent> getRelatedEvents(String uuid);
     
-    EventStream getAggregate(UUID uuid);
+    EventStream getAggregate(String uuid);
 }

@@ -1,5 +1,6 @@
 package com.apssouza.eventsourcing.entities;
 
+import com.apssouza.eventsourcing.aggregates.EmailState;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,8 @@ public class Email {
     @NotNull
     @Column(unique = true)
     private String email;
+    
+    private EmailState state;
 
     @Version
     private long version;
@@ -38,16 +41,22 @@ public class Email {
     public Email() {
     }
 
-    public Email(String name, String email) {
+    public Email(String name, String email, EmailState state) {
         this.name = name;
         this.email = email;
+        this.state = state;
     }
 
-    public Email(long id, String name, String email) {
-        this(name, email);
+    public Email(long id, String name, String email, EmailState state) {
+        this(name, email,state);
         this.id = id;
     }
 
+    public EmailState getState() {
+        return state;
+    }
+
+    
     public long getId() {
         return id;
     }
@@ -91,6 +100,11 @@ public class Email {
     @Override
     public String toString() {
         return "Email{" + "id=" + id + ", authId=" + authId + ", name=" + name + ", email=" + email + ", version=" + version + '}';
+    }
+
+    public Email setState(EmailState emailState) {
+        state = emailState;
+        return this;
     }
 
 }

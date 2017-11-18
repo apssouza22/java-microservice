@@ -2,8 +2,9 @@ package com.apssouza.eventsourcing.commands;
 
 import com.apssouza.eventsourcing.aggregates.EmailAggregate;
 import com.apssouza.eventsourcing.services.EventSourcingService;
-import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.apssouza.infra.AppEvent;
+import com.apssouza.infra.EventPublisher;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,36 +16,62 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class EmailCommandHandler {
+public class EmailCommandHandler  {
 
-    @Autowired
-    EventSourcingService eventSourcingService;
+    private final EventSourcingService eventSourcingService;
 
-    public void create(EmailCreateCommand command) {
-        UUID randomUUID = UUID.randomUUID();
-        EmailAggregate emailAggregate = getByUUID(randomUUID);
-        eventSourcingService.save(emailAggregate.create(command));
+    private final EventPublisher eventPublisher;
+
+    public EmailCommandHandler(
+            EventSourcingService eventSourcingService,
+            EventPublisher eventPublisher
+    ) {
+        this.eventSourcingService = eventSourcingService;
+        this.eventPublisher = eventPublisher;   
+    }
+
+    
+    public void create(EmailCreateCommand command) throws Exception {
+        EmailAggregate emailAggregate = getByUUID(command.getUuid());
+        emailAggregate = emailAggregate.create(command);
+        List<AppEvent> pendingEvents = emailAggregate.getUncommittedChanges();
+        eventSourcingService.save(emailAggregate);
+
+        pendingEvents.forEach(eventPublisher::publish);
+        pendingEvents.forEach(eventPublisher::stream);
     }
 
     public void send(EmailSendCommand command) throws Exception {
         EmailAggregate emailAggregate = getByUUID(command.getUuid());
-        emailAggregate.send(command);
+        emailAggregate = emailAggregate.send(command);
+
+        List<AppEvent> pendingEvents = emailAggregate.getUncommittedChanges();
+        pendingEvents.forEach(eventPublisher::stream);
+        
         eventSourcingService.save(emailAggregate);
     }
 
     public void delivery(EmailDeliveryCommand command) throws Exception {
         EmailAggregate emailAggregate = getByUUID(command.getUuid());
-        emailAggregate.delivery(command);
+        emailAggregate = emailAggregate.delivery(command);
+        
+        List<AppEvent> pendingEvents = emailAggregate.getUncommittedChanges();
+        pendingEvents.forEach(eventPublisher::stream);
+        
         eventSourcingService.save(emailAggregate);
     }
 
     public void delete(EmailDeleteCommand command) throws Exception {
         EmailAggregate emailAggregate = getByUUID(command.getUuid());
         emailAggregate.delete(command);
+        
+        List<AppEvent> pendingEvents = emailAggregate.getUncommittedChanges();
+        pendingEvents.forEach(eventPublisher::stream);
+        
         eventSourcingService.save(emailAggregate);
     }
 
-    public EmailAggregate getByUUID(UUID uuid) {
+    public EmailAggregate getByUUID(String uuid) {
         return EmailAggregate.from(uuid, eventSourcingService.getRelatedEvents(uuid));
     }
 }

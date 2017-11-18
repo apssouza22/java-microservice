@@ -30,6 +30,7 @@ services:
     image: todo/reminder-service
     ports:
       - 8015:8015
+      - 8001:8001
     networks:
       - net
     depends_on:
@@ -41,6 +42,7 @@ services:
     image: todo/mail-service
     ports:
       - 8020:8020
+      - 8000:8000
     networks:
       - net
     depends_on:
