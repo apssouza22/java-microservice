@@ -5,7 +5,6 @@ import com.apssouza.eventsourcing.events.EmailCreatedEvent;
 import com.apssouza.eventsourcing.events.EmailDeletedEvent;
 import com.apssouza.mailservice.repository.EmailRepository;
 import java.util.List;
-import java.util.Random;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
