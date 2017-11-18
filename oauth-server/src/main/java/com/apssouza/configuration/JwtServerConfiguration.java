@@ -15,6 +15,8 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
  */
 @Configuration
 public class JwtServerConfiguration {
+    
+    private static final String ENC_PASSWORD = "58347105";
 
     @Bean
     public TokenStore tokenStore() {
@@ -23,7 +25,10 @@ public class JwtServerConfiguration {
 
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "58347105".toCharArray());
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(
+                new ClassPathResource("jwt.jks"), 
+                ENC_PASSWORD.toCharArray()
+        );
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
         return converter;

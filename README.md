@@ -129,6 +129,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"id":161,"caption":"Test c
 ```
 
 ## TODO
+* Deploy the project to Amazon ECS
 * Integrate turbine in the Admin dashboard
 * Add private maven repository Artifactory
 * Manager services integration through Spring Webflow

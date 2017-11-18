@@ -1,4 +1,3 @@
-
 package com.apssouza.auth;
 
 import java.util.HashMap;
@@ -17,7 +16,8 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(
             OAuth2AccessToken accessToken,
-            OAuth2Authentication authentication) {
+            OAuth2Authentication authentication
+    ) {
         Map<String, Object> additionalInfo = new HashMap<>();
         additionalInfo.put("name", authentication.getName());
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);

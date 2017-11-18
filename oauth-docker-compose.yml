@@ -1,0 +1,76 @@
+version: '2'
+
+services:
+  config:
+    image: todo/config-server
+    ports:
+      - 8888:8888
+    networks:
+      - net
+    hostname: config
+    container_name: config 
+    external_links:
+      - elk
+      - kafka
+    
+  oauth:
+    image: todo/oauth-server
+    ports:
+      - 8017:8017
+    networks:
+      - net
+    depends_on:
+      - user
+    hostname: oauth
+    container_name: oauth
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+  
+  eureka:
+    image: todo/eureka-server
+    ports:
+      - 8010:8010
+    networks:
+      - net
+    depends_on:
+      - config
+    hostname: eureka
+    container_name: eureka  
+    command: ["./wait-for-it.sh","config:8888","--timeout=100","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+    
+  gateway:
+    image: todo/api-gateway
+    ports:
+      - 8018:8018
+    networks:
+      - net
+    hostname: gateway
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+  
+  user:
+    image: todo/user-service
+    ports:
+      - 8016:8016
+    networks:
+      - net
+    hostname: user
+    container_name: user
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+      - kafka
+
+volumes:
+  todo_data:
+    external: true
+  todo_elk:
+    external: true
+
+networks:
+  net:
+    driver: bridge
