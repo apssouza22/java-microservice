@@ -11,7 +11,7 @@ Monitoring using Hystrix dashboard and Turbine, Administrating using Spring admi
 Log management with Elastic search, Logstash and Kibana (ELK), Server load balancing with Nginx,
 Infrastructure management with Docker-compose, JMX application monitoring,
 Security with Spring Security OAuth, Oauth2 with JWT, Aspect Oriented Programing, 
-Distributed events with Kafka, Maven Multimodule project, Event Sourcing, 
+Distributed events with Kafka, Spring Stream Maven Multimodule project, Event Sourcing, 
 CQRS, REST, Web Sockets, Continuous deploy with Jenkins, and all developed using Java 8.
 
 ![Alt text](microservices-architecture.jpg?raw=true "microservices architecture")

@@ -56,7 +56,7 @@
         </dependency>
         
         <dependency>
-            <groupId>com.apssouza.monitoring</groupId>
+            <groupId>com.apssouza</groupId>
             <artifactId>jmx-monitoring</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

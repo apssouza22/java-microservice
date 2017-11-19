@@ -7,13 +7,15 @@ services:
       - 5601:5601
       - 9200:9200
       - 5044:5044
-      - 5000:5000
+      - 5001:5000
     networks:
       - net
     volumes:
       - todo_elk:/var/lib/elasticsearch
     hostname: elk
     container_name: elk
+    mem_limit: 4925288000  
+    cpu_shares: 500  
     
   zookeeper:
     image: wurstmeister/zookeeper
@@ -21,7 +23,9 @@ services:
       - 2181:2181
     networks:
       - net
-    
+    mem_limit: 925288000  
+    cpu_shares: 100
+  
   kafka:
     image: wurstmeister/kafka
     ports:
@@ -38,7 +42,8 @@ services:
     container_name: kafka
     networks:
       - net
-
+    mem_limit: 925288000  
+    cpu_shares: 100
 
 volumes:
   todo_data:

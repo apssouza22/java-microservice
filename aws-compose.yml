@@ -1,0 +1,125 @@
+version: '2'
+
+services:
+    
+  config:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:config-server
+    ports:
+      - 8888:8888
+    hostname: config
+    container_name: config 
+    external_links:
+      - elk
+      - kafka
+    mem_limit: 1025288000
+    cpu_shares: 100
+    extra_hosts:
+      - "eureka:52.51.233.183"
+
+
+  user:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:user-service
+    ports:
+      - 8016:8016
+    networks:
+      - net
+    depends_on:
+      - eureka
+      - admin
+    hostname: user
+    container_name: user
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+      - kafka
+    mem_limit: 1025288000      
+    cpu_shares: 100
+    extra_hosts:
+      - "config:52.51.233.183"
+      - "eureka:52.51.233.183"
+
+
+  oauth:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:oauth-server
+    ports:
+      - 8017:8017
+    depends_on:
+      - eureka
+      - user
+      - admin
+    hostname: oauth
+    container_name: oauth
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+    mem_limit: 1025288000   
+    cpu_shares: 100
+    extra_hosts:
+      - "config:52.51.233.183"
+      - "eureka:52.51.233.183"
+
+
+
+  mail:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:mail-service
+    ports:
+      - 8020:8020
+    depends_on:
+      - eureka
+      - admin
+    hostname: mail
+    container_name: mail
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+      - kafka
+    mem_limit: 1025288000  
+    cpu_shares: 100
+    extra_hosts:
+      - "config:52.51.233.183"
+      - "eureka:52.51.233.183"
+
+
+  admin:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:admin-server
+    depends_on:
+      - eureka
+    container_name: admin
+    ports:
+      - 8026:8026
+    environment:
+      - EUREKA_SERVICE_URL=http://eureka:8010
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - LOGGING_FILE=/tmp/admin.log
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+    mem_limit: 1225288000
+    cpu_shares: 100
+    extra_hosts:
+      - "config:52.51.233.183"
+      - "eureka:52.51.233.183"
+    
+  eureka:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:eureka-server
+    ports:
+      - 8010:8010
+    depends_on:
+      - config
+    hostname: eureka
+    container_name: eureka  
+    command: ["./wait-for-it.sh","config:8888","--timeout=100","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+    mem_limit: 1025288000  
+    cpu_shares: 100
+    extra_hosts:
+      - "config:52.51.233.183"
+
+
+volumes:
+  todo_data:
+    external: true
+  todo_elk:
+    external: true
+
