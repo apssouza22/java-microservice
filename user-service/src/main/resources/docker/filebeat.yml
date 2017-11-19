@@ -17,7 +17,7 @@ filebeat:
       document_type: syslog
     -
       paths:
-        - /var/log/spring-music.log
+        - /var/log/todo.log
       document_type: log4j
       multiline:
         pattern: '^[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}'

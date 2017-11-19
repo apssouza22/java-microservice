@@ -1,0 +1,53 @@
+version: '2'
+
+services:
+  config:
+    image: todo/config-server
+    ports:
+      - 8888:8888
+    networks:
+      - net
+    hostname: config
+    container_name: config 
+    external_links:
+      - elk
+      - kafka
+  
+  user:
+    image: todo/user-service
+    ports:
+      - 8016:8016
+    networks:
+      - net
+    hostname: user
+    container_name: user
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=10","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+      - kafka
+
+  elk:
+    image: sebp/elk:latest
+    ports:
+      - 5601:5601
+      - 9200:9200
+      - 5044:5044
+      - 5000:5000
+    networks:
+      - net
+    volumes:
+      - todo_elk:/var/lib/elasticsearch
+    hostname: elk
+    container_name: elk
+    mem_limit: 4925288000  
+    cpu_shares: 500  
+    
+volumes:
+  todo_data:
+    external: true
+  todo_elk:
+    external: true
+
+networks:
+  net:
+    driver: bridge
