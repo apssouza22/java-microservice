@@ -1,8 +1,15 @@
-# Hands-on Microservices with Java
+# Bootstrap project to work with microservices using Java
 
 Read the post talking about this [project](https://medium.com/hands-on-microservices-with-java/hands-on-microservices-with-java-e8a5b5b022ee)
- 
-“Microservices Architecture” example with many concepts and technologies put in place and combined within a whole system composed with different microservices. 
+
+The idea of this project is provide you a bootstrap for your next microservice architecture using Java. 
+On this repository we will be addressing some challenges that everyone faces when are starting with microservices. 
+This project will definitely helps you get an understand about the microservice world and save you a lot of time in setting your initial 
+microservice architecture.
+
+Basically if you are interested on microservice, either study or want to implement microservice approach at your work, this project is for you!
+
+
 Some patterns, tools and technologies that you will see in this system:
 
 Spring Boot, Spring Data, Spring Cloud Eureka, Load Balancing with Ribbon, 
@@ -14,7 +21,7 @@ Security with Spring Security OAuth, Oauth2 with JWT, Aspect Oriented Programing
 Distributed events with Kafka, Spring Stream Maven Multimodule project, Event Sourcing, 
 CQRS, REST, Web Sockets, Continuous deploy with Jenkins, and all developed using Java 8.
 
-![Alt text](microservices-architecture.jpg?raw=true "microservices architecture")
+![Alt text](assets/microservices-arch.jpg?raw=true "microservices architecture")
 
 
 ## How to use
