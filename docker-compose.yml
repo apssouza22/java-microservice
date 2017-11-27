@@ -121,7 +121,47 @@ services:
     command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
     external_links:
       - elk
+      
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+    networks:
+      - net
+    mem_limit: 925288000  
+    cpu_shares: 100
+  
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - 9092
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 172.19.0.1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_CREATE_TOPICS: "todo-mail:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    hostname: kafka
+    container_name: kafka
+    networks:
+      - net
+    mem_limit: 925288000  
+    cpu_shares: 100
 
+  proxy:
+     build: proxy/
+     ports:
+       - 8055:80
+     networks:
+       - net
+     depends_on:
+       - gateway
+     hostname: proxy
+     container_name: proxy  
+     command: ["./wait-for-it.sh","gateway:8018","--timeout=50","--","/usr/local/bin/start.sh"]
+     
 volumes:
   todo_data:
     external: true

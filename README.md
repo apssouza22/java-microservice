@@ -28,7 +28,6 @@ CQRS, REST, Web Sockets, Continuous deploy with Jenkins, and all developed using
 
 * run package-projects.sh
 * run docker-orchestrate.sh
-* docker-compose -f infra-docker-compose.yml -p todo up (wait until all services be up)
 * docker-compose -p todo up 
 
 ## Continuous deploy using Jenkins Pipeline
@@ -44,9 +43,9 @@ and paste the content of the Jenkinsfile in the Pipeline script box. Have a look
 to check how to work with Jenkins pipeline
 
 ### Accessing the services
-* Authenticate -> curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"  
+* Authenticate -> ```curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"```   
 
-* Get data using the access_token -> localhost:8018/accounts?access_token={access_token} or curl -H "Authorization: Bearer $TOKEN" "localhost:8018/path"
+* Get data using the access_token -> `localhost:8018/accounts?access_token={access_token}` or `curl -H "Authorization: Bearer $TOKEN" "localhost:8018/path"`
 
 ### Scaling 
 NGINX will  be configured for browser caching of the static content and Load balance. For that we will need to scale our App Gateway 
@@ -104,7 +103,7 @@ curl -d '{"userEmail":"alex@test.com", "caption":"post caption", "description":"
 
 ```
 # running separated container and link to the network infrastructure
-docker run -d -p 8026:8026  --network todo_net --add-host eureka:172.19.0.3 todo/admin-server
+docker run -d -p 8018:8018  --network todo_net --add-host eureka:172.19.0.5 --add-host config:172.19.0.2 todo/reminder-service
 
 # orchestrate start-up of containers, tailing the logs...
 docker-compose -p music up -d container-name && docker logs elk --follow # ^C to break
