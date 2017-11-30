@@ -14,7 +14,9 @@ services:
     mem_limit: 1025288000
     cpu_shares: 100
     extra_hosts:
-      - "eureka:52.51.233.183"
+      - "eureka:52.16.120.13"
+    environment:
+      - JAVA_OPTS=' -Xmx800m'
 
 
   user:
@@ -35,70 +37,11 @@ services:
     mem_limit: 1025288000      
     cpu_shares: 100
     extra_hosts:
-      - "config:52.51.233.183"
-      - "eureka:52.51.233.183"
-
-
-  oauth:
-    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:oauth-server
-    ports:
-      - 8017:8017
-    depends_on:
-      - eureka
-      - user
-      - admin
-    hostname: oauth
-    container_name: oauth
-    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
-    external_links:
-      - elk
-    mem_limit: 1025288000   
-    cpu_shares: 100
-    extra_hosts:
-      - "config:52.51.233.183"
-      - "eureka:52.51.233.183"
-
-
-
-  mail:
-    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:mail-service
-    ports:
-      - 8020:8020
-    depends_on:
-      - eureka
-      - admin
-    hostname: mail
-    container_name: mail
-    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
-    external_links:
-      - elk
-      - kafka
-    mem_limit: 1025288000  
-    cpu_shares: 100
-    extra_hosts:
-      - "config:52.51.233.183"
-      - "eureka:52.51.233.183"
-
-
-  admin:
-    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:admin-server
-    depends_on:
-      - eureka
-    container_name: admin
-    ports:
-      - 8026:8026
+      - "config:52.16.120.13"
+      - "eureka:52.16.120.13"
     environment:
-      - EUREKA_SERVICE_URL=http://eureka:8010
-      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
-      - LOGGING_FILE=/tmp/admin.log
-    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
-    external_links:
-      - elk
-    mem_limit: 1225288000
-    cpu_shares: 100
-    extra_hosts:
-      - "config:52.51.233.183"
-      - "eureka:52.51.233.183"
+      - JAVA_OPTS=' -Xmx800m'
+
     
   eureka:
     image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:eureka-server
@@ -114,12 +57,82 @@ services:
     mem_limit: 1025288000  
     cpu_shares: 100
     extra_hosts:
-      - "config:52.51.233.183"
-
-
-volumes:
-  todo_data:
-    external: true
-  todo_elk:
-    external: true
-
+      - "config:52.16.120.13"
+    environment:
+      - JAVA_OPTS=' -Xmx800m'
+  
+  
+  mail:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:mail-service
+    ports:
+      - 8020:8020
+    networks:
+      - net
+    hostname: mail
+    container_name: mail
+    command: ["./wait-for-it.sh","config:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    extra_hosts:
+      - "config:52.16.120.13"
+      - "eureka:52.16.120.13"
+      - "kafka:52.16.120.13"
+      - "zookeeper:52.16.120.13"
+    environment:
+      - JAVA_OPTS=' -Xmx800m'
+    mem_limit: 1025288000      
+    cpu_shares: 100
+      
+  reminder:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:reminder-service
+    ports:
+      - 8015:8015
+    networks:
+      - net
+    depends_on:
+      - eureka
+      - admin
+    hostname: reminder
+    command: ["./wait-for-it.sh","config:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    external_links:
+      - elk
+      - kafka
+    extra_hosts:
+      - "config:52.16.120.13"
+      - "eureka:52.16.120.13"
+      - "kafka:52.16.120.13"
+      - "zookeeper:52.16.120.13"
+    environment:
+      - JAVA_OPTS=' -Xmx800m'
+    mem_limit: 1025288000      
+    cpu_shares: 100
+  
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+    networks:
+      - net
+    mem_limit: 925288000  
+    cpu_shares: 100
+  
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: "52.16.120.13:2181"
+      KAFKA_CREATE_TOPICS: "todo-mail:1:1"
+      HOSTNAME_COMMAND: curl http://169.254.169.254/latest/meta-data/public-hostname
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_PROTOCOL_NAME: OUTSIDE
+      KAFKA_PROTOCOL_NAME: INSIDE
+      KAFKA_ADVERTISED_PORT: 9094
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    hostname: kafka
+    container_name: kafka
+    networks:
+      - net
+    mem_limit: 1325288000  
+    cpu_shares: 100
+    extra_hosts:
+      - "zookeeper:52.16.120.13"

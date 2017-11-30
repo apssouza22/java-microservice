@@ -11,7 +11,7 @@ services:
     container_name: config 
     external_links:
       - elk
-      - kafka
+    command: ["./wait-for-it.sh","elk:5601","--timeout=90","--","/usr/local/bin/start.sh"]
   
   user:
     image: todo/user-service
@@ -21,7 +21,7 @@ services:
       - net
     hostname: user
     container_name: user
-    command: ["./wait-for-it.sh","eureka:8010","--timeout=10","--","/usr/local/bin/start.sh"]
+    command: ["./wait-for-it.sh","elk:5601","--timeout=90","--","/usr/local/bin/start.sh"]
     external_links:
       - elk
       - kafka
@@ -36,7 +36,7 @@ services:
     networks:
       - net
     volumes:
-      - todo_elk:/var/lib/elasticsearch
+      - todo_data:/var/lib/elasticsearch
     hostname: elk
     container_name: elk
     mem_limit: 4925288000  
