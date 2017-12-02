@@ -8,9 +8,6 @@ services:
       - 8888:8888
     hostname: config
     container_name: config 
-    external_links:
-      - elk
-      - kafka
     mem_limit: 1025288000
     cpu_shares: 100
     extra_hosts:
@@ -25,9 +22,6 @@ services:
       - 8016:8016
     networks:
       - net
-    depends_on:
-      - eureka
-      - admin
     hostname: user
     container_name: user
     command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
@@ -87,14 +81,8 @@ services:
       - 8015:8015
     networks:
       - net
-    depends_on:
-      - eureka
-      - admin
     hostname: reminder
     command: ["./wait-for-it.sh","config:8010","--timeout=150","--","/usr/local/bin/start.sh"]
-    external_links:
-      - elk
-      - kafka
     extra_hosts:
       - "config:52.16.120.13"
       - "eureka:52.16.120.13"

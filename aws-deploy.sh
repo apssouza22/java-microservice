@@ -31,7 +31,7 @@ docker push ${REPOSITORY_URI}:admin-server
 docker tag todo/mail-service:latest ${REPOSITORY_URI}:mail-service
 docker push ${REPOSITORY_URI}:mail-service
 
-ecs-cli compose --verbose --file /java-microservice/aws-compose.yml up
+ecs-cli compose --verbose --file ./aws-compose.yml up
 
 
 
