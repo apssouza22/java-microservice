@@ -3,7 +3,7 @@ set -ex
 
 loginString="$(aws ecr get-login)"
 ${loginString/-e none/ }
-REPOSITORY_URI=004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex
+REPOSITORY_URI=${REPOSITORY_URI}
 
 docker tag todo/oauth-server:latest ${REPOSITORY_URI}:oauth-server
 docker push ${REPOSITORY_URI}:oauth-server

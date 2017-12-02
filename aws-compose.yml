@@ -11,17 +11,14 @@ services:
     mem_limit: 1025288000
     cpu_shares: 100
     extra_hosts:
-      - "eureka:52.16.120.13"
+      - "eureka:EC2_INSTANCE_IP"
     environment:
       - JAVA_OPTS=' -Xmx800m'
-
 
   user:
     image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:user-service
     ports:
       - 8016:8016
-    networks:
-      - net
     hostname: user
     container_name: user
     command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
@@ -31,8 +28,8 @@ services:
     mem_limit: 1025288000      
     cpu_shares: 100
     extra_hosts:
-      - "config:52.16.120.13"
-      - "eureka:52.16.120.13"
+      - "config:EC2_INSTANCE_IP"
+      - "eureka:EC2_INSTANCE_IP"
     environment:
       - JAVA_OPTS=' -Xmx800m'
 
@@ -46,59 +43,51 @@ services:
     hostname: eureka
     container_name: eureka  
     command: ["./wait-for-it.sh","config:8888","--timeout=100","--","/usr/local/bin/start.sh"]
-    external_links:
-      - elk
     mem_limit: 1025288000  
     cpu_shares: 100
     extra_hosts:
-      - "config:52.16.120.13"
+      - "config:EC2_INSTANCE_IP"
     environment:
       - JAVA_OPTS=' -Xmx800m'
   
-  
-  mail:
-    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:mail-service
+  oauth:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:oauth-server
     ports:
-      - 8020:8020
-    networks:
-      - net
-    hostname: mail
-    container_name: mail
-    command: ["./wait-for-it.sh","config:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+      - 8017:8017
+    hostname: oauth
+    container_name: oauth
+    command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    mem_limit: 1025288000   
+    cpu_shares: 100
     extra_hosts:
-      - "config:52.16.120.13"
-      - "eureka:52.16.120.13"
-      - "kafka:52.16.120.13"
-      - "zookeeper:52.16.120.13"
+      - "config:EC2_INSTANCE_IP"
+      - "eureka:EC2_INSTANCE_IP"
     environment:
       - JAVA_OPTS=' -Xmx800m'
-    mem_limit: 1025288000      
-    cpu_shares: 100
       
-  reminder:
-    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:reminder-service
+  admin:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:admin-server
+    container_name: admin
     ports:
-      - 8015:8015
-    networks:
-      - net
-    hostname: reminder
-    command: ["./wait-for-it.sh","config:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+      - 8026:8026
+    environment:
+      - EUREKA_SERVICE_URL=http://EC2_INSTANCE_IP:8010
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - LOGGING_FILE=/tmp/admin.log
+      - JAVA_OPTS=' -Xmx800m'
+    command: ["./wait-for-it.sh","EC2_INSTANCE_IP:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    mem_limit: 1225288000
+    cpu_shares: 100
     extra_hosts:
-      - "config:52.16.120.13"
-      - "eureka:52.16.120.13"
-      - "kafka:52.16.120.13"
-      - "zookeeper:52.16.120.13"
+      - "config:EC2_INSTANCE_IP" 
+      - "eureka:EC2_INSTANCE_IP"
     environment:
       - JAVA_OPTS=' -Xmx800m'
-    mem_limit: 1025288000      
-    cpu_shares: 100
   
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
       - 2181:2181
-    networks:
-      - net
     mem_limit: 925288000  
     cpu_shares: 100
   
@@ -107,7 +96,7 @@ services:
     ports:
       - 9092:9092
     environment:
-      KAFKA_ZOOKEEPER_CONNECT: "52.16.120.13:2181"
+      KAFKA_ZOOKEEPER_CONNECT: "EC2_INSTANCE_IP:2181"
       KAFKA_CREATE_TOPICS: "todo-mail:1:1"
       HOSTNAME_COMMAND: curl http://169.254.169.254/latest/meta-data/public-hostname
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
@@ -118,9 +107,25 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     hostname: kafka
     container_name: kafka
-    networks:
-      - net
     mem_limit: 1325288000  
     cpu_shares: 100
     extra_hosts:
-      - "zookeeper:52.16.120.13"
+      - "zookeeper:EC2_INSTANCE_IP"
+  
+  reminder:
+    image: 004833468061.dkr.ecr.eu-west-1.amazonaws.com/alex:reminder-service
+    ports:
+      - 8015:8015
+    networks:
+      - net
+    hostname: reminder
+    command: ["./wait-for-it.sh","config:8010","--timeout=150","--","/usr/local/bin/start.sh"]
+    extra_hosts:
+      - "config:52.50.116.215"
+      - "eureka:52.50.116.215"
+      - "kafka:52.50.116.215"
+      - "zookeeper:52.50.116.215"
+    environment:
+      - JAVA_OPTS=' -Xmx800m'
+    mem_limit: 1025288000      
+    cpu_shares: 100

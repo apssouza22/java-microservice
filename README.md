@@ -1,6 +1,9 @@
 # Bootstrap project to work with microservices using Java
 
-Read the post talking about this [project](https://medium.com/hands-on-microservices-with-java/hands-on-microservices-with-java-e8a5b5b022ee)
+watch the videos demonstrating the project
+
+<a href="https://medium.com/@alexsandrosouza/bootstrapping-a-microservices-screencast-7212aa3912cc" target="_blank"><img src="http://img.youtube.com/vi/6LPDbgf5ssU/0.jpg" 
+alt="Bootstrapping a microservice architecture" width="240" height="180" border="10" /></a>
 
 The idea of this project is provide you a bootstrap for your next microservice architecture using Java. 
 On this repository we will be addressing some challenges that everyone faces when are starting with microservices. 
@@ -26,9 +29,9 @@ CQRS, REST, Web Sockets, Continuous deploy with Jenkins, and all developed using
 
 ## How to use
 
-* run package-projects.sh
-* run docker-orchestrate.sh
-* docker-compose -p todo up 
+* run `package-projects.sh`
+* run `docker-orchestrate.sh`
+* `docker-compose -p todo up` 
 
 ## Continuous deploy using Jenkins Pipeline
 We have created a docker image in order to have continuous deploy in our project [here](https://github.com/apssouza22/build-deploy).
@@ -41,6 +44,14 @@ the Docker image built. To use it, you will need just to configure a Job on Jenk
 and paste the content of the Jenkinsfile in the Pipeline script box. Have a look at this 
 [video](https://www.youtube.com/watch?v=u3xLXEnlu2M&t=1023s&index=2&list=PLoO1q0-ZB3v6ZN6qvk0dsRRuxjiAQDuZx)
 to check how to work with Jenkins pipeline
+
+### Deploy on AWS 
+* Create your credentials on AWS 
+* Create your cluster on AWS console
+* Have the build-deploy container running (Checkout in the project's README how to do it)
+* Access Jenkins painal
+* Create a pipeline job
+* Run the Job
 
 ### Accessing the services
 * Authenticate -> ```curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"```   
