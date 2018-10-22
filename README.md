@@ -11,16 +11,42 @@ The idea of this project is to provide you a bootstrap for your next microservic
 
 Basically, if you are interested in microservice, either study or want to implement microservice approach at your work, this project is for you!
 
-Some patterns, tools and technologies that you will see in this system:
+
+Microservice principles addressed:
+
+* Scalability
+* Availability
+* Resiliency
+* Independent, autonomous
+* Decentralized governance
+* Failure isolation
+* Auto-Provisioning
+* Continuous delivery through DevOps
+
+Microservice patterns:
+
+Circuit Breakers
+API Gateway
+Command Query Responsibility Segregation (CQRS)
+Saga Pattern
+Event Sourcing
+Log Aggregation
+Health Check
+Service Discovery
+External Configuration
+Distributed authentication
+
+Technologies that you will see in this system:
 
 Spring Boot, Spring Data, Spring Cloud Eureka, Load Balancing with Ribbon, 
 Declarative REST Clients with Feign, Software Circuit Breakers with Hystrix, 
-Monitoring using Hystrix dashboard and Turbine, Administrating using Spring admin,
-Log management with Elastic search, Logstash and Kibana (ELK), Server load balancing with Nginx,
+Administrating using Spring admin,Log management with Elastic search, Logstash and Kibana (ELK), 
+Server load balancing with Nginx,
 Infrastructure management with Docker-compose, JMX application monitoring,
 Security with Spring Security OAuth, Oauth2 with JWT, Aspect Oriented Programing, 
 Distributed events with Kafka, Spring Stream Maven Multimodule project, Event Sourcing, 
 CQRS, REST, Web Sockets, Continuous deploy with Jenkins, and all developed using Java 8.
+
 
 ![Alt text](assets/microservices-arch.jpg?raw=true "microservices architecture")
 
