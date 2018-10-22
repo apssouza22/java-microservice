@@ -188,3 +188,4 @@ curl -H "Content-Type: application/json" -X POST -d '{"id":161,"caption":"Test c
 ## TODO
 * Add private maven repository Artifactory
 * Manager services integration through Spring Webflow
+* Add Distributed Tracing
