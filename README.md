@@ -25,16 +25,16 @@ Microservice principles addressed:
 
 Microservice patterns:
 
-Circuit Breakers
-API Gateway
-Command Query Responsibility Segregation (CQRS)
-Saga Pattern
-Event Sourcing
-Log Aggregation
-Health Check
-Service Discovery
-External Configuration
-Distributed authentication
+* Circuit Breakers
+* API Gateway
+* Command Query Responsibility Segregation (CQRS)
+* Saga Pattern
+* Event Sourcing
+* Log Aggregation
+* Health Check
+* Service Discovery
+* External Configuration
+* Distributed authentication
 
 Technologies that you will see in this system:
 
