@@ -168,6 +168,8 @@ docker logs container-name
 ```
 
 ### Kafka
+Inside the Kafka container
+
 ```
 # event consume
 /opt/kafka/bin/kafka-console-consumer.sh --zookeeper zookeeper:2181 --topic todo-mail --from-beginning
@@ -177,6 +179,9 @@ docker logs container-name
 
 # Listing topics
 /opt/kafka/bin/kafka-topics.sh --list --zookeeper zookeeper:2181
+
+# Create topic
+/opt/kafka/bin/kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic pcs
 ```
 
 ### Data
