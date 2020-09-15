@@ -2,10 +2,10 @@
 
 Watch the videos demonstrating the project
 
-<a href="https://medium.com/@alexsandrosouza/bootstrapping-a-microservices-screencast-7212aa3912cc" target="_blank"><img src="http://img.youtube.com/vi/6LPDbgf5ssU/0.jpg" 
+<a href="https://dzone.com/articles/bootstrapping-a-microservice-architecturescreencas" target="_blank"><img src="http://img.youtube.com/vi/6LPDbgf5ssU/0.jpg" 
 alt="Bootstrapping a microservice architecture" width="240" height="180" border="10" /></a>
 
-Read about the project [here](https://medium.com/hands-on-microservices-with-java/bootstrapping-microservices-your-microservice-architecture-ready-438eefb2e435)
+Read about the project [here](https://dzone.com/articles/bootstrapping-microservices-your-microservice-arch)
 
 The idea of this project is to provide you a bootstrap for your next microservice architecture using Java. we are addressing main challenges that everyone faces when is starting with microservices. This project will definitely help you get an understand about microservices world and save you a lot of time in setting your initial microservice architecture.
 
