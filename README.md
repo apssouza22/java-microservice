@@ -11,6 +11,7 @@ The idea of this project is to provide you a bootstrap for your next microservic
 
 Basically, if you are interested in microservice, either study or want to implement microservice approach at your work, this project is for you!
 
+https://www.linkedin.com/in/alexsandro-souza-dev/
 
 Microservice principles addressed:
 
