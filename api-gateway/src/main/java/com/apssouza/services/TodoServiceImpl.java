@@ -20,7 +20,7 @@ public class TodoServiceImpl implements TodoService {
     TodoClient todoClient;
 
     @Override
-    public List<User> getAll() {
+    public List<Todo> getAll() {
         return todoClient.getAll();
     }
 

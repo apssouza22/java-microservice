@@ -1,0 +1,3 @@
+com/apssouza/infra/AbstractDomainEvent.class
+com/apssouza/infra/EventPublisher.class
+com/apssouza/infra/AppEvent.class

@@ -1,4 +1,4 @@
-# Bootstrap project to work with microservices using Java
+s# Bootstrap project to work with microservices using Java
 
 Watch the videos demonstrating the project
 
@@ -91,7 +91,7 @@ to check how to work with Jenkins pipeline
 ### Accessing the services
 * Authenticate -> ```curl -X POST -vu todo-app:123456 http://localhost:8017/oauth/token -H "Accept: application/json" -d "password=1234&username=apssouza22@gmail.com&grant_type=password&scope=write&client_secret=123456&client_id=todo-app"```   
 
-* Get data using the access_token -> `localhost:8018/accounts?access_token={access_token}` or `curl -H "Authorization: Bearer $TOKEN" "localhost:8018/path"`
+* Get data using the access_token -> `localhost:8018/accounts?access_token={access_token}` or `curl -H "Authorization: Bearer dG9kby1hcHA6MTIzNDU2" "localhost:8018/path"`
 
 ### Scaling 
 NGINX will  be configured for browser caching of the static content and Load balance. For that we will need to scale our App Gateway 

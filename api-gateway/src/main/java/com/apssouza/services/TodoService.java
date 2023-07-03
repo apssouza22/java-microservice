@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface TodoService {
     
-    public List<User> getAll();
+    public List<Todo> getAll();
 
     public List<Todo> getTodoByUserEmaill(String email);
 
