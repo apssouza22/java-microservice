@@ -40,6 +40,7 @@ public class JwtConfiguration {
             throw new RuntimeException(e);
         }
         converter.setVerifierKey(publicKey);
+        converter.setSigningKey(publicKey);//added as per stack overflow to solve
         return converter;
     }
 }

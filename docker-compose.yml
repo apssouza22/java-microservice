@@ -4,7 +4,7 @@ services:
   config:
     image: todo/config-server
     ports:
-      - 8888:8888
+      - "8888:8888"
     networks:
       - net
     hostname: config
@@ -16,7 +16,7 @@ services:
   eureka:
     image: todo/eureka-server
     ports:
-      - 8010:8010
+      - "8010:8010"
     networks:
       - net
     depends_on:
@@ -30,7 +30,7 @@ services:
   reminder:
     image: todo/reminder-service
     ports:
-      - 8015:8015
+      - "8015:8015"
     networks:
       - net
     depends_on:
@@ -46,7 +46,7 @@ services:
   user:
     image: todo/user-service
     ports:
-      - 8016:8016
+      - "8016:8016"
     networks:
       - net
     depends_on:
@@ -62,7 +62,7 @@ services:
   oauth:
     image: todo/oauth-server
     ports:
-      - 8017:8017
+      - "8017:8017"
     networks:
       - net
     depends_on:
@@ -79,7 +79,7 @@ services:
   gateway:
     image: todo/api-gateway
     ports:
-      - 8018:8018
+      - "8018:8018"
     networks:
       - net
     depends_on:
@@ -112,7 +112,7 @@ services:
       - eureka
     container_name: admin
     ports:
-      - 8026:8026
+      - "8026:8026"
     networks:
       - net
     environment:
@@ -136,7 +136,7 @@ services:
   kafka:
     image: wurstmeister/kafka
     ports:
-      - "9092"
+      - "9092:9092"
     depends_on:
       - zookeeper
     environment:
