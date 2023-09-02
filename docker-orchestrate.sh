@@ -18,9 +18,9 @@ docker volume create --name todo_elk
 
 # create bridge network for project
 # ** assumes your project folder is 'todo' **
+#docker network rm todo_net
 docker network create -d bridge todo_net
 
 # build images and orchestrate start-up of containers (in this order)
 # -p = --project-name
-docker-compose -p todo up 
-
+docker-compose -p todo up

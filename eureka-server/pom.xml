@@ -22,6 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>com.apssouza.discovery.Application</start-class>
         <java.version>1.8</java.version>
+        <docker.host.url>tcp://localhost:2375</docker.host.url>
     </properties>
 
     <dependencies>
@@ -39,7 +40,7 @@
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
     </dependencies>
-	
+
     <build>
         <plugins>
             <plugin>
@@ -128,8 +129,8 @@
                         <artifactId>docker-maven-plugin</artifactId>
                         <version>0.19.0</version>
                         <configuration>
-                            <!--<dockerHost>http://localhost:2376</dockerHost>-->
                             <dockerHost>unix:///var/run/docker.sock</dockerHost>
+<!--                            <dockerHost>${docker.host.url}</dockerHost>-->
                             <images>
                                 <image>
                                     <name>${docker.image.name}</name>

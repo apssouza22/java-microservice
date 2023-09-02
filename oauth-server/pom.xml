@@ -108,7 +108,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <fork>true</fork>
+<!--                    <fork>true</fork>-->
                     <addResources>true</addResources>
                 </configuration>
             </plugin>
@@ -194,7 +194,7 @@
                         <artifactId>docker-maven-plugin</artifactId>
                         <version>0.19.0</version>
                         <configuration>
-                            <!--<dockerHost>http://localhost:2376</dockerHost>-->
+<!--                            <dockerHost>http://localhost:2375</dockerHost>-->
                             <dockerHost>unix:///var/run/docker.sock</dockerHost>
                             <images>
                                 <image>

@@ -4,7 +4,7 @@ services:
   config:
     image: todo/config-server
     ports:
-      - 8888:8888
+      - "8888:8888"
     networks:
       - net
     hostname: config
@@ -16,7 +16,7 @@ services:
   eureka:
     image: todo/eureka-server
     ports:
-      - 8010:8010
+      - "8010:8010"
     networks:
       - net
     depends_on:
@@ -30,22 +30,23 @@ services:
   reminder:
     image: todo/reminder-service
     ports:
-      - 8015:8015
+      - "8015:8015"
     networks:
       - net
     depends_on:
       - eureka
       - admin
     hostname: reminder
+    container_name: reminder
     command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
     external_links:
       - elk
       - kafka
-      
+
   user:
     image: todo/user-service
     ports:
-      - 8016:8016
+      - "8016:8016"
     networks:
       - net
     depends_on:
@@ -61,7 +62,7 @@ services:
   oauth:
     image: todo/oauth-server
     ports:
-      - 8017:8017
+      - "8017:8017"
     networks:
       - net
     depends_on:
@@ -78,7 +79,7 @@ services:
   gateway:
     image: todo/api-gateway
     ports:
-      - 8018:8018
+      - "8018:8018"
     networks:
       - net
     depends_on:
@@ -111,7 +112,7 @@ services:
       - eureka
     container_name: admin
     ports:
-      - 8026:8026
+      - "8026:8026"
     networks:
       - net
     environment:
@@ -121,20 +122,21 @@ services:
     command: ["./wait-for-it.sh","eureka:8010","--timeout=150","--","/usr/local/bin/start.sh"]
     external_links:
       - elk
-      
+
+
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
-      - 2181:2181
+      - "2181:2181"
     networks:
       - net
-    mem_limit: 925288000  
-    cpu_shares: 100
+    mem_limit: 300m
+    cpu_shares: 70
   
   kafka:
     image: wurstmeister/kafka
     ports:
-      - 9092
+      - "9092:9092"
     depends_on:
       - zookeeper
     environment:
@@ -147,7 +149,7 @@ services:
     container_name: kafka
     networks:
       - net
-    mem_limit: 925288000  
+    mem_limit: 1200m
     cpu_shares: 100
 
   proxy:
@@ -161,7 +163,23 @@ services:
      hostname: proxy
      container_name: proxy  
      command: ["./wait-for-it.sh","gateway:8018","--timeout=50","--","/usr/local/bin/start.sh"]
-     
+
+  elk:
+    image: sebp/elk
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    hostname: elk
+    container_name: elk
+    networks:
+      - net
+    mem_limit: 3000m
+    cpu_shares: 50
+
+
 volumes:
   todo_data:
     external: true

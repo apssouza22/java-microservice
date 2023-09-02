@@ -22,6 +22,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <start-class>com.apssouza.BasicApplication</start-class>
         <java.version>1.8</java.version>
+        <docker.host.url>tcp://localhost:2375</docker.host.url>
     </properties>
 
     <dependencies>
@@ -160,6 +161,7 @@
                         <configuration>
                             <!--<dockerHost>http://localhost:2376</dockerHost>-->
                             <dockerHost>unix:///var/run/docker.sock</dockerHost>
+<!--                            <dockerHost>${docker.host.url}</dockerHost>-->
                             <images>
                                 <image>
                                     <name>${docker.image.name}</name>

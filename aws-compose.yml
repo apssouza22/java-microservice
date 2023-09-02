@@ -81,8 +81,7 @@ services:
     extra_hosts:
       - "config:EC2_INSTANCE_IP" 
       - "eureka:EC2_INSTANCE_IP"
-    environment:
-      - JAVA_OPTS=' -Xmx800m'
+
   
   zookeeper:
     image: wurstmeister/zookeeper
