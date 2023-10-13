@@ -10,20 +10,20 @@ tools {
             }
         }
 
-        stage('mail-service') {
+        stage('Build and Test') {
             parallel {
-                stage('mail-service') {
+                stage('api-gateway') {
                     steps {
-                        dir('mail-service') {
+                        dir('api-gateway') {
                             sh 'mvn clean package'
                             // You can add more Maven-related build and test commands as needed
                         }
                     }
                 }
 
-                stage('api-gateway') {
+                stage('mail-service') {
                     steps {
-                        dir('api-gateway') {
+                        dir('mail-service') {
                             sh 'mvn clean package'
                             // You can add more Maven-related build and test commands as needed
                         }
