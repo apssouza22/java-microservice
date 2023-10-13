@@ -21,9 +21,9 @@ tools {
                     }
                 }
 
-                stage('mail-service') {
+                stage('eureka-server') {
                     steps {
-                        dir('mail-service') {
+                        dir('eureka-server') {
                             sh 'mvn clean package'
                             // You can add more Maven-related build and test commands as needed
                         }
