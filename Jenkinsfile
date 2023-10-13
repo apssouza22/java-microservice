@@ -10,11 +10,11 @@ tools {
             }
         }
 
-        stage('admin-server') {
+        stage('config-server') {
             parallel {
-                stage('admin-server') {
+                stage('config-server') {
                     steps {
-                        dir('admin-server') {
+                        dir('config-server') {
                             bsh 'mvn clean package'
                             // You can add more Maven-related build and test commands as needed
                         }
