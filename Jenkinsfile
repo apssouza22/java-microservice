@@ -10,11 +10,11 @@ tools {
             }
         }
 
-        stage('config-server') {
+        stage('mail-service') {
             parallel {
-                stage('config-server') {
+                stage('mail-service') {
                     steps {
-                        dir('config-server') {
+                        dir('mail-service') {
                             sh 'mvn clean package'
                             // You can add more Maven-related build and test commands as needed
                         }
