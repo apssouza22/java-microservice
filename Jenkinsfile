@@ -15,7 +15,7 @@ tools {
                 stage('config-server') {
                     steps {
                         dir('config-server') {
-                            bsh 'mvn clean package'
+                            sh 'mvn clean package'
                             // You can add more Maven-related build and test commands as needed
                         }
                     }
